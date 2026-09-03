@@ -1,0 +1,149 @@
+/* ─────────────────────────────────────────────────────────────
+   Lyceum Presentations — Base Stylesheet
+   Підключати через: <link rel="stylesheet" href="../_shared/base.css">
+   (або ../../_shared/base.css з підпапок рівня 2)
+───────────────────────────────────────────────────────────── */
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#07101f;
+  --surface:#0d1a30;
+  --card:#142240;
+  --border:#1c3054;
+  --text:#e2e8f0;
+  --muted:#526480;
+  --cyan:#00d4ff;
+  --coral:#ff6b6b;
+  --yellow:#ffd93d;
+  --green:#6bcb77;
+  --purple:#a78bfa;
+  --orange:#fb923c;
+  --fd:'Exo 2',sans-serif;
+  --fb:'Nunito',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+}
+
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--fb)}
+
+/* ── Progress bar ── */
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .4s ease;z-index:100;box-shadow:0 0 12px var(--cyan)}
+
+/* ── Background ── */
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.bg-glow{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.055) 0%,transparent 70%);top:-250px;right:-250px;pointer-events:none;z-index:0;animation:bgPulse 9s ease-in-out infinite}
+.bg-glow2{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.045) 0%,transparent 70%);bottom:-150px;left:-150px;pointer-events:none;z-index:0;animation:bgPulse 12s ease-in-out infinite reverse}
+@keyframes bgPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.7}}
+
+/* ── Layout ── */
+#app{position:fixed;inset:0;display:flex;flex-direction:column;z-index:1}
+#slides{position:relative;flex:1;overflow:hidden}
+
+/* ── Slides ── */
+.slide{position:absolute;inset:0;padding:44px 68px 16px;opacity:0;transform:translateX(44px);transition:opacity .42s cubic-bezier(.4,0,.2,1),transform .42s cubic-bezier(.4,0,.2,1);pointer-events:none;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.slide::-webkit-scrollbar{width:4px}
+.slide::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+
+/* ── Navigation ── */
+#nav{display:flex;align-items:center;justify-content:center;gap:18px;padding:11px 30px;background:rgba(13,26,48,.85);backdrop-filter:blur(12px);border-top:1px solid var(--border);z-index:10}
+.nbtn{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;transition:all .2s ease;font-size:17px}
+.nbtn:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 14px rgba(0,212,255,.2)}
+.nbtn:disabled{opacity:.28;cursor:not-allowed}
+#ctr{font-family:var(--fm);font-size:13px;color:var(--muted);min-width:56px;text-align:center}
+#ctr span{color:var(--cyan)}
+
+/* ── Typography ── */
+.lbl{font-family:var(--fm);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:7px;opacity:.8}
+h1.stitle{font-family:var(--fd);font-size:clamp(34px,4.8vw,58px);font-weight:800;line-height:1.1;background:linear-gradient(135deg,#fff 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+h2.stitle{font-family:var(--fd);font-size:clamp(22px,3vw,36px);font-weight:700;color:var(--text);margin-bottom:18px}
+h2.stitle .a{color:var(--cyan)}
+p{font-size:14.5px;line-height:1.7;color:#c4d0e0;margin-bottom:10px}
+ul{list-style:none;padding:0}
+ul li{padding:7px 0 7px 20px;position:relative;font-size:14.5px;color:#c4d0e0;line-height:1.5}
+ul li::before{content:'▸';position:absolute;left:0;color:var(--cyan)}
+code{font-family:var(--fm);font-size:12.5px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);padding:2px 6px;border-radius:5px;color:var(--cyan)}
+.hi{color:var(--cyan);font-weight:600}
+.hy{color:var(--yellow);font-weight:600}
+.hc{color:var(--coral);font-weight:600}
+.hg{color:var(--green);font-weight:600}
+.hp{color:var(--purple);font-weight:600}
+
+/* ── Layout helpers ── */
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.col3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+.ctitle{font-family:var(--fd);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+
+/* ── Code blocks (.cb) ── */
+.cb{background:#0b1120;border:1px solid #1c2c42;border-radius:12px;padding:18px;font-family:var(--fm);font-size:12.5px;line-height:1.75;overflow-x:auto}
+.cbh{display:flex;align-items:center;gap:6px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #1c2c42}
+.dot{width:11px;height:11px;border-radius:50%}
+.dr{background:#ff5f57}.dy{background:#febc2e}.dg{background:#28c840}
+.fn{font-family:var(--fm);font-size:10.5px;color:var(--muted);margin-left:4px}
+pre{margin:0;white-space:pre}
+
+/* ── Syntax highlighting ── */
+.kw{color:#ff79c6}   /* keywords: def for in if return import */
+.fn2{color:#50fa7b}  /* builtins: print len append range */
+.str{color:#f1fa8c}  /* strings */
+.num{color:#bd93f9}  /* numbers */
+.cmt{color:#6272a4;font-style:italic} /* comments */
+.prop{color:#8be9fd} /* variables / identifiers */
+.punct{color:#f8f8f2}/* brackets, commas, colons */
+.val{color:#ffb86c}  /* indices, slices, values */
+.at{color:#bd93f9}   /* CSS at-rules / attributes */
+.sel{color:#50fa7b}  /* CSS selectors */
+.tag{color:#ff79c6}  /* HTML tags */
+.pct{color:#ff79c6}  /* punctuation variant */
+
+/* ── Live demo area ── */
+.demo{background:#060e1c;border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;min-height:110px}
+.dlbl{font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.tbtn{padding:8px 18px;background:transparent;border:1px solid var(--cyan);border-radius:8px;color:var(--cyan);font-family:var(--fd);font-size:12.5px;cursor:pointer;transition:all .2s ease;margin-top:6px}
+.tbtn:hover{background:rgba(0,212,255,.1)}
+
+/* ── Demo highlight animations ── */
+.highlight{background:rgba(0,212,255,.25)!important;border-color:var(--cyan)!important;transition:background .2s,border-color .2s}
+.highlight-green{background:rgba(107,203,119,.25)!important;border-color:var(--green)!important;transition:background .2s,border-color .2s}
+.highlight-red{background:rgba(255,107,107,.25)!important;border-color:var(--coral)!important;transition:background .2s,border-color .2s}
+
+/* ── Difficulty badges ── */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:11.5px;font-weight:600;font-family:var(--fd)}
+.be{background:rgba(107,203,119,.12);color:var(--green);border:1px solid rgba(107,203,119,.25)}
+.bm{background:rgba(255,217,61,.12);color:var(--yellow);border:1px solid rgba(255,217,61,.25)}
+.bh{background:rgba(255,107,107,.12);color:var(--coral);border:1px solid rgba(255,107,107,.25)}
+
+/* ── Slide 1 — Title ── */
+.s1{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:calc(100vh - 68px);position:relative}
+.fshape{position:absolute;border-radius:50%;opacity:.55}
+.fs1{width:90px;height:90px;background:radial-gradient(circle,rgba(0,212,255,.45),transparent);top:8%;left:6%;animation:fl1 7s ease-in-out infinite}
+.fs2{width:55px;height:55px;background:radial-gradient(circle,rgba(167,139,250,.55),transparent);top:12%;right:8%;animation:fl2 9s ease-in-out infinite}
+.fs3{width:35px;height:35px;background:radial-gradient(circle,rgba(255,217,61,.65),transparent);bottom:22%;left:12%;animation:fl1 5.5s ease-in-out infinite reverse}
+.fs4{width:65px;height:65px;background:radial-gradient(circle,rgba(255,107,107,.45),transparent);bottom:14%;right:7%;animation:fl2 8s ease-in-out infinite reverse}
+.fs5{width:22px;height:22px;background:radial-gradient(circle,rgba(107,203,119,.7),transparent);top:42%;right:4%;animation:fl1 4.5s ease-in-out infinite}
+@keyframes fl1{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-22px) rotate(5deg)}66%{transform:translateY(-10px) rotate(-3deg)}}
+@keyframes fl2{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-28px) translateX(10px)}}
+.fcode{position:absolute;font-family:var(--fm);font-size:11px;opacity:.1;color:var(--cyan);animation:floatC 11s ease-in-out infinite}
+.fcode:nth-child(1){top:4%;left:2%;animation-delay:0s}
+.fcode:nth-child(2){top:58%;left:1.5%;animation-delay:-3s}
+.fcode:nth-child(3){top:7%;right:2.5%;animation-delay:-5.5s}
+.fcode:nth-child(4){bottom:4%;right:4%;animation-delay:-1.5s}
+@keyframes floatC{0%,100%{transform:translateY(0);opacity:.1}50%{transform:translateY(-14px);opacity:.2}}
+.ttag{font-family:var(--fm);font-size:12.5px;color:var(--muted);margin-bottom:18px;letter-spacing:1px}
+.ttag .tn{color:var(--cyan)}
+h1.mtitle{font-family:var(--fd);font-size:clamp(38px,5.5vw,68px);font-weight:800;line-height:1.1;margin-bottom:14px;background:linear-gradient(135deg,#ffffff 0%,#00d4ff 45%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tul{width:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--purple));margin:0 auto 18px;border-radius:2px;animation:ulExp 1.8s ease .3s forwards}
+@keyframes ulExp{from{width:0}to{width:88px}}
+.tsub{font-size:18px;color:var(--muted);margin-bottom:26px;font-weight:300}
+.tmeta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.mchip{display:flex;align-items:center;gap:7px;padding:7px 15px;background:var(--card);border:1px solid var(--border);border-radius:30px;font-size:12.5px;color:var(--muted)}
+.mchip .ic{color:var(--cyan)}
+
+/* ── Slide 2 — Lesson plan grid ── */
+.planGrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:8px}
+.pitem{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:12px;transition:border-color .2s}
+.pitem:hover{border-color:var(--cyan)}
+.pnum{font-family:var(--fd);font-size:21px;font-weight:800;color:var(--border);min-width:30px}
+.ptxt{font-size:13.5px;color:#c4d0e0;line-height:1.4}
+.ptxt strong{display:block;font-size:14.5px;color:var(--text);font-family:var(--fd);font-weight:600}

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Інформація, повідомлення, дані — 10 клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Generic: definition box ── */
+.inf-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.inf-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.inf-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.inf-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Three approaches (slide 4) ── */
+.inf-appr{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px;transition:border-color .2s}
+.inf-appr:hover{border-color:var(--cyan)}
+.inf-appr .at{font-family:var(--fd);font-weight:700;font-size:13.5px;margin-bottom:6px}
+.inf-appr .aauth{font-family:var(--fm);font-size:10.5px;color:var(--muted);margin-bottom:8px}
+.inf-appr p{font-size:12.5px;margin:0}
+.inf-appr.sel{border-color:var(--green);box-shadow:0 0 0 1px rgba(107,203,119,.3)}
+
+/* ── Message forms grid (slide 6) ── */
+.inf-formGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:6px}
+.inf-form{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;transition:transform .2s ease,border-color .2s ease}
+.inf-form:hover{transform:translateY(-4px);border-color:var(--purple)}
+.inf-form .ic{font-size:24px;margin-bottom:7px}
+.inf-form .lb{font-size:11.5px;color:#c4d0e0;font-family:var(--fd)}
+
+/* ── Generic flow / chain diagram ── */
+.inf-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.inf-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;transition:all .35s ease;position:relative}
+.inf-fstep .ic{font-size:20px;margin-bottom:6px}
+.inf-fstep .tt{font-size:11.5px;color:#c4d0e0;line-height:1.3;font-family:var(--fd);font-weight:600}
+.inf-fstep .tag{display:inline-block;margin-top:7px;font-family:var(--fm);font-size:9.5px;padding:2px 7px;border-radius:20px;letter-spacing:.5px}
+.inf-fstep.on{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.inf-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:20px}
+.tag-p{background:rgba(0,212,255,.15);color:var(--cyan)}
+.tag-o{background:rgba(167,139,250,.15);color:var(--purple)}
+.tag-z{background:rgba(255,217,61,.15);color:var(--yellow)}
+
+/* ── Process badges (slide 9) ── */
+.inf-procGrid{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 14px}
+.inf-proc{font-family:var(--fm);font-size:12px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:#c4d0e0;background:var(--card)}
+.inf-proc.main{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08);font-weight:600}
+
+/* ── Security example rows (slide 10) ── */
+.inf-secRow{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:9px}
+.inf-secRow .nm{flex:1;font-size:13px;color:#e2e8f0}
+.inf-secRow .tags{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ── Systems grid (slide 13) ── */
+.inf-sysCol{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+.inf-sysCol .st{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:12px;text-align:center;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.inf-sysItem{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(28,48,84,.6);font-size:12.5px}
+.inf-sysItem:last-child{border-bottom:none}
+.inf-sysItem .k{color:#e2e8f0}
+.inf-sysItem .v{color:var(--muted);font-family:var(--fm);font-size:11px;text-align:right}
+
+/* ── Human skills (slide 14) ── */
+.inf-skillGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.inf-skill{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
+.inf-skill .ic{color:var(--green);font-size:14px;margin-top:1px}
+.inf-skill p{margin:0;font-size:12.5px}
+
+/* ── Practice slides (15/17) ── */
+.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
+.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
+.tcl{list-style:none;padding:0}
+.tcl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.tcl li::before{content:'☐';left:-20px;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+.hint{border-radius:10px;padding:12px 14px}
+.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
+.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
+.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
+.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+
+.inf-quiz{display:flex;flex-direction:column;gap:8px}
+.inf-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.inf-qitem:hover{border-color:var(--cyan)}
+.inf-qitem .q{font-size:13px;color:#e2e8f0}
+.inf-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.inf-qitem.show .ans{max-height:60px;opacity:1;margin-top:7px}
+
+/* ── Solutions (16/18) ── */
+.inf-solRow{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 15px;margin-bottom:8px}
+.inf-solRow .q{font-size:12.5px;color:#c4d0e0}
+.inf-solRow .a{font-family:var(--fm);font-size:11.5px;color:var(--green);white-space:nowrap}
+
+/* ── Rebus break (slide 15) ── */
+.inf-tile{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-family:var(--fm);font-weight:700;font-size:15px;color:var(--yellow)}
+
+/* ── Summary ── */
+.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sumi{font-size:26px;margin-bottom:7px}
+.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sumc p{font-size:12px;color:var(--muted);margin:0}
+.ty{text-align:center;margin-top:18px}
+.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
+.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
+.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
+.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
+.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
+.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
+.dd:nth-child(5){background:var(--green);animation-delay:.48s}
+@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">інформація</span>
+        <span class="fcode">повідомлення</span>
+        <span class="fcode">дані</span>
+        <span class="fcode">процеси</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"інформаційні технології у суспільстві"</span>&gt;</div>
+        <h1 class="mtitle">Інформація,<br>повідомлення, дані</h1>
+        <div class="tul"></div>
+        <p class="tsub">Основні поняття інформатики та інформаційні процеси</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 10 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ 1, § 1.1</div>
+          <div class="mchip"><span class="ic">✨</span> Вступний урок</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 10 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Основні поняття інформатики</strong>Чому інформатика — молода наука</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Інформація, повідомлення, дані</strong>Три ключових терміни та зв'язок між ними</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Схема пізнання світу</strong>Як людина отримує та опрацьовує повідомлення</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Інформаційні процеси</strong>Основні та складні процеси над повідомленнями</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Технології та системи</strong>Апаратна й програмна складові</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Людина в інформаційному суспільстві</strong>Які навички потрібні кожному з нас</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Young science
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Вступ</div>
+      <h2 class="stitle">Інформатика — <span class="a">молода наука</span></h2>
+      <div class="inf-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інформатика</strong> — наука, що вивчає методи та засоби опрацювання, передавання та зберігання повідомлень.</p>
+      </div>
+      <div class="col2">
+        <div>
+          <p>Порівняно з іншими науками інформатика — дуже <span class="hi">молода наука</span>: їй близько <strong style="color:#fff">70 років</strong>, тоді як історія математики налічує кілька <strong style="color:#fff">тисячоліть</strong>.</p>
+          <p>Як і в кожній науці, в інформатиці є основні поняття, які потрібно чітко розуміти:</p>
+          <div class="inf-procGrid" style="margin-top:12px">
+            <span class="inf-proc main">інформація</span>
+            <span class="inf-proc main">повідомлення</span>
+            <span class="inf-proc main">дані</span>
+            <span class="inf-proc">інформаційні процеси</span>
+            <span class="inf-proc">інформаційні технології</span>
+            <span class="inf-proc">інформаційні системи</span>
+            <span class="inf-proc">алгоритм</span>
+            <span class="inf-proc">код</span>
+            <span class="inf-proc">програма</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ctitle">Молодість науки</div>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-top:6px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:64px;text-align:right;font-family:var(--fm);font-size:12px;color:var(--cyan)">~70 р.</div>
+              <div style="flex:1;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--cyan),rgba(0,212,255,.15));width:6%"></div>
+              <div style="font-size:12.5px;color:#c4d0e0">Інформатика</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:64px;text-align:right;font-family:var(--fm);font-size:12px;color:var(--purple)">тисячоліття</div>
+              <div style="flex:1;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--purple),rgba(167,139,250,.15))"></div>
+              <div style="font-size:12.5px;color:#c4d0e0">Математика</div>
+            </div>
+          </div>
+          <p style="margin-top:14px;margin-bottom:0;font-size:12.5px;color:#94a3b8">Тому вчені досі дискутують щодо трактування базових понять інформатики — на відміну від давно усталеної математики.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Three approaches
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Підходи до поняття «інформація»</div>
+      <h2 class="stitle">Три підходи до <span class="a">розуміння інформації</span></h2>
+      <p>Вчені пояснюють поняття «інформація» по-різному — узагальнено це можна звести до трьох теорій:</p>
+      <div class="col3" style="margin-top:12px">
+        <div class="inf-appr">
+          <div class="at" style="color:var(--yellow)">Традиційний підхід</div>
+          <div class="aauth">Р. Хартлі, К. Шеннон</div>
+          <p>«Інформація» — синонім «повідомлення». Зміст ігнорується: повідомлення — це просто набір сигналів залежно від способу передавання й фіксації.</p>
+        </div>
+        <div class="inf-appr">
+          <div class="at" style="color:var(--coral)">Атрибутивний підхід</div>
+          <div class="aauth">Атрибут (лат. attributio)</div>
+          <p>Інформація — невід'ємна частина, опис, <strong>атрибут</strong> матеріального об'єкта. Існує об'єктивно, незалежно від свідомості людини.</p>
+        </div>
+        <div class="inf-appr sel">
+          <div class="at" style="color:var(--green)">Філософський підхід ✓</div>
+          <div class="aauth">Прийнято в цьому підручнику</div>
+          <p>Інформація — результат <strong>відображення у свідомості людини</strong> реалій навколишнього світу, з урахуванням змісту повідомлень.</p>
+        </div>
+      </div>
+      <div class="inf-note" style="margin-top:14px">💡 Саме філософський підхід ми використовуватимемо далі на цьому уроці.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Information definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle"><span class="a">Інформація</span></h2>
+      <div class="inf-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інформація</strong> — одне з основних понять інформатики, строге й універсальне означення якого неможливе. Інформація є <span class="hi">відображенням реалій навколишнього світу у свідомості людини</span>.</p>
+      </div>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">Чому інформацію не можна виміряти?</div>
+          <p style="margin-bottom:0">Результат відображення реалій світу неможливо однозначно передбачити — він завжди різний для різних людей і навіть для однієї людини за різних умов.</p>
+        </div>
+        <div class="demo">
+          <div class="dlbl">Приклад — один фільм, різні враження</div>
+          <div style="display:flex;gap:16px;justify-content:center;font-size:26px">🎬 → 😀 🤔 😢</div>
+          <p style="font-family:var(--fm);font-size:11px;color:var(--muted);margin:0;text-align:center">Один і той самий кінофільм — різне враження в різних глядачів (і навіть у того самого глядача за іншого настрою)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Message definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle"><span class="a">Повідомлення</span></h2>
+      <div class="inf-def">
+        <div class="dt">Означення</div>
+        <p><strong>Повідомлення</strong> — це деякі сигнали чи послідовності сигналів, які сприймаються людиною через <span class="hi">органи чуття</span> (зір, слух, дотик тощо).</p>
+      </div>
+      <p>У технічних пристроях для роботи з повідомленнями використовують датчики, здатні сприймати навіть ті сигнали, яких не сприймає людина — наприклад, <strong style="color:#fff">рентгенівське випромінювання</strong>.</p>
+      <p style="margin-bottom:6px">Способи подання повідомлень:</p>
+      <div class="inf-formGrid">
+        <div class="inf-form"><div class="ic">⚡</div><div class="lb">Сигнали</div></div>
+        <div class="inf-form"><div class="ic">🖼</div><div class="lb">Малюнки</div></div>
+        <div class="inf-form"><div class="ic">🔊</div><div class="lb">Звуки</div></div>
+        <div class="inf-form"><div class="ic">📐</div><div class="lb">Схеми</div></div>
+        <div class="inf-form"><div class="ic">📝</div><div class="lb">Текст</div></div>
+      </div>
+      <div class="inf-note" style="margin-top:12px">💡 Одне й те саме подання повідомлення може нести різний зміст — залежно від обставин і підготовленості того, хто його сприймає.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Data definition + chain
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle"><span class="a">Дані</span></h2>
+      <div class="inf-def">
+        <div class="dt">Означення</div>
+        <p><strong>Дані</strong> — це повідомлення, які подано у вигляді, зручному для <span class="hi">зберігання, передавання та опрацьовування</span>.</p>
+      </div>
+      <p style="margin-bottom:8px">Зв'язок між трьома поняттями:</p>
+      <div class="inf-flow" id="chainDef">
+        <div class="inf-fstep on"><div class="ic">🌍</div><div class="tt">Реалії світу</div></div>
+        <div class="inf-farrow">→</div>
+        <div class="inf-fstep on"><div class="ic">📡</div><div class="tt">Повідомлення</div><span class="tag tag-p">сигнали</span></div>
+        <div class="inf-farrow">→</div>
+        <div class="inf-fstep on"><div class="ic">💾</div><div class="tt">Дані</div><span class="tag tag-z">зручна форма</span></div>
+        <div class="inf-farrow">→</div>
+        <div class="inf-fstep on"><div class="ic">🧠</div><div class="tt">Інформація</div><span class="tag tag-o">у свідомості</span></div>
+      </div>
+      <div class="inf-note" style="margin-top:14px">💡 Наприклад, текст параграфа в підручнику — це <strong style="color:#fff">дані</strong>; те, що ти зрозумів і запам'ятав, прочитавши його, — це вже <strong style="color:#fff">інформація</strong>.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Cognition scheme (interactive)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Мал. 1.1</div>
+      <h2 class="stitle">Схема <span class="a">пізнання світу</span></h2>
+      <p>Приклад: учителька пояснює правила обчислень — учень чує й бачить пояснення, мозок опрацьовує сигнали, і врешті учень відповідає усно або записує в зошит.</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Живий демо — натисни «Відтворити»</div>
+        <div class="inf-flow" id="flow1">
+          <div class="inf-fstep" data-step="1"><div class="ic">👩‍🏫</div><div class="tt">Джерело повідомлень</div></div>
+          <div class="inf-farrow">→</div>
+          <div class="inf-fstep" data-step="2"><div class="ic">👁️👂</div><div class="tt">Світлові й звукові сигнали</div><span class="tag tag-p">передавання</span></div>
+          <div class="inf-farrow">→</div>
+          <div class="inf-fstep" data-step="3"><div class="ic">🧠</div><div class="tt">Опрацювання (мозок)</div><span class="tag tag-o">опрацювання</span></div>
+          <div class="inf-farrow">→</div>
+          <div class="inf-fstep" data-step="4"><div class="ic">🗣️✍️</div><div class="tt">Результат: відповідь / запис</div><span class="tag tag-p">передавання</span></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="infPlayFlow('flow1')">▶ Відтворити</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Information processes
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Інформаційні <span class="a">процеси</span></h2>
+      <div class="inf-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інформаційні процеси</strong> — це процеси, що здійснюються над повідомленнями.</p>
+      </div>
+      <p style="margin-bottom:4px">Три <span class="hi">основні</span> процеси:</p>
+      <div class="inf-procGrid">
+        <span class="inf-proc main">передавання</span>
+        <span class="inf-proc main">опрацювання</span>
+        <span class="inf-proc main">зберігання</span>
+      </div>
+      <p style="margin-bottom:4px">Складніші процеси — базуються щонайменше на двох основних:</p>
+      <div class="inf-procGrid">
+        <span class="inf-proc">пошук</span>
+        <span class="inf-proc">використання</span>
+        <span class="inf-proc">групування</span>
+        <span class="inf-proc">розповсюдження</span>
+        <span class="inf-proc">сортування</span>
+        <span class="inf-proc">кодування</span>
+        <span class="inf-proc">захист</span>
+        <span class="inf-proc">накопичення</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Security example
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Приклад / Складний процес</div>
+      <h2 class="stitle">Приклад: <span class="a">інформаційна безпека</span></h2>
+      <p>Складний процес завжди можна розкласти на основні. Розглянемо заходи інформаційної безпеки з 9 класу:</p>
+      <div class="inf-secRow">
+        <div class="nm">💾 Резервне копіювання на окремий носій</div>
+        <div class="tags"><span class="inf-proc main">опрацювання</span><span class="inf-proc main">передавання</span><span class="inf-proc main">зберігання</span></div>
+      </div>
+      <div class="inf-secRow">
+        <div class="nm">🔒 Шифрування даних</div>
+        <div class="tags"><span class="inf-proc main">опрацювання</span></div>
+      </div>
+      <div class="inf-secRow">
+        <div class="nm">🔑 Обмеження доступу різних користувачів</div>
+        <div class="tags"><span class="inf-proc main">опрацювання</span></div>
+      </div>
+      <div class="inf-note" style="margin-top:8px">💡 Так само можна проаналізувати будь-який складний процес — наприклад, пошук, кодування чи розповсюдження повідомлень.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Usage process (mal 1.2)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Приклад / Мал. 1.2</div>
+      <h2 class="stitle">Процес <span class="a">використання повідомлень</span></h2>
+      <p>Складний процес «використання повідомлень» складається з чотирьох кроків, кожен з яких — один з основних процесів:</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="inf-flow" id="flow2">
+          <div class="inf-fstep" data-step="1"><div class="ic">📥</div><div class="tt">Отримання повідомлень</div><span class="tag tag-p">передавання</span></div>
+          <div class="inf-farrow">→</div>
+          <div class="inf-fstep" data-step="2"><div class="ic">🗄️</div><div class="tt">Фіксація для зберігання</div><span class="tag tag-z">зберігання</span></div>
+          <div class="inf-farrow">→</div>
+          <div class="inf-fstep" data-step="3"><div class="ic">🔍</div><div class="tt">Аналіз і прийняття рішення</div><span class="tag tag-o">опрацювання</span></div>
+          <div class="inf-farrow">→</div>
+          <div class="inf-fstep" data-step="4"><div class="ic">📤</div><div class="tt">Передавання вказівки</div><span class="tag tag-p">передавання</span></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="infPlayFlow('flow2')">▶ Відтворити</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Information technologies
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Інформаційні <span class="a">технології</span></h2>
+      <div class="inf-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інформаційні технології</strong> — технології здійснення операцій над текстами, зображеннями, презентаціями, числовими та іншими даними з використанням комп'ютерів.</p>
+      </div>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">За типом даних</div>
+          <ul><li>Текстові</li><li>Графічні</li><li>Числові</li><li>Мультимедійні</li></ul>
+        </div>
+        <div class="card">
+          <div class="ctitle">За процесом</div>
+          <ul><li>Передавання</li><li>Опрацювання</li><li>Зберігання</li></ul>
+        </div>
+        <div class="card">
+          <div class="ctitle">За метою</div>
+          <ul><li>Пошук</li><li>Стиснення</li><li>Кодування</li><li>Захист даних</li></ul>
+        </div>
+      </div>
+      <div class="inf-note" style="margin-top:12px">🎯 Мета застосування ІТ — створення й опрацювання <strong style="color:#fff">інформаційних ресурсів</strong>: програм, документів, зображень, аудіо- та відеоданих, веб-сторінок.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Information systems (mal 1.3)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Мал. 1.3</div>
+      <h2 class="stitle">Інформаційні <span class="a">системи</span></h2>
+      <div class="inf-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інформаційна система</strong> — сукупність взаємопов'язаних елементів, призначена для реалізації інформаційних процесів.</p>
+      </div>
+      <div class="col2">
+        <div class="inf-sysCol">
+          <div class="st" style="color:var(--cyan)">⚙ Апаратна складова</div>
+          <div class="inf-sysItem"><span class="k">Пристрої опрацювання</span><span class="v">процесор</span></div>
+          <div class="inf-sysItem"><span class="k">Пристрої введення</span><span class="v">сканер, камера</span></div>
+          <div class="inf-sysItem"><span class="k">Пристрої виведення</span><span class="v">монітор, принтер</span></div>
+          <div class="inf-sysItem"><span class="k">Мультимедійні пристрої</span><span class="v">мікрофон, колонки</span></div>
+          <div class="inf-sysItem"><span class="k">Обладнання мережі</span><span class="v">–</span></div>
+        </div>
+        <div class="inf-sysCol">
+          <div class="st" style="color:var(--purple)">💿 Програмна складова</div>
+          <div class="inf-sysItem"><span class="k">Системні програми</span><span class="v">операційна система</span></div>
+          <div class="inf-sysItem"><span class="k">Прикладні програми</span><span class="v">текстовий, табличний процесор</span></div>
+          <div class="inf-sysItem"><span class="k">Службові програми</span><span class="v">передавання даних у мережі</span></div>
+          <div class="inf-sysItem"><span class="k">Спеціальні прикладні</span><span class="v">банківські системи, продаж квитків</span></div>
+        </div>
+      </div>
+      <div class="inf-note" style="margin-top:12px">💡 Програмну складову й дані часто окремо називають <strong style="color:#fff">інформаційною складовою</strong> системи.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Human in information society
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Теорія / Підсумок теми</div>
+      <h2 class="stitle">Людина в <span class="a">інформаційному суспільстві</span></h2>
+      <p>Щоб бути успішним у сучасному суспільстві, потрібно розвивати такі знання й уміння ще під час навчання в школі:</p>
+      <div class="inf-skillGrid">
+        <div class="inf-skill"><span class="ic">✓</span><p>Знання основ теорії інформації</p></div>
+        <div class="inf-skill"><span class="ic">✓</span><p>Навички збирання, зберігання, опрацювання, передавання та захисту повідомлень</p></div>
+        <div class="inf-skill"><span class="ic">✓</span><p>Уміння аналізувати, класифікувати, оцінювати повідомлення, синтезувати нові ідеї</p></div>
+        <div class="inf-skill"><span class="ic">✓</span><p>Готовність оволодівати новими знаннями й технологіями</p></div>
+        <div class="inf-skill"><span class="ic">✓</span><p>Готовність сприймати повідомлення, що ламають стереотипи</p></div>
+        <div class="inf-skill"><span class="ic">✓</span><p>Навички міжособистісного спілкування, зокрема комп'ютерними технологіями</p></div>
+        <div class="inf-skill"><span class="ic">✓</span><p>Уміння аргументовано вести дискусію</p></div>
+        <div class="inf-skill"><span class="ic">✓</span><p>Повага до інтелектуальної власності</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Rebus break
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Перерва / Розгадай</div>
+      <h2 class="stitle">Збери <span class="a">термін</span></h2>
+      <p>У кожному слові літери переплутані. Здогадайся, яке словосполучення з сьогоднішнього уроку тут заховано, а тоді натисни кнопку, щоб перевірити себе.</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Переплутані літери</div>
+        <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+            <span class="inf-tile">І</span><span class="inf-tile">Н</span><span class="inf-tile">Й</span><span class="inf-tile">І</span><span class="inf-tile">Ц</span><span class="inf-tile">А</span><span class="inf-tile">М</span><span class="inf-tile">Р</span><span class="inf-tile">О</span><span class="inf-tile">Ф</span><span class="inf-tile">Н</span><span class="inf-tile">І</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+            <span class="inf-tile">Ї</span><span class="inf-tile">І</span><span class="inf-tile">Г</span><span class="inf-tile">О</span><span class="inf-tile">Л</span><span class="inf-tile">О</span><span class="inf-tile">Н</span><span class="inf-tile">Х</span><span class="inf-tile">Е</span><span class="inf-tile">Т</span>
+          </div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="infRevealRebus()">🔍 Показати відповідь</button>
+        <div id="rebusAnswer" style="font-family:var(--fd);font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--green);text-align:center;opacity:0;transition:opacity .4s ease">ІНФОРМАЦІЙНІ ТЕХНОЛОГІЇ</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Practice 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Визнач інформаційний процес</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>Для кожної ситуації визнач, який основний інформаційний процес переважає: <span class="hi">передавання</span>, <span class="hg">опрацювання</span> чи <span class="hy">зберігання</span>. Натисни на пункт, щоб перевірити себе.</p>
+      <div class="inf-quiz">
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Ти пишеш твір</div><div class="ans">→ опрацювання повідомлень</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Ти дивишся кінофільм</div><div class="ans">→ передавання (сприйняття) повідомлень</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Ти читаєш листа</div><div class="ans">→ передавання + опрацювання повідомлень</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Уранці тебе будить будильник</div><div class="ans">→ зберігання (сигнал у часі) + передавання</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">д) Лікар ставить діагноз</div><div class="ans">→ опрацювання повідомлень</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Питай себе: сигнал змінюється (передається), аналізується (опрацьовується) чи просто фіксується (зберігається)?</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Solution 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Практика / Рішення завдання 1</div>
+      <div class="th">
+        <div class="tnum" style="color:var(--green);font-size:36px;line-height:1.1">✓</div>
+        <div class="tinf">
+          <h2>Рішення: Визнач процес</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <div class="inf-solRow"><span class="q">а) Ти пишеш твір</span><span class="a">опрацювання</span></div>
+      <div class="inf-solRow"><span class="q">б) Ти дивишся кінофільм</span><span class="a">передавання</span></div>
+      <div class="inf-solRow"><span class="q">в) Ти читаєш листа</span><span class="a">передавання + опрацювання</span></div>
+      <div class="inf-solRow"><span class="q">г) Уранці тебе будить будильник</span><span class="a">зберігання + передавання</span></div>
+      <div class="inf-solRow"><span class="q">д) Лікар ставить діагноз</span><span class="a">опрацювання</span></div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">Пояснення</div>
+        <p style="margin-bottom:0">У кожній ситуації повідомлення спочатку <strong style="color:#fff">передаються</strong> (через сигнали, зображення, звук), а потім людина їх <strong style="color:#fff">опрацьовує</strong> — тому багато прикладів поєднують кілька основних процесів одночасно.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 18 — Practice 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="18">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Повідомлення чи інформація?</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:12px">1. Спочатку поясни своїми словами відмінність між поняттями «повідомлення» та «інформація».<br>2. Далі визнач основні інформаційні процеси в кожній операції:</p>
+      <div class="inf-quiz">
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Знімання відеофільму</div><div class="ans">→ передавання + зберігання повідомлень</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Розв'язування задачі</div><div class="ans">→ опрацювання повідомлень</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Розмова через Skype</div><div class="ans">→ передавання повідомлень (в обидва боки)</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Ведення конспекту уроку</div><div class="ans">→ опрацювання + зберігання повідомлень</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">д) Показування пантоміми</div><div class="ans">→ передавання повідомлень (без слів)</div></div>
+        <div class="inf-qitem" onclick="this.classList.toggle('show')"><div class="q">е) Ведення щоденника</div><div class="ans">→ опрацювання + зберігання повідомлень</div></div>
+      </div>
+      <div class="hint hint-y" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Повідомлення — це сигнали, що сприймаються; інформація — це те, що людина усвідомила, відобразила у своїй свідомості.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 19 — Solution 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="19">
+      <div class="lbl">Практика / Рішення завдання 2</div>
+      <div class="th">
+        <div class="tnum" style="color:var(--green);font-size:36px;line-height:1.1">✓</div>
+        <div class="tinf">
+          <h2>Рішення: Повідомлення та процеси</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <div class="inf-def" style="margin-bottom:12px">
+        <div class="dt">Повідомлення vs Інформація</div>
+        <p><strong>Повідомлення</strong> — сигнали, які сприймають органи чуття (те, що передається ззовні). <strong>Інформація</strong> — те, що людина усвідомила, відобразивши ці сигнали у своїй свідомості. Те саме повідомлення може дати різну інформацію різним людям.</p>
+      </div>
+      <div class="inf-solRow"><span class="q">а) Знімання відеофільму</span><span class="a">передавання + зберігання</span></div>
+      <div class="inf-solRow"><span class="q">б) Розв'язування задачі</span><span class="a">опрацювання</span></div>
+      <div class="inf-solRow"><span class="q">в) Розмова через Skype</span><span class="a">передавання</span></div>
+      <div class="inf-solRow"><span class="q">г) Ведення конспекту уроку</span><span class="a">опрацювання + зберігання</span></div>
+      <div class="inf-solRow"><span class="q">д) Показування пантоміми</span><span class="a">передавання</span></div>
+      <div class="inf-solRow"><span class="q">е) Ведення щоденника</span><span class="a">опрацювання + зберігання</span></div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 20 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="20">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 1.1, сторінки 5–9 — прочитати, звернути особливу увагу на означення (виділені жирним і курсивом), уміти відповісти на запитання після параграфа.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">🏠 Завдання 6 (ст. 9)</div>
+        <p style="margin-bottom:0">Знайдіть відомості про інформаційні технології, які ви не вивчали в курсі інформатики 5–9 класів, про сфери їх використання. Підготуйте на цю тему комп'ютерну презентацію.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 21 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="21">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🌍</div><div class="sumt">Інформація</div><p>Відображення реалій світу у свідомості людини — виміряти неможливо</p></div>
+        <div class="sumc"><div class="sumi">📡</div><div class="sumt">Повідомлення</div><p>Сигнали, які сприймають органи чуття чи технічні датчики</p></div>
+        <div class="sumc"><div class="sumi">💾</div><div class="sumt">Дані</div><p>Повідомлення у зручній для зберігання й опрацювання формі</p></div>
+        <div class="sumc"><div class="sumi">🔄</div><div class="sumt">Інформаційні процеси</div><p>Передавання, опрацювання, зберігання — і складніші на їх основі</p></div>
+        <div class="sumc"><div class="sumi">⚙</div><div class="sumt">Технології та системи</div><p>ІТ здійснюють процеси, системи мають апаратну й програмну складові</p></div>
+        <div class="sumc"><div class="sumi">🧑‍🎓</div><div class="sumt">Людина в суспільстві</div><p>Ключові навички: аналізувати, захищати, комунікувати повідомлення</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Sequential flow-step highlight demo (slides 8, 11)
+let infFlowBusy = false;
+function infPlayFlow(id) {
+  if (infFlowBusy) return;
+  infFlowBusy = true;
+  const steps = document.querySelectorAll(`#${id} .inf-fstep`);
+  steps.forEach(s => s.classList.remove('on'));
+  steps.forEach((s, i) => {
+    setTimeout(() => s.classList.add('on'), i * 550);
+  });
+  setTimeout(() => { infFlowBusy = false; }, steps.length * 550 + 900);
+}
+
+// Rebus reveal (slide 15)
+function infRevealRebus() {
+  document.getElementById('rebusAnswer').style.opacity = '1';
+}
+</script>
+</body>
+</html>
