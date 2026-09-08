@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Інформаційні системи — 10 клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Generic: definition box ── */
+.sys-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.sys-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.sys-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.sys-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Examples grid (slide 3) ── */
+.sys-exGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
+.sys-ex{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;transition:transform .2s ease,border-color .2s ease}
+.sys-ex:hover{transform:translateY(-4px);border-color:var(--purple)}
+.sys-ex .ic{font-size:26px;margin-bottom:7px}
+.sys-ex .lb{font-size:12px;color:#c4d0e0;font-family:var(--fd)}
+
+/* ── Generic flow / chain diagram ── */
+.sys-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.sys-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;transition:all .35s ease;position:relative}
+.sys-fstep .ic{font-size:20px;margin-bottom:6px}
+.sys-fstep .tt{font-size:11.5px;color:#c4d0e0;line-height:1.3;font-family:var(--fd);font-weight:600}
+.sys-fstep .tag{display:inline-block;margin-top:7px;font-family:var(--fm);font-size:9.5px;padding:2px 7px;border-radius:20px;letter-spacing:.5px}
+.sys-fstep.on{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.sys-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:20px}
+.tag-p{background:rgba(0,212,255,.15);color:var(--cyan)}
+.tag-o{background:rgba(167,139,250,.15);color:var(--purple)}
+.tag-z{background:rgba(255,217,61,.15);color:var(--yellow)}
+
+/* ── Systems grid / dvokolonkova schema ── */
+.sys-sysCol{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+.sys-sysCol .st{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:12px;text-align:center;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.sys-sysItem{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(28,48,84,.6);font-size:12.5px}
+.sys-sysItem:last-child{border-bottom:none}
+.sys-sysItem .k{color:#e2e8f0}
+.sys-sysItem .v{color:var(--muted);font-family:var(--fm);font-size:11px;text-align:right}
+
+/* ── Terms pills ── */
+.sys-pillGrid{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 14px}
+.sys-pill{font-family:var(--fm);font-size:12px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:#c4d0e0;background:var(--card)}
+.sys-pill.main{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08);font-weight:600}
+
+/* ── Comparison table (slide 12) ── */
+.sys-tbl{width:100%;border-collapse:separate;border-spacing:0 8px}
+.sys-tbl th{font-family:var(--fd);font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);text-align:left;padding:0 14px 4px}
+.sys-tbl td{background:var(--card);border:1px solid var(--border);padding:11px 14px;font-size:12.5px;color:#c4d0e0;vertical-align:top}
+.sys-tbl td:first-child{border-radius:10px 0 0 10px;font-weight:700;color:#e2e8f0}
+.sys-tbl td:last-child{border-radius:0 10px 10px 0;color:var(--green);font-family:var(--fm);font-size:11.5px}
+
+/* ── Two-task cards (slide 13) ── */
+.sys-taskGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sys-task{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sys-task .ic{font-size:28px;margin-bottom:8px}
+.sys-task p{font-size:12.5px;margin:0;color:#c4d0e0}
+
+/* ── Stage cards (slide 15) ── */
+.sys-stageGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sys-stage{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px}
+.sys-stage .yr{font-family:var(--fm);font-size:11px;color:var(--yellow);margin-bottom:6px}
+.sys-stage .tt{font-family:var(--fd);font-weight:700;font-size:13.5px;margin-bottom:8px;color:var(--text)}
+.sys-stage ul{margin:0;padding-left:16px}
+.sys-stage li{font-size:11.5px;color:#94a3b8;margin-bottom:4px}
+
+/* ── Classification grids ── */
+.sys-clsGrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sys-clsGrid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sys-cls{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;text-align:center}
+.sys-cls .tt{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--purple);margin-bottom:6px}
+.sys-cls p{font-size:11.5px;color:#94a3b8;margin:0}
+
+/* ── Practice slides ── */
+.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
+.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
+.tcl{list-style:none;padding:0}
+.tcl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.tcl li::before{content:'☐';left:-20px;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+.hint{border-radius:10px;padding:12px 14px}
+.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
+.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
+.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
+.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+
+.sys-quiz{display:flex;flex-direction:column;gap:8px}
+.sys-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.sys-qitem:hover{border-color:var(--cyan)}
+.sys-qitem .q{font-size:13px;color:#e2e8f0}
+.sys-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.sys-qitem.show .ans{max-height:60px;opacity:1;margin-top:7px}
+
+.sys-solRow{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 15px;margin-bottom:8px}
+.sys-solRow .q{font-size:12.5px;color:#c4d0e0}
+.sys-solRow .a{font-family:var(--fm);font-size:11.5px;color:var(--green);white-space:nowrap;text-align:right}
+
+/* ── Rebus break ── */
+.sys-tile{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-family:var(--fm);font-weight:700;font-size:15px;color:var(--yellow)}
+
+/* ── Summary ── */
+.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sumi{font-size:26px;margin-bottom:7px}
+.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sumc p{font-size:12px;color:var(--muted);margin:0}
+.ty{text-align:center;margin-top:18px}
+.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
+.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
+.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
+.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
+.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
+.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
+.dd:nth-child(5){background:var(--green);animation-delay:.48s}
+@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">система</span>
+        <span class="fcode">дані</span>
+        <span class="fcode">засоби</span>
+        <span class="fcode">процеси</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"інформаційні технології у суспільстві"</span>&gt;</div>
+        <h1 class="mtitle">Інформаційні<br>системи</h1>
+        <div class="tul"></div>
+        <p class="tsub">Важливі складники й ознаки сучасного суспільства</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 10 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ 1, § 2</div>
+          <div class="mchip"><span class="ic">⚙</span> Урок 2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 10 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Що таке система</strong>Від об'єктів до єдиного цілого</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Інформаційна система</strong>Означення та складові — засоби й дані</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Забезпечення ІС</strong>Технічне, програмне, організаційне й правове</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Процеси в ІС</strong>Рух даних від джерела до споживача</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Етапи становлення</strong>Від бібліотек до сучасних автоматизованих ІС</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Класифікація ІС</strong>За автоматизацією, масштабом і сферою</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — What is a system
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Пригадай</div>
+      <h2 class="stitle">Що таке <span class="a">система?</span></h2>
+      <p>Людина живе й працює у світі систем. Вони різняться як складом, так і метою функціонування. Наприклад, системою є:</p>
+      <div class="sys-exGrid">
+        <div class="sys-ex"><div class="ic">🏫</div><div class="lb">Освітній заклад</div></div>
+        <div class="sys-ex"><div class="ic">🏢</div><div class="lb">Комерційна фірма</div></div>
+        <div class="sys-ex"><div class="ic">🚗</div><div class="lb">Автомобіль</div></div>
+        <div class="sys-ex"><div class="ic">💻</div><div class="lb">Комп'ютер</div></div>
+      </div>
+      <div class="sys-def">
+        <div class="dt">Означення</div>
+        <p><strong>Система</strong> — це сукупність взаємопов'язаних між собою об'єктів, які утворюють <span class="hi">єдине ціле</span>.</p>
+      </div>
+      <p style="margin-bottom:0">Зміна однієї зі складових системи приводить до відповідних змін усієї системи. Кожна система створюється з певною метою та існує в певному середовищі — важливо визначити її мету, виділити об'єкти, описати їхні властивості та зрозуміти зв'язки між ними.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Information system definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Інформаційна <span class="a">система</span></h2>
+      <div class="sys-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інформаційна система</strong> (у загальному розумінні) — це система, яка здійснює або в якій відбуваються <span class="hi">інформаційні процеси</span>: пошук, збирання, зберігання, передавання й опрацювання інформаційних даних.</p>
+      </div>
+      <p>У такій системі можуть відбуватися один, два чи кілька процесів. Інформаційні системи можна спостерігати щодня:</p>
+      <div class="col2" style="margin-top:6px">
+        <div class="card">
+          <div class="ctitle">📺 Телебачення</div>
+          <p style="margin-bottom:0">Забезпечує насамперед <strong style="color:#fff">поширення</strong> інформаційних даних.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📱 Мережа мобільного зв'язку</div>
+          <p style="margin-bottom:0">Використовують для <strong style="color:#fff">передавання</strong> даних.</p>
+        </div>
+      </div>
+      <div class="sys-note" style="margin-top:12px">💡 За допомогою комп'ютера здійснюють майже всі інформаційні процеси — він спеціально призначений для роботи з даними. Утім і людина є інформаційною системою, яка забезпечує своє функціонування без втручання сторонніх.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Structure: means & data
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Мал. 1.4</div>
+      <h2 class="stitle">Складна <span class="a">структура</span></h2>
+      <p>Інформаційна система має складну структуру — складається із засобів і даних:</p>
+      <div class="col2">
+        <div class="sys-sysCol">
+          <div class="st" style="color:var(--cyan)">⚙ Засоби</div>
+          <div class="sys-sysItem"><span class="k">Інформаційні</span><span class="v">–</span></div>
+          <div class="sys-sysItem"><span class="k">Технічні</span><span class="v">–</span></div>
+          <div class="sys-sysItem"><span class="k">Програмні</span><span class="v">–</span></div>
+          <div class="sys-sysItem"><span class="k">Математичні</span><span class="v">–</span></div>
+          <div class="sys-sysItem"><span class="k">Організаційні</span><span class="v">–</span></div>
+          <div class="sys-sysItem"><span class="k">Правові та ін.</span><span class="v">–</span></div>
+        </div>
+        <div class="sys-sysCol">
+          <div class="st" style="color:var(--purple)">💾 Дані</div>
+          <div class="sys-sysItem"><span class="k">Структуровані</span><span class="v">задана форма, тип, розмір</span></div>
+          <div class="sys-sysItem"><span class="k">Неструктуровані</span><span class="v">текст, статті, книги тощо</span></div>
+        </div>
+      </div>
+      <div class="sys-note" style="margin-top:12px">💡 На наступних слайдах розглянемо кожну складову засобів окремо.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Technical means
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Технічні засоби</div>
+      <h2 class="stitle">Технічне <span class="a">забезпечення</span></h2>
+      <p style="margin-bottom:10px">До технічних засобів інформаційної системи належать:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🖥 Комп'ютери</div>
+          <p style="margin-bottom:0">Основа апаратної частини — виконують опрацювання даних.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📡 Канали зв'язку</div>
+          <p style="margin-bottom:0">Забезпечують передавання даних між пристроями системи.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🔌 Пристрої</div>
+          <p style="margin-bottom:0">Для збирання, накопичення, опрацювання, виведення та передавання інформаційних даних.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📄 Технічна документація</div>
+          <p style="margin-bottom:0">Визначає правила експлуатації та використання технічних засобів.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Software & math means
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Програмні та математичні засоби</div>
+      <h2 class="stitle">Програмне й <span class="a">математичне</span> забезпечення</h2>
+      <div class="sys-def">
+        <div class="dt">Означення</div>
+        <p>Сукупність математичних методів, алгоритмів, моделей і програм, які реалізують функції інформаційної системи, — це <strong>математичні</strong> та <strong>програмні засоби</strong>.</p>
+      </div>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">➕ Математичні засоби</div>
+          <p style="margin-bottom:0">Методи, алгоритми та моделі, на яких ґрунтується опрацювання даних.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">💿 Програмні засоби</div>
+          <p style="margin-bottom:0">Програми, що реалізують ці методи й алгоритми на комп'ютері.</p>
+        </div>
+      </div>
+      <div class="sys-note" style="margin-top:12px">💡 Інформаційне забезпечення становлять значення параметрів, що характеризують об'єкти системи, та дані про форми вхідних і вихідних документів.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Organizational & legal means
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Організаційне та правове забезпечення</div>
+      <h2 class="stitle">Організаційне й <span class="a">правове</span> забезпечення</h2>
+      <div class="sys-def">
+        <div class="dt">Означення</div>
+        <p><strong>Організаційне й правове забезпечення</strong> — це сукупність документів, які регламентують діяльність людей у межах інформаційної системи.</p>
+      </div>
+      <div class="sys-pillGrid">
+        <span class="sys-pill main">закони</span>
+        <span class="sys-pill main">постанови</span>
+        <span class="sys-pill main">інструкції</span>
+      </div>
+      <div class="sys-note">💡 До інших засобів можна віднести, наприклад, <strong style="color:#fff">лінгвістичні</strong>, які визначають інтерфейс користувача, подання даних у базі тощо.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Structured / unstructured data
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Дані в системі</div>
+      <h2 class="stitle">Структуровані та <span class="a">неструктуровані дані</span></h2>
+      <p>Дані в інформаційній системі можуть зберігатися в неструктурованому або структурованому вигляді:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">📋 Неструктуровані дані</div>
+          <p style="margin-bottom:0">Звичайні текстові документи (можливо, ілюстровані): статті, реферати, журнали, книги тощо. Системи з такими даними не завжди дають конкретну відповідь — можуть видати лише перелік документів, де шукати.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🗂 Структуровані дані</div>
+          <p style="margin-bottom:0">Структурування передбачає задання правил, що визначають їхню <span class="hi">форму</span>, <span class="hi">тип</span>, <span class="hi">розмір</span> і <span class="hi">значення</span> — наприклад, поля бази даних.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Data flow (interactive)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Мал. 1.5</div>
+      <h2 class="stitle">Рух <span class="a">даних у системі</span></h2>
+      <p>До інформаційної системи дані надходять від джерела. Ці дані надсилають для зберігання чи певного опрацювання в системі й потім передають споживачеві.</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Живий демо — натисни «Відтворити»</div>
+        <div class="sys-flow" id="flow1">
+          <div class="sys-fstep" data-step="1"><div class="ic">📤</div><div class="tt">Джерело</div></div>
+          <div class="sys-farrow">→</div>
+          <div class="sys-fstep" data-step="2"><div class="ic">📥</div><div class="tt">Приймання даних</div><span class="tag tag-p">передавання</span></div>
+          <div class="sys-farrow">→</div>
+          <div class="sys-fstep" data-step="3"><div class="ic">🗄️</div><div class="tt">Збереження та опрацювання</div><span class="tag tag-o">опрацювання</span></div>
+          <div class="sys-farrow">→</div>
+          <div class="sys-fstep" data-step="4"><div class="ic">📊</div><div class="tt">Виведення інформації</div><span class="tag tag-z">зберігання</span></div>
+          <div class="sys-farrow">→</div>
+          <div class="sys-fstep" data-step="5"><div class="ic">🙋</div><div class="tt">Споживач</div><span class="tag tag-p">передавання</span></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="sysPlayFlow('flow1')">▶ Відтворити</button>
+      </div>
+      <div class="sys-note" style="margin-top:12px">💡 Споживачем може бути людина, пристрій або інша інформаційна система. Між споживачем і самою системою може бути встановлено <strong style="color:#fff">зворотний зв'язок</strong>.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Processes & interaction
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Теорія / Процеси та взаємодія</div>
+      <h2 class="stitle">Процеси в <span class="a">інформаційній системі</span></h2>
+      <p style="margin-bottom:4px">У ній відбуваються такі процеси:</p>
+      <div class="sys-pillGrid">
+        <span class="sys-pill main">введення даних</span>
+        <span class="sys-pill main">опрацювання (перетворення)</span>
+        <span class="sys-pill main">зберігання</span>
+        <span class="sys-pill main">виведення</span>
+        <span class="sys-pill main">відправка / отримання мережею</span>
+      </div>
+      <p style="margin-bottom:6px">Між джерелом і споживачем може бути організовано <span class="hi">взаємодію</span>:</p>
+      <ul class="tcl" style="padding-left:4px">
+        <li style="list-style:none"><strong style="color:#fff">довільна взаємодія</strong> — обов'язкова участь операторів і на боці приймання, і на боці передавання (можливо, у заздалегідь обумовленому форматі);</li>
+        <li style="list-style:none"><strong style="color:#fff">інтерактивна віддалена взаємодія</strong> — оператор лише на передавальному боці, прийняті документи опрацьовуються автоматично;</li>
+        <li style="list-style:none"><strong style="color:#fff">контрольоване потокове опрацювання</strong> — вимагає обов'язкового контролю оператора на боці приймання;</li>
+        <li style="list-style:none"><strong style="color:#fff">повністю автоматизований процес</strong> — приймання й опрацювання документів без участі операторів.</li>
+      </ul>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Comparison table
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Приклад / Порівняння</div>
+      <h2 class="stitle">Системи <span class="a">відрізняються</span></h2>
+      <p style="margin-bottom:10px">За структурою та призначенням:</p>
+      <table class="sys-tbl">
+        <tr><th>Система</th><th>Елементи системи</th><th>Призначення</th></tr>
+        <tr><td>Компанія</td><td>Люди, обладнання, матеріали, будівлі тощо</td><td>Виробництво товарів</td></tr>
+        <tr><td>Комп'ютер</td><td>Електронні та електрохімічні елементи, лінії зв'язку тощо</td><td>Опрацювання даних</td></tr>
+        <tr><td>Телекомунікаційна</td><td>Комп'ютери, роутери, кабелі, мережеве ПЗ тощо</td><td>Передавання інформаційних даних</td></tr>
+        <tr><td>Інформаційна</td><td>Комп'ютери, мережі, люди, інформаційне та програмне забезпечення</td><td>Виробництво професійних інформаційних даних</td></tr>
+      </table>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Developing an IS
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Розробка ІС</div>
+      <h2 class="stitle">Розробка <span class="a">інформаційної системи</span></h2>
+      <p>Розробка інформаційної системи передбачає розв'язування двох завдань:</p>
+      <div class="sys-taskGrid">
+        <div class="sys-task"><div class="ic">🗄️</div><p>Наповнення системи даними певної <strong style="color:#fff">предметної області</strong></p></div>
+        <div class="sys-task"><div class="ic">🖥️</div><p>Створення <strong style="color:#fff">інтерфейсу користувача</strong> (бажано графічного) для отримання необхідних інформаційних даних</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — History: libraries → mechanics → automated
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Теорія / Мал. 1.6</div>
+      <h2 class="stitle">Етапи <span class="a">становлення ІС</span></h2>
+      <p>Інформаційні системи існують з моменту появи суспільства — на кожній стадії його розвитку є потреба в управлінні чи обміні інформаційними даними, як між членами й колективами суспільства, так і між поколіннями.</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="sys-flow" id="flow2">
+          <div class="sys-fstep" data-step="1"><div class="ic">📚</div><div class="tt">Бібліотеки — найдавніші й найпоширеніші ІС</div></div>
+          <div class="sys-farrow">→</div>
+          <div class="sys-fstep" data-step="2"><div class="ic">⚙️</div><div class="tt">Механічні пристрої для сортування, копіювання, пошуку</div></div>
+          <div class="sys-farrow">→</div>
+          <div class="sys-fstep" data-step="3"><div class="ic">💻</div><div class="tt">Автоматизовані ІС на основі ЕОМ</div></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="sysPlayFlow('flow2')">▶ Відтворити</button>
+      </div>
+      <div class="sys-note" style="margin-top:12px">💡 У бібліотеках здавна збирають і зберігають книжки, створюють каталоги, видають журнали й довідники про нові надходження, ведуть облік видачі.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Three stages of automated IS
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Теорія / Три етапи</div>
+      <h2 class="stitle">Становлення сучасних <span class="a">автоматизованих ІС</span></h2>
+      <div class="sys-stageGrid">
+        <div class="sys-stage">
+          <div class="yr">1. 60-ті роки XX ст.</div>
+          <div class="tt">Початковий</div>
+          <ul><li>Нагромадження базового досвіду використання комп'ютерів</li><li>Виявлення основних напрямів застосування</li></ul>
+        </div>
+        <div class="sys-stage">
+          <div class="yr">2. 70-ті роки XX ст.</div>
+          <div class="tt">Систематичне запровадження</div>
+          <ul><li>Пошук нових сфер застосування комп'ютерів</li><li>Ізольованість і несумісність окремих ІС</li><li>Вузьке коло користувачів</li></ul>
+        </div>
+        <div class="sys-stage">
+          <div class="yr">3. з 80-х років XX ст.</div>
+          <div class="tt">Об'єднання ІС</div>
+          <ul><li>Потужні комп'ютерні мережі та комунікаційні системи</li><li>Дані — ресурс такого ж порядку, як фінанси й персонал</li><li>Зростає статус інформаційних служб</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Classification: automation & scale
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Теорія / Класифікація</div>
+      <h2 class="stitle">Якими бувають <span class="a">інформаційні системи?</span></h2>
+      <p style="margin-bottom:6px">За <span class="hi">ступенем автоматизації</span>:</p>
+      <div class="sys-clsGrid3">
+        <div class="sys-cls"><div class="tt">Ручні</div><p>Опрацювання даних виконує людина</p></div>
+        <div class="sys-cls"><div class="tt">Автоматизовані</div><p>Частину функцій виконує техніка, частину — людина</p></div>
+        <div class="sys-cls"><div class="tt">Автоматичні</div><p>Усі функції — за допомогою технічних засобів без участі людини</p></div>
+      </div>
+      <p style="margin:12px 0 6px">За <span class="hi">масштабом використання</span>:</p>
+      <div class="sys-clsGrid4">
+        <div class="sys-cls"><div class="tt">Одиночні</div><p>На автономному ПК, без мережі</p></div>
+        <div class="sys-cls"><div class="tt">Групові</div><p>Колективне використання, локальна мережа</p></div>
+        <div class="sys-cls"><div class="tt">Корпоративні</div><p>Великі компанії, клієнт-серверна структура</p></div>
+        <div class="sys-cls"><div class="tt">Глобальні</div><p>Територія держави чи континенту (напр. Інтернет)</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Classification: domain & activity
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Теорія / Класифікація</div>
+      <h2 class="stitle">За сферою <span class="a">призначення й діяльності</span></h2>
+      <p style="margin-bottom:6px">За <span class="hi">сферою призначення</span> (предметною галуззю, вказано лише деякі):</p>
+      <div class="sys-pillGrid">
+        <span class="sys-pill">економічна</span><span class="sys-pill">медична</span><span class="sys-pill">географічна</span>
+        <span class="sys-pill">адміністративна</span><span class="sys-pill">виробнича</span><span class="sys-pill">навчальна</span>
+        <span class="sys-pill">екологічна</span><span class="sys-pill">криміналістична</span><span class="sys-pill">військова</span>
+      </div>
+      <p style="margin:8px 0 6px">За <span class="hi">місцем діяльності</span>:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🔬 Наукові</div>
+          <p style="margin-bottom:0">Автоматизація роботи науковців, аналіз статистичних даних, керування експериментом.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📐 Автоматизованого проєктування</div>
+          <p style="margin-bottom:0">Допомагають інженерам-проєктувальникам і розробникам нової техніки й технологій.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🏢 Організаційного керування</div>
+          <p style="margin-bottom:0">Для персоналу промислових підприємств, банків, бірж, готелів та їхніх філій.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🏭 Керування технологічними процесами</div>
+          <p style="margin-bottom:0">Гнучкі виробничі процеси, металургія, енергетика.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 18 — Rebus break
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="18">
+      <div class="lbl">Перерва / Розгадай</div>
+      <h2 class="stitle">Збери <span class="a">термін</span></h2>
+      <p>У кожному слові літери переплутані. Здогадайся, яке словосполучення з сьогоднішнього уроку тут заховано, а тоді натисни кнопку, щоб перевірити себе.</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Переплутані літери</div>
+        <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap">
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+            <span class="sys-tile">Й</span><span class="sys-tile">А</span><span class="sys-tile">Н</span><span class="sys-tile">Ц</span><span class="sys-tile">І</span><span class="sys-tile">Р</span><span class="sys-tile">О</span><span class="sys-tile">М</span><span class="sys-tile">Ф</span><span class="sys-tile">А</span><span class="sys-tile">Н</span><span class="sys-tile">І</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+            <span class="sys-tile">Т</span><span class="sys-tile">Е</span><span class="sys-tile">М</span><span class="sys-tile">С</span><span class="sys-tile">И</span><span class="sys-tile">С</span><span class="sys-tile">А</span>
+          </div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="sysRevealRebus()">🔍 Показати відповідь</button>
+        <div id="rebusAnswer" style="font-family:var(--fd);font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--green);text-align:center;opacity:0;transition:opacity .4s ease">ІНФОРМАЦІЙНА СИСТЕМА</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 19 — Practice 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="19">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Класифікуй систему</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>Для кожної ситуації визнач <span class="hi">ступінь автоматизації</span> та <span class="hg">масштаб використання</span> інформаційної системи. Натисни на пункт, щоб перевірити себе.</p>
+      <div class="sys-quiz">
+        <div class="sys-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Класний журнал, який учитель веде в паперовому вигляді</div><div class="ans">→ ручна, одиночна</div></div>
+        <div class="sys-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Автоматична пральна машина з програмами прання</div><div class="ans">→ автоматична, одиночна</div></div>
+        <div class="sys-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Електронний журнал і щоденник школи, яким користуються вчителі й учні</div><div class="ans">→ автоматизована, групова</div></div>
+        <div class="sys-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Пошукова система Google</div><div class="ans">→ автоматизована, глобальна</div></div>
+        <div class="sys-qitem" onclick="this.classList.toggle('show')"><div class="q">д) Роботизована лінія складання на заводі</div><div class="ans">→ автоматична, корпоративна</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Питай себе: чи бере участь людина в опрацюванні (ступінь автоматизації)? Скільки користувачів і на якій території (масштаб)?</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 20 — Solution 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="20">
+      <div class="lbl">Практика / Рішення завдання 1</div>
+      <div class="th">
+        <div class="tnum" style="color:var(--green);font-size:36px;line-height:1.1">✓</div>
+        <div class="tinf">
+          <h2>Рішення: Класифікуй систему</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <div class="sys-solRow"><span class="q">а) Паперовий класний журнал</span><span class="a">ручна, одиночна</span></div>
+      <div class="sys-solRow"><span class="q">б) Автоматична пральна машина</span><span class="a">автоматична, одиночна</span></div>
+      <div class="sys-solRow"><span class="q">в) Електронний журнал школи</span><span class="a">автоматизована, групова</span></div>
+      <div class="sys-solRow"><span class="q">г) Google</span><span class="a">автоматизована, глобальна</span></div>
+      <div class="sys-solRow"><span class="q">д) Роботизована лінія на заводі</span><span class="a">автоматична, корпоративна</span></div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">Пояснення</div>
+        <p style="margin-bottom:0">Зверни увагу: та сама система водночас класифікується за <strong style="color:#fff">кількома ознаками</strong> — за ступенем автоматизації, за масштабом, за сферою призначення тощо.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 21 — Practice 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="21">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Проаналізуй систему «Шкільна бібліотека»</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:10px">Розглянь шкільну бібліотеку як інформаційну систему. Визнач:</p>
+      <ul class="tcl">
+        <li>Технічні засоби (обладнання)</li>
+        <li>Програмні засоби (якщо є електронний каталог)</li>
+        <li>Дані — структуровані чи неструктуровані</li>
+        <li>Ступінь автоматизації та масштаб використання</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:10px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Пригадай слайд про бібліотеки як найдавніші інформаційні системи — каталоги, облік видачі, довідники про нові надходження.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 22 — Solution 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="22">
+      <div class="lbl">Практика / Рішення завдання 2</div>
+      <div class="th">
+        <div class="tnum" style="color:var(--green);font-size:36px;line-height:1.1">✓</div>
+        <div class="tinf">
+          <h2>Рішення: Шкільна бібліотека</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <div class="col2">
+        <div class="sys-sysCol">
+          <div class="st" style="color:var(--cyan)">⚙ Засоби</div>
+          <div class="sys-sysItem"><span class="k">Технічні</span><span class="v">ПК, сканер штрих-кодів</span></div>
+          <div class="sys-sysItem"><span class="k">Програмні</span><span class="v">програма електронного каталогу</span></div>
+          <div class="sys-sysItem"><span class="k">Організаційні</span><span class="v">правила видачі, формуляри</span></div>
+        </div>
+        <div class="sys-sysCol">
+          <div class="st" style="color:var(--purple)">💾 Дані</div>
+          <div class="sys-sysItem"><span class="k">Структуровані</span><span class="v">картка книги: автор, рік, полиця</span></div>
+          <div class="sys-sysItem"><span class="k">Неструктуровані</span><span class="v">самі тексти книжок</span></div>
+        </div>
+      </div>
+      <div class="sys-note" style="margin-top:12px">💡 Ступінь автоматизації — <strong style="color:#fff">автоматизована</strong> (частину виконує бібліотекар, частину — комп'ютер); масштаб — <strong style="color:#fff">групова</strong> (спільне користування учнями й учителями школи).</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 23 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="23">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 2, сторінки 14–20 — прочитати, звернути особливу увагу на означення (виділені жирним і курсивом), уміти відповісти на запитання після параграфа.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">💻 Працюємо за комп'ютером</div>
+        <p style="margin-bottom:0">Виконати практичне завдання, сторінка 18–20.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 24 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="24">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🧩</div><div class="sumt">Система</div><p>Сукупність взаємопов'язаних об'єктів, що утворюють єдине ціле</p></div>
+        <div class="sumc"><div class="sumi">🗂</div><div class="sumt">Інформаційна система</div><p>Здійснює інформаційні процеси: пошук, збирання, зберігання, передавання, опрацювання</p></div>
+        <div class="sumc"><div class="sumi">⚙</div><div class="sumt">Складові ІС</div><p>Технічні, програмні, математичні, організаційні й правові засоби та дані</p></div>
+        <div class="sumc"><div class="sumi">🔄</div><div class="sumt">Рух даних</div><p>Джерело → приймання → зберігання/опрацювання → виведення → споживач</p></div>
+        <div class="sumc"><div class="sumi">📚</div><div class="sumt">Становлення ІС</div><p>Від бібліотек і механічних пристроїв до сучасних автоматизованих систем</p></div>
+        <div class="sumc"><div class="sumi">🏷</div><div class="sumt">Класифікація</div><p>За автоматизацією, масштабом, сферою призначення та місцем діяльності</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Sequential flow-step highlight demo (slides 10, 14)
+let sysFlowBusy = false;
+function sysPlayFlow(id) {
+  if (sysFlowBusy) return;
+  sysFlowBusy = true;
+  const steps = document.querySelectorAll(`#${id} .sys-fstep`);
+  steps.forEach(s => s.classList.remove('on'));
+  steps.forEach((s, i) => {
+    setTimeout(() => s.classList.add('on'), i * 550);
+  });
+  setTimeout(() => { sysFlowBusy = false; }, steps.length * 550 + 900);
+}
+
+// Rebus reveal (slide 18)
+function sysRevealRebus() {
+  document.getElementById('rebusAnswer').style.opacity = '1';
+}
+</script>
+</body>
+</html>
