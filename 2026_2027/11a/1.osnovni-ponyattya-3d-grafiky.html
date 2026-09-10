@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Основні поняття 3D-графіки — 11 клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition box ── */
+.g3-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.g3-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.g3-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.g3-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Flow / pipeline diagram ── */
+.g3-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.g3-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;transition:all .35s ease}
+.g3-fstep .ic{font-size:19px;margin-bottom:6px}
+.g3-fstep .tt{font-size:10.5px;color:#c4d0e0;line-height:1.25;font-family:var(--fd);font-weight:600}
+.g3-fstep.on{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.g3-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;padding-top:18px}
+
+/* ── Icon grid (applications) ── */
+.g3-formGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
+.g3-form{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px 8px;text-align:center;transition:transform .2s ease,border-color .2s ease}
+.g3-form:hover{transform:translateY(-4px);border-color:var(--purple)}
+.g3-form .ic{font-size:26px;margin-bottom:7px}
+.g3-form .lb{font-size:12px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.g3-form .sub{font-size:10px;color:var(--muted);margin-top:3px}
+
+/* ── Colored pros/cons bars (mirrors source slide style) ── */
+.g3-bar{display:flex;align-items:center;gap:13px;padding:13px 18px;border-radius:10px;margin-bottom:8px;font-size:12.5px;color:#07101f;font-weight:600;line-height:1.35}
+.g3-bar .ic{font-size:17px;flex-shrink:0}
+.g3-bar.c1{background:var(--yellow)}
+.g3-bar.c2{background:var(--green)}
+.g3-bar.c3{background:#5fd4c8}
+.g3-bar.c4{background:#7ea6e0}
+
+/* ── Video reference card (external YouTube link, no embedded 3D render) ── */
+.g3-vid{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--card);text-decoration:none;color:inherit;transition:border-color .2s}
+.g3-vid:hover{border-color:var(--cyan)}
+.g3-vidThumb{position:relative;aspect-ratio:16/9;background:#000}
+.g3-vidThumb img{width:100%;height:100%;object-fit:cover;display:block;opacity:.82}
+.g3-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:rgba(0,212,255,.92);display:flex;align-items:center;justify-content:center;color:#07101f;font-size:14px}
+.g3-vidCap{padding:9px 12px}
+.g3-vidCap .tt{font-family:var(--fd);font-weight:700;font-size:12px;color:var(--text);margin-bottom:2px}
+.g3-vidCap .sub{font-size:10px;color:var(--muted)}
+
+/* ── Practice slides ── */
+.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
+.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
+.hint{border-radius:10px;padding:12px 14px}
+.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
+.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
+.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
+.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+
+.g3-quiz{display:flex;flex-direction:column;gap:8px}
+.g3-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.g3-qitem:hover{border-color:var(--cyan)}
+.g3-qitem .q{font-size:13px;color:#e2e8f0}
+.g3-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.g3-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+.g3-cl{list-style:none;padding:0;margin:0}
+.g3-cl li{display:flex;align-items:flex-start;gap:9px;padding:6px 0;font-size:13px;color:#c4d0e0}
+.g3-cl li::before{content:'☐';color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+/* ── Summary questions ── */
+.g3-qlist{list-style:none;padding:0;margin:0;counter-reset:qn}
+.g3-qlist li{counter-increment:qn;display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 15px;margin-bottom:7px;font-size:13px;color:#c4d0e0}
+.g3-qlist li::before{content:counter(qn);font-family:var(--fd);font-weight:800;font-size:14px;color:var(--cyan);flex-shrink:0}
+
+.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sumi{font-size:26px;margin-bottom:7px}
+.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sumc p{font-size:12px;color:var(--muted);margin:0}
+.ty{text-align:center;margin-top:18px}
+.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
+.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
+.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
+.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
+.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
+.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
+.dd:nth-child(5){background:var(--green);animation-delay:.48s}
+@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">вершина · ребро · полігон</span>
+        <span class="fcode">меш-об'єкт</span>
+        <span class="fcode">моделювання</span>
+        <span class="fcode">рендеринг</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"тривимірна графіка"</span>&gt;</div>
+        <h1 class="mtitle">Основні поняття<br>3D-графіки</h1>
+        <div class="tul"></div>
+        <p class="tsub">Тривимірна графіка. Основні поняття тривимірної графіки. Моделювання</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 11 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ 2, § 2.1</div>
+          <div class="mchip"><span class="ic">✨</span> Вибірковий модуль «Тривимірне моделювання»</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 11 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Пригадаймо: комп'ютерна графіка</strong>Растрова, векторна — і тривимірна</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Що таке тривимірна графіка</strong>Означення, ефект реальної присутності, історія</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Переваги й недоліки 3D-графіки</strong>Чому це потужний, але вимогливий інструмент</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Тривимірне моделювання й меш-об'єкт</strong>Вершина, ребро, полігон</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Сфери застосування</strong>Від дитячих іграшок до медицини й архітектури</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Етапи створення тривимірного зображення</strong>Від моделювання до постобробки</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Recap: computer graphics types
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Пригадаймо</div>
+      <h2 class="stitle">Комп'ютерна <span class="a">графіка</span></h2>
+      <div class="g3-def">
+        <div class="dt">Означення</div>
+        <p><strong>Комп'ютерна графіка</strong> — наука, що вивчає методи та способи створення, збереження та опрацювання зображень за допомогою відповідних програмно-апаратних комплексів.</p>
+      </div>
+      <p style="margin-bottom:6px">З деякими видами комп'ютерної графіки ти вже знайомий(-а):</p>
+      <div class="col3" style="margin-top:6px">
+        <div class="card"><div class="ctitle">🖼 Растрова</div><p style="margin-bottom:0">Зображення — сітка кольорових пікселів.</p></div>
+        <div class="card"><div class="ctitle">📐 Векторна</div><p style="margin-bottom:0">Зображення описане математичними формулами.</p></div>
+        <div class="card" style="border-color:var(--green);box-shadow:0 0 0 1px rgba(107,203,119,.3)"><div class="ctitle" style="color:var(--green)">🧊 Тривимірна ✓</div><p style="margin-bottom:0">Ще один вид — тема сьогоднішнього уроку.</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — 3D graphics definition + 2D vs 3D
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">тривимірна графіка?</span></h2>
+      <div class="g3-def">
+        <div class="dt">Означення</div>
+        <p><strong>Тривимірна графіка</strong> (або <strong>3D-графіка</strong>) — розділ комп'ютерної графіки, який присвячено методам створення зображень або відео шляхом моделювання об'ємних об'єктів у тривимірному просторі.</p>
+      </div>
+      <p>Векторні та растрові зображення є <span class="hi">двовимірними</span>, тобто пласкими. Графічне зображення тривимірних об'єктів отримується як <span class="hg">геометрична проєкція тривимірної моделі сцени на площину</span> — і робиться це за допомогою спеціалізованих програм.</p>
+      <div class="g3-note">💡 Тому те, що ти бачиш на екрані від 3D-моделі, — це завжди лише «фотографія» об'ємної сцени з певної точки огляду.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Realism effect + history
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Ефект присутності та історія</div>
+      <h2 class="stitle">Реалістичність і <span class="a">трохи історії</span></h2>
+      <div class="g3-def" style="border-color:rgba(107,203,119,.22);background:rgba(107,203,119,.06);border-left-color:var(--green)">
+        <div class="dt" style="color:var(--green)">Головна перевага</div>
+        <p>Тривимірна графіка дає <strong style="color:#fff">ефект реальної присутності</strong>, реалістичності створеного зображення.</p>
+      </div>
+      <p>Система тривимірної графіки має досить тривалу історію:</p>
+      <ul class="g3-cl" style="margin-bottom:10px">
+        <li>Вільяму Феттеру приписують сам термін «комп'ютерна графіка» — з 1961 року, для опису його роботи в компанії <strong style="color:#fff">Boeing</strong></li>
+        <li>Однією з перших робіт у стилі комп'ютерної анімації була <strong style="color:#fff">Futureworld</strong> (1976) — з анімацією обличчя й руки людини</li>
+        <li>Ця технологія спочатку з'явилась в експериментальній короткометражці <strong style="color:#fff">A Computer Animated Hand</strong> (1972), яку створили студенти Університету Юти Едвін Кетмалл і Фред Парк</li>
+      </ul>
+      <div class="g3-note">🕰️ З того моменту тривимірна графіка — новітня технологія, яка розвивається дуже активно й дотепер.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Advantages
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Переваги тривимірної графіки</div>
+      <h2 class="stitle">Переваги <span class="a">3D-графіки</span></h2>
+      <div class="g3-bar c1"><span class="ic">👍</span><span>Тривимірне моделювання дає дуже точну модель, максимально наближену до реальності</span></div>
+      <div class="g3-bar c2"><span class="ic">👍</span><span>Сучасні програми допомагають досягти високої деталізації</span></div>
+      <div class="g3-bar c3"><span class="ic">👍</span><span>Висловити тривимірний об'єкт у двомірній площині непросто — тоді як 3D-візуалізація дає можливість ретельно опрацювати й, що найголовніше, розглянути всі деталі</span></div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Disadvantages
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Недоліки тривимірної графіки</div>
+      <h2 class="stitle">Недоліки <span class="a">3D-графіки</span></h2>
+      <div class="g3-bar c1"><span class="ic">👎</span><span>Підвищені вимоги до апаратної частини комп'ютера</span></div>
+      <div class="g3-bar c2"><span class="ic">👎</span><span>Необхідність великої підготовчої роботи</span></div>
+      <div class="g3-bar c3"><span class="ic">👎</span><span>Менша, ніж при використанні двовимірної графіки, свобода у формуванні зображення</span></div>
+      <div class="g3-bar c4"><span class="ic">👎</span><span>Необхідність контролю над взаємним розміщенням об'єктів у складі сцен, особливо при виконанні анімації</span></div>
+      <div class="g3-note" style="margin-top:10px">💡 Саме тому більшість графічних програм спеціалізуються або на векторній, або на растровій графіці, а програми для тривимірної графіки дозволяють працювати з обома — з векторними (побудова об'єктів) і растровими (текстури) зображеннями одночасно.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — 3D modeling & 3D model
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Тривимірне <span class="a">моделювання</span></h2>
+      <div class="col2">
+        <div class="g3-def">
+          <div class="dt">Тривимірне моделювання</div>
+          <p>Процес створення тривимірної моделі об'єкта.</p>
+        </div>
+        <div class="g3-def" style="border-color:rgba(167,139,250,.22);background:rgba(167,139,250,.06);border-left-color:var(--purple)">
+          <div class="dt" style="color:var(--purple)">Тривимірна модель</div>
+          <p>Зоровий об'ємний прообраз певного об'єкта.</p>
+        </div>
+      </div>
+      <div class="g3-note">💡 Створена модель може як відповідати об'єкту реального світу (наприклад, чашка), так і бути абстрактною.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Mesh object: vertex/edge/polygon
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Меш-об'єкт: <span class="a">вершина, ребро, полігон</span></h2>
+      <div class="g3-def">
+        <div class="dt">Меш-об'єкт (mesh object)</div>
+        <p>Тривимірний об'єкт — це набір поверхонь, які називаються <strong style="color:#fff">полігонами</strong> і поєднані <strong style="color:#fff">ребрами</strong> та <strong style="color:#fff">вершинами</strong>. Найчастіше як полігони використовують чотирикутники, рідше — трикутники.</p>
+      </div>
+      <div class="col2">
+        <div class="g3-note">📍 <strong style="color:#fff">Меш-об'єкт</strong> описується сукупністю вершин разом із їх просторовими координатами.</div>
+        <a class="g3-vid" href="https://www.youtube.com/watch?v=ScwIHGLJFXI" target="_blank" rel="noopener">
+          <div class="g3-vidThumb"><img src="https://img.youtube.com/vi/ScwIHGLJFXI/hqdefault.jpg" alt="Vertices, Edges and Faces"><span class="g3-play">▶</span></div>
+          <div class="g3-vidCap"><div class="tt">What are Vertices, Edges and Faces?</div><div class="sub">YouTube · 🇬🇧 англійською — за потреби ввімкни автосубтитри</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Applications: overview
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Сфери застосування</div>
+      <h2 class="stitle">Кіно, ігри, <span class="a">наука</span></h2>
+      <p>Сучасний світ уже неможливо уявити без застосування тривимірної графіки. Її сфера впливу — від дитячих іграшок до наукових досліджень.</p>
+      <div class="g3-formGrid">
+        <div class="g3-form"><div class="ic">🎬</div><div class="lb">Кіно</div><div class="sub">спецефекти, напр. «Аватар»</div></div>
+        <div class="g3-form"><div class="ic">🐼</div><div class="lb">3D-мультфільми</div><div class="sub">«Кунг-фу Панда», «Суперсімейка»</div></div>
+        <div class="g3-form"><div class="ic">🎮</div><div class="lb">Комп'ютерні ігри</div><div class="sub">об'ємні світи й персонажі</div></div>
+        <div class="g3-form"><div class="ic">🔬</div><div class="lb">Наукові дослідження</div><div class="sub">моделювання процесів і явищ</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — 3D printing at home & school
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Сфери застосування / 3D-друк</div>
+      <h2 class="stitle">3D-друк у побуті <span class="a">й навчанні</span></h2>
+      <p>Найпростіші тривимірні об'єкти можна створити та роздрукувати на 3D-принтері самостійно: іграшки для молодшого братика чи сестрички, підставку під мобільний телефон, кошик для олівців і ручок тощо.</p>
+      <div class="col2" style="margin-top:10px">
+        <div class="g3-note">🧪 Навчальні моделі — кульки й пружинки для фізики, стереометричні фігури для математики, моделі РНК і ДНК для біології. Можливості обмежуються лише фантазією.</div>
+        <a class="g3-vid" href="https://www.youtube.com/watch?v=Vx0Z6LplaMU" target="_blank" rel="noopener">
+          <div class="g3-vidThumb"><img src="https://img.youtube.com/vi/Vx0Z6LplaMU/hqdefault.jpg" alt="What is 3D printing"><span class="g3-play">▶</span></div>
+          <div class="g3-vidCap"><div class="tt">What Is 3D Printing and How Does It Work?</div><div class="sub">Mashable Explains · 🇬🇧 англійською</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Architecture & medicine
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Сфери застосування / Архітектура та медицина</div>
+      <h2 class="stitle">Архітектура <span class="a">та медицина</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🏛 Архітектура</div>
+          <p style="margin-bottom:0">Першу повністю функціональну офісну будівлю було надруковано в Дубаї (ОАЕ). Завдяки цьому час на будівництво зменшився на <strong style="color:#fff">50–70%</strong>, а трудові витрати — на <strong style="color:#fff">50–80%</strong>.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🩺 Медицина</div>
+          <p style="margin-bottom:0">Протези кінцівок, заміна гіпсовим пов'язкам і незручним ортодонтичним брекетам. Ізраїльські вчені навіть надрукували людське серце, здатне функціонувати.</p>
+        </div>
+      </div>
+      <div class="g3-note" style="margin-top:12px">🎨 Тривимірне моделювання застосовують навіть у мистецтві та харчовій промисловості — існує харчовий 3D-принтер для авторських солодощів.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Stages of creating a 3D image
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Етапи створення тривимірного зображення</div>
+      <h2 class="stitle">Від моделі до <span class="a">готового зображення</span></h2>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Живе демо — натисни «Відтворити»</div>
+        <div class="g3-flow" id="flow1">
+          <div class="g3-fstep" data-step="1"><div class="ic">🧊</div><div class="tt">Моделювання</div></div>
+          <div class="g3-farrow">→</div>
+          <div class="g3-fstep" data-step="2"><div class="ic">🎨</div><div class="tt">Текстурування</div></div>
+          <div class="g3-farrow">→</div>
+          <div class="g3-fstep" data-step="3"><div class="ic">💡</div><div class="tt">Освітлення й камера</div></div>
+          <div class="g3-farrow">→</div>
+          <div class="g3-fstep" data-step="4"><div class="ic">🏃</div><div class="tt">Анімація (за потреби)</div></div>
+          <div class="g3-farrow">→</div>
+          <div class="g3-fstep" data-step="5"><div class="ic">🖥️</div><div class="tt">Рендеринг</div></div>
+          <div class="g3-farrow">→</div>
+          <div class="g3-fstep" data-step="6"><div class="ic">✨</div><div class="tt">Постобробка</div></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="g3PlayFlow('flow1')">▶ Відтворити</button>
+      </div>
+      <div class="col2" style="margin-top:12px">
+        <div class="g3-note">📌 <strong style="color:#fff">Моделювання</strong> — створення 3D-моделі та сцени. <strong style="color:#fff">Текстурування</strong> — призначення поверхням растрових або процедурних текстур. <strong style="color:#fff">Рендеринг</strong> — побудова двовимірної проєкції.</div>
+        <a class="g3-vid" href="https://www.youtube.com/watch?v=I7n30ffp0K8" target="_blank" rel="noopener">
+          <div class="g3-vidThumb"><img src="https://img.youtube.com/vi/I7n30ffp0K8/hqdefault.jpg" alt="How does the 3D Rendering process work"><span class="g3-play">▶</span></div>
+          <div class="g3-vidCap"><div class="tt">How does the 3D Rendering process work?</div><div class="sub">YouTube · 🇬🇧 англійською</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Practice 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Впізнай поняття</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>Для кожного опису визнач, про яке поняття уроку йдеться. Клікни на пункт, щоб перевірити себе.</p>
+      <div class="g3-quiz">
+        <div class="g3-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Точка в просторі, яка є частиною меш-об'єкта</div><div class="ans">→ вершина</div></div>
+        <div class="g3-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Поверхня меш-об'єкта, найчастіше чотирикутної форми</div><div class="ans">→ полігон (грань)</div></div>
+        <div class="g3-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Зоровий об'ємний прообраз певного об'єкта</div><div class="ans">→ тривимірна модель</div></div>
+        <div class="g3-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Побудова двовимірної проєкції тривимірної сцени</div><div class="ans">→ рендеринг</div></div>
+        <div class="g3-qitem" onclick="this.classList.toggle('show')"><div class="q">д) Термін, який приписують Вільяму Феттеру з 1961 року</div><div class="ans">→ «комп'ютерна графіка»</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Повернись до слайдів 4, 5, 8, 9 і 13, якщо якесь поняття не пригадується одразу.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Practice 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Сфери використання 3D-графіки</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p>Підготуй коротке усне повідомлення (3–5 речень) про одну із сфер застосування тривимірної графіки й моделювання — за зразком слайдів 10–12. Використай чек-лист, щоб нічого не забути:</p>
+      <ul class="g3-cl">
+        <li>Яку сферу ти обрав(-ла) — кіно, ігри, 3D-друк, архітектура, медицина, наука тощо</li>
+        <li>Наведи один-два конкретні приклади (назви фільму, гри, винаходу)</li>
+        <li>Поясни, яку конкретну проблему тривимірна графіка тут розв'язує</li>
+        <li>Згадай, чи це моделювання реального об'єкта, чи абстрактної форми</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Цю ж роботу можна оформити письмово як домашнє повідомлення — і поповнити прикладами, яких не було на уроці.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">Проаналізувати § 2.1, ст. 100–102 (М. А. Домаскіна, Т. В. Тихонова, «Тривимірне моделювання. Вибірковий модуль», 10–11 клас).</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">🗣 Завершити повідомлення</div>
+        <p style="margin-bottom:0">Довершити повідомлення про сфери використання тривимірної графіки та тривимірного моделювання, розпочате на уроці (завдання 2).</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Summary questions
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Підсумок</div>
+      <h2 class="stitle">Обговоримо <span class="a">разом</span></h2>
+      <ol class="g3-qlist">
+        <li>Що називають комп'ютерною графікою?</li>
+        <li>Що називають тривимірною графікою?</li>
+        <li>Яка різниця між растровою, векторною та тривимірною графікою?</li>
+        <li>Як ти розумієш поняття «тривимірне моделювання»?</li>
+        <li>Як ти розумієш поняття «тривимірна модель»?</li>
+        <li>З яких елементів складається тривимірний об'єкт?</li>
+        <li>Де застосовується тривимірна графіка та моделювання?</li>
+      </ol>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 18 — Summary cards + thanks
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="18">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🧊</div><div class="sumt">3D-графіка</div><p>Проєкція тривимірної моделі сцени на площину</p></div>
+        <div class="sumc"><div class="sumi">🔺</div><div class="sumt">Меш-об'єкт</div><p>Вершини, ребра й полігони, поєднані разом</p></div>
+        <div class="sumc"><div class="sumi">⚖️</div><div class="sumt">Переваги й недоліки</div><p>Реалістичність і деталізація — ціною вимог до техніки й часу</p></div>
+        <div class="sumc"><div class="sumi">🎬</div><div class="sumt">Сфери застосування</div><p>Кіно, ігри, наука, 3D-друк, архітектура, медицина</p></div>
+        <div class="sumc"><div class="sumi">🔄</div><div class="sumt">Етапи створення</div><p>Моделювання → текстурування → освітлення → рендеринг → постобробка</p></div>
+        <div class="sumc"><div class="sumi">📜</div><div class="sumt">Історія</div><p>Термін «комп'ютерна графіка» — з 1961 р., Вільям Феттер, Boeing</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Sequential flow-step highlight demo (slide 13)
+let g3FlowBusy = false;
+function g3PlayFlow(id) {
+  if (g3FlowBusy) return;
+  g3FlowBusy = true;
+  const steps = document.querySelectorAll(`#${id} .g3-fstep`);
+  steps.forEach(s => s.classList.remove('on'));
+  steps.forEach((s, i) => {
+    setTimeout(() => s.classList.add('on'), i * 450);
+  });
+  setTimeout(() => { g3FlowBusy = false; }, steps.length * 450 + 900);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Людина в інформаційному суспільстві — 10 клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Generic: definition box ── */
+.hum-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.hum-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.hum-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.hum-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Pills ── */
+.hum-pillGrid{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 14px}
+.hum-pill{font-family:var(--fm);font-size:12px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:#c4d0e0;background:var(--card)}
+.hum-pill.main{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08);font-weight:600}
+.hum-pill.warn{border-color:var(--coral);color:var(--coral);background:rgba(255,107,107,.08)}
+
+/* ── Warning list (negative tendencies, threats) ── */
+.hum-warnList{display:flex;flex-direction:column;gap:8px}
+.hum-warn{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--coral);border-radius:0 10px 10px 0;padding:10px 14px}
+.hum-warn .ic{color:var(--coral);font-size:15px;margin-top:1px}
+.hum-warn p{margin:0;font-size:12.5px;color:#c4d0e0}
+
+/* ── Triad / 3-col scheme with defs ── */
+.hum-triad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hum-tcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.hum-tcard .tt{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:7px}
+.hum-tcard p{font-size:12px;color:#94a3b8;margin:0}
+
+/* ── Case examples ── */
+.hum-caseGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hum-case{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px}
+.hum-case .tt{font-family:var(--fd);font-weight:700;font-size:12.5px;color:var(--yellow);margin-bottom:6px}
+.hum-case p{font-size:12px;color:#c4d0e0;margin:0}
+
+/* ── Methods 2x2 grid ── */
+.hum-methodGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hum-method{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px}
+.hum-method .tt{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--purple);margin-bottom:6px}
+.hum-method p{font-size:12px;color:#94a3b8;margin:0}
+
+/* ── Tools grid (Вправа 2) ── */
+.hum-toolGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hum-tool{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px}
+.hum-tool .ic{font-size:20px;flex-shrink:0}
+.hum-tool .tt{font-family:var(--fd);font-weight:700;font-size:12.5px;color:var(--text);margin-bottom:4px}
+.hum-tool p{font-size:11.5px;color:#94a3b8;margin:0}
+
+/* ── Practice slides ── */
+.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
+.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
+.tcl{list-style:none;padding:0}
+.tcl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.tcl li::before{content:'☐';left:-20px;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+.hint{border-radius:10px;padding:12px 14px}
+.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
+.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
+.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
+.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+
+/* ── Rebus break ── */
+.hum-tile{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-family:var(--fm);font-weight:700;font-size:15px;color:var(--yellow)}
+
+/* ── Summary ── */
+.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sumi{font-size:26px;margin-bottom:7px}
+.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sumc p{font-size:12px;color:var(--muted);margin:0}
+.ty{text-align:center;margin-top:18px}
+.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
+.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
+.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
+.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
+.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
+.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
+.dd:nth-child(5){background:var(--green);animation-delay:.48s}
+@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">суспільство</span>
+        <span class="fcode">безпека</span>
+        <span class="fcode">загрози</span>
+        <span class="fcode">захист</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"інформаційні технології у суспільстві"</span>&gt;</div>
+        <h1 class="mtitle">Людина в<br>інформаційному суспільстві</h1>
+        <div class="tul"></div>
+        <p class="tsub">Проблеми інформаційної безпеки · Практична робота 1</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 10 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ 1, § 3</div>
+          <div class="mchip"><span class="ic">💻</span> Практична робота 1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 10 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Інформаційна ера</strong>Новий етап розвитку цивілізації</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Інформаційне суспільство</strong>Ознаки та небезпечні тенденції</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Інформаційна безпека</strong>Загрози, атаки та тріада CIA</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Захист даних</strong>Методи захисту та законодавство України</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Безпека людини онлайн</strong>Персональні дані, ЕЦП, критичне мислення</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Практична робота 1</strong>Достовірність даних і виявлення фейків</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Information age
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Інформаційна <span class="a">ера</span></h2>
+      <div class="hum-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інформаційна ера</strong> (англ. Information Age, Digital Age) — концептуальна ідея про те, що сучасний вік характеризується широкими можливостями для окремих осіб вільно передавати й приймати інформацію та мати <span class="hi">миттєвий доступ до знань</span>, що було б важко чи неможливо в попередні епохи розвитку людства.</p>
+      </div>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🏭 Індустріальна ера</div>
+          <p style="margin-bottom:0">Базується в основному на виробництві й розподілі енергії.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">💻 Інформаційна ера</div>
+          <p style="margin-bottom:0">Заснована на мікроелектронних інформаційних і комунікаційних технологіях та генній інженерії.</p>
+        </div>
+      </div>
+      <div class="hum-note" style="margin-top:12px">💡 Цей період — протягом життя практично одного-двох поколінь — змінив собою індустріальну епоху.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Consequences of information revolution
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Наслідки</div>
+      <h2 class="stitle">Наслідки <span class="a">інформаційної революції</span></h2>
+      <p>Передумови інформаційної ери заклала <span class="hi">інформаційна революція</span> — її досягнення уможливили створення складних технічних систем, що дозволили опрацьовувати величезні обсяги інформаційних даних. Це спричинило докорінні зміни в усіх сферах життя людини:</p>
+      <div class="col2" style="margin-top:8px">
+        <div class="card">
+          <div class="ctitle">💼 Економіка послуг</div>
+          <p style="margin-bottom:0">Перехід від пріоритету виробництва до економіки послуг, в основі якої лежить не виробництво товарів, а надання послуг.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🎭 Масова культура</div>
+          <p style="margin-bottom:0">Виникає й розвивається «масова культура», низка субкультур зі своїми унікальними характеристиками, кіберспорт тощо.</p>
+        </div>
+      </div>
+      <div class="hum-note" style="margin-top:12px">💡 Зростає популярність соціальних мереж та інтернет-ЗМІ — виникають нові форми правління суспільством: <strong style="color:#fff">нетократія</strong> та <strong style="color:#fff">медіакратія</strong>. Зростання соціального впливу інформації спричинило появу нового виду війн — <strong style="color:#fff">інформаційної війни</strong>. Основною цінністю поступово стають <strong style="color:#fff">інформаційні ресурси</strong>.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Information as a resource / society definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Інформація як <span class="a">ресурс</span></h2>
+      <p style="margin-bottom:6px">Інформацію як об'єктивне явище можна розглядати за такими ознаками:</p>
+      <ul class="tcl" style="padding-left:4px">
+        <li style="list-style:none">1. це самостійна виробнича галузь, тобто вид економічної діяльності;</li>
+        <li style="list-style:none">2. це невід'ємний фактор будь-якого виробництва, фундаментальний ресурс економічної системи;</li>
+        <li style="list-style:none">3. це інформаційний товар, що визначається монопольною ціною через рівновагу попиту й платоспроможності;</li>
+        <li style="list-style:none">4. це елемент ринкового механізму поряд із ціною й корисністю;</li>
+        <li style="list-style:none">5. це один з найважливіших факторів конкурентної боротьби, що впливає на ефективність виробництва без фізичного збільшення традиційних ресурсів.</li>
+      </ul>
+      <div class="hum-def" style="margin-top:10px">
+        <div class="dt">Означення</div>
+        <p><strong>Інформаційне суспільство</strong> — це суспільство, в якому більшість працюючих зайнято виробництвом, зберіганням, опрацюванням та розповсюдженням інформаційних даних.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Signs of IS + dangerous tendencies
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Ознаки та ризики</div>
+      <h2 class="stitle">Ознаки й <span class="a">ризики</span></h2>
+      <p style="margin-bottom:8px">Основні ознаки інформаційного суспільства:</p>
+      <div class="hum-triad">
+        <div class="hum-tcard"><div class="tt">💰 Ресурс</div><p>Перетворення інформації на найважливіший економічний ресурс</p></div>
+        <div class="hum-tcard"><div class="tt">🔓 Відкритість</div><p>Інформаційне суспільство є видом відкритого суспільства</p></div>
+        <div class="hum-tcard"><div class="tt">⚖️ Власні закони</div><p>Інформація розвивається за своїми законами, не пов'язаними з реальними фактами</p></div>
+      </div>
+      <p style="margin:12px 0 6px">Крім позитивних моментів, є й <span class="hi">небезпечні тенденції</span>:</p>
+      <div class="hum-warnList">
+        <div class="hum-warn"><span class="ic">⚠</span><p>Усе більший вплив на суспільство засобів масової інформації</p></div>
+        <div class="hum-warn"><span class="ic">⚠</span><p>Інформаційні технології можуть зруйнувати приватне життя людей та організацій</p></div>
+        <div class="hum-warn"><span class="ic">⚠</span><p>Існує проблема відбору достовірних інформаційних даних</p></div>
+        <div class="hum-warn"><span class="ic">⚠</span><p>Багатьом людям буде важко адаптуватися до середовища інформаційного суспільства</p></div>
+        <div class="hum-warn"><span class="ic">⚠</span><p>Існує небезпека розриву між розробниками інформаційних технологій і споживачами</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Information security definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Інформаційна <span class="a">безпека</span></h2>
+      <div class="hum-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інформаційна безпека</strong> — стан захищеності потреб людини, суспільства та держави в інформації незалежно від внутрішніх і зовнішніх <span class="hi">загроз</span>.</p>
+      </div>
+      <div class="hum-def" style="border-color:rgba(167,139,250,.22);border-left-color:var(--purple);background:rgba(167,139,250,.06)">
+        <div class="dt" style="color:var(--purple)">Означення</div>
+        <p><strong>Загроза інформаційній безпеці</strong> — будь-які обставини або події (атаки), що можуть бути причиною порушення цілісності, конфіденційності або доступності інформації та створюють небезпеку життєво важливим інтересам особистості, суспільства й держави.</p>
+      </div>
+      <div class="hum-note">💡 Інформаційна безпека також означає рівень захищеності інформаційного середовища суспільства, який забезпечує його формування, використання та розвиток в інтересах громадян, організацій, держави.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — CIA triad
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Принципи безпеки</div>
+      <h2 class="stitle">Три <span class="a">принципи безпеки</span></h2>
+      <p style="margin-bottom:8px">Інформаційна безпека базується на трьох принципах:</p>
+      <div class="hum-triad">
+        <div class="hum-tcard" style="border-color:rgba(0,212,255,.3)"><div class="tt" style="color:var(--cyan)">🔒 Конфіденційність</div><p>Захист чутливої інформації від несанкціонованого доступу</p></div>
+        <div class="hum-tcard" style="border-color:rgba(255,217,61,.3)"><div class="tt" style="color:var(--yellow)">✅ Цілісність</div><p>Захист точності та повноти інформації й програмного забезпечення</p></div>
+        <div class="hum-tcard" style="border-color:rgba(107,203,119,.3)"><div class="tt" style="color:var(--green)">🕐 Доступність</div><p>Забезпечення доступності інформації та послуг у потрібний користувачу час</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — CIA violation examples
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Приклад / Порушення принципів безпеки</div>
+      <h2 class="stitle">Приклади <span class="a">порушень</span></h2>
+      <div class="hum-caseGrid">
+        <div class="hum-case"><div class="tt">🔒 Конфіденційність</div><p>Отримання зловмисниками доступу до даних користувача в реєстрі банку; навмисне розголошення даних співробітниками банку.</p></div>
+        <div class="hum-case"><div class="tt">✅ Цілісність</div><p>Перекручування фактів засобами масової інформації з метою маніпуляції громадською думкою.</p></div>
+        <div class="hum-case"><div class="tt">🕐 Доступність</div><p>Недоступність можливості придбання квитків на потяг через атаку на базу даних або сайт залізниці.</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Hacker attack
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Хакерська <span class="a">атака</span></h2>
+      <div class="hum-def">
+        <div class="dt">Означення</div>
+        <p><strong>Хакерська атака</strong> (кібератака) — дії кіберзлочинців або шкідливої програми, спрямовані на захоплення, видалення або редагування інформаційних даних віддаленої системи, отримання контролю над ресурсами системи або на виведення її з ладу.</p>
+      </div>
+      <p style="margin-bottom:8px">Будь-яка загроза складається із:</p>
+      <div class="hum-triad">
+        <div class="hum-tcard"><div class="tt">👤 Суб'єкт</div><p>Порушник, користувач, окремий громадянин чи підприємство</p></div>
+        <div class="hum-tcard"><div class="tt">🎯 Об'єкт</div><p>Сайт, сервер, база даних чи документ</p></div>
+        <div class="hum-tcard"><div class="tt">➡️ Вектор атаки</div><p>Викрадення паролю, соціальна інженерія та інше</p></div>
+      </div>
+      <div class="hum-note" style="margin-top:12px">💡 Загроза інформаційній безпеці може бути <strong style="color:#fff">внутрішньою</strong> або <strong style="color:#fff">зовнішньою</strong>.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Attack types
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Теорія / Типи атак</div>
+      <h2 class="stitle">Типи <span class="a">атак і загроз</span></h2>
+      <p style="margin-bottom:4px">Найпоширеніші атаки на комп'ютерні системи:</p>
+      <div class="hum-pillGrid">
+        <span class="hum-pill warn">шкідливе ПЗ (віруси)</span>
+        <span class="hum-pill warn">інтернет-шахрайство</span>
+        <span class="hum-pill warn">атаки на відмову в обслуговуванні</span>
+        <span class="hum-pill warn">крадіжки коштів</span>
+        <span class="hum-pill warn">крадіжки персональних даних</span>
+        <span class="hum-pill warn">несанкціонований доступ</span>
+        <span class="hum-pill warn">розповсюдження недостовірної інформації</span>
+      </div>
+      <p style="margin:10px 0 6px">Загрози користувачам інтернету:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🙋 Від користувачів</div>
+          <p style="margin-bottom:0">Зумисне пошкодження чи викрадення даних хакерами; пошкодження даних унаслідок необережних дій.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">💻 Електронні методи впливу</div>
+          <p style="margin-bottom:0">Комп'ютерні віруси, спам, фішинг.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Data protection
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Теорія / Захист даних</div>
+      <h2 class="stitle">Захист <span class="a">інформаційних даних</span></h2>
+      <div class="hum-def">
+        <div class="dt">Означення</div>
+        <p><strong>Захист інформаційних даних</strong> — сукупність заходів, спрямованих на запобігання порушенню конфіденційності, цілісності та доступності даних.</p>
+      </div>
+      <p style="margin-bottom:6px">Щоб правильно побудувати систему захисту, потрібно відповісти на запитання:</p>
+      <div class="hum-pillGrid">
+        <span class="hum-pill main">які дані необхідно захищати?</span>
+        <span class="hum-pill main">як зловмисник може отримати доступ?</span>
+        <span class="hum-pill main">як йому перешкодити?</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Protection methods
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Методи захисту</div>
+      <h2 class="stitle">Методи <span class="a">захисту даних</span></h2>
+      <p style="margin-bottom:8px">Кожен метод забезпечує окремий аспект безпеки, але майже завжди їх використовують комплексно:</p>
+      <div class="hum-methodGrid">
+        <div class="hum-method"><div class="tt">🔧 Технічний</div><p>Обмеження доступу апаратно-технічними засобами: антивіруси, файрволи, маршрутизатори, токіни, смарт-карти.</p></div>
+        <div class="hum-method"><div class="tt">🏗 Інженерний</div><p>Попереджує втрату даних унаслідок навмисних дій чи природного впливу: обмежувальні конструкції, охоронно-пожежна сигналізація.</p></div>
+        <div class="hum-method"><div class="tt">📋 Організаційний</div><p>Попереджує доступ сторонніх осіб за допомогою організаційних заходів — правил розмежування доступу.</p></div>
+        <div class="hum-method"><div class="tt">🔐 Криптографічний</div><p>Попереджує доступ за допомогою математичних перетворень: шифрування повідомлень, хешування паролів.</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — State & law
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Теорія / Держава та законодавство</div>
+      <h2 class="stitle">Держава та <span class="a">законодавство</span></h2>
+      <p style="margin-bottom:6px">В Україні політика гарантування інформаційної безпеки регламентується низкою законодавчих актів і будується на принципах:</p>
+      <ul class="tcl" style="padding-left:4px">
+        <li style="list-style:none">відповідальність за збереження інформації, її засекречування й розсекречування;</li>
+        <li style="list-style:none">забезпечення доступу до інформаційного ресурсу з урахуванням прав власності на нього;</li>
+        <li style="list-style:none">регламентація прав, обов'язків і відповідальності всіх суб'єктів інформаційного простору;</li>
+        <li style="list-style:none">захист від хибної, викривленої, недостовірної інформації.</li>
+      </ul>
+      <div class="hum-note" style="margin-top:10px">⚖️ Основний законодавчий акт, що регулює захист інформації особистості, — Закон України <strong style="color:#fff">«Про захист персональних даних»</strong>. Він регулює правові відносини, пов'язані із захистом і обробкою персональних даних, зокрема право на невтручання в особисте життя.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Personal data
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Теорія / Персональні дані</div>
+      <h2 class="stitle">Персональні <span class="a">дані</span></h2>
+      <p style="margin-bottom:6px">До персональних даних відносять відомості, що ідентифікують фізичну особу:</p>
+      <div class="hum-pillGrid">
+        <span class="hum-pill">прізвище, ім'я, по батькові</span><span class="hum-pill">адреса</span><span class="hum-pill">телефони</span>
+        <span class="hum-pill">паспортні дані</span><span class="hum-pill">національність</span><span class="hum-pill">освіта</span>
+        <span class="hum-pill">сімейний стан</span><span class="hum-pill">дата й місце народження</span>
+      </div>
+      <div class="hum-note">💡 Ця інформація є інформацією про фізичну особу та членів її сім'ї й вважається <strong style="color:#fff">конфіденційною</strong> — може оброблятися й поширюватися тільки за згодою особи, якій вона належить, крім випадків, визначених законом.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Identification, ECP, watermarks
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Теорія / Ідентифікація та підпис</div>
+      <h2 class="stitle">Ідентифікація й <span class="a">електронний підпис</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🔑 Логін і пароль</div>
+          <p style="margin-bottom:0">Ідентифікація користувача включає реєстрацію в системі безпеки унікального реєстраційного імені (<strong style="color:#fff">логіна</strong>) і відповідного йому пароля.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">✍️ Електронний цифровий підпис (ЕЦП)</div>
+          <p style="margin-bottom:0">Приєднане до тексту криптографічне перетворення, що дає змогу перевірити справжність авторства й автентичність самого тексту.</p>
+        </div>
+      </div>
+      <div class="hum-note" style="margin-top:12px">💧 До технологічного захисту також відносять цифрові <strong style="color:#fff">водяні знаки</strong> (Digital watermark) — їх використовують проти несанкціонованого копіювання мультимедійних файлів для захисту авторських прав.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Safe internet practices
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Теорія / Рекомендації</div>
+      <h2 class="stitle">Безпечна робота <span class="a">в інтернеті</span></h2>
+      <p style="margin-bottom:8px">У кіберпросторі циркулюють мільйони примірників шкідливого ПЗ — щоб убезпечити себе, дотримуйтесь рекомендацій:</p>
+      <ul class="tcl">
+        <li>Не відкривайте електронні листи, файли або посилання від людей чи джерел, яким не довіряєте</li>
+        <li>Ніколи не передавайте свої паролі або логіни стороннім особам</li>
+        <li>У соціальних мережах пам'ятайте, що можете стати мішенню для шахраїв і злочинців</li>
+        <li>Користуйтесь лише ліцензійним програмним забезпеченням, вебдодатками та ресурсами</li>
+      </ul>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 18 — Critical thinking
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="18">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Критичне <span class="a">мислення</span></h2>
+      <div class="hum-def">
+        <div class="dt">Означення</div>
+        <p><strong>Критичне мислення</strong> — процес аналізу, синтезування й обґрунтовування оцінки достовірності/цінності інформації; здатність генерувати чи змінювати свою позицію на основі фактів і аргументів та приймати зважені рішення.</p>
+      </div>
+      <p style="margin-bottom:6px">Характеристики критичного мислення:</p>
+      <div class="hum-pillGrid">
+        <span class="hum-pill main">самостійність</span>
+        <span class="hum-pill main">постановка проблеми</span>
+        <span class="hum-pill main">прийняття рішення</span>
+        <span class="hum-pill main">чітка аргументованість</span>
+        <span class="hum-pill main">соціальність</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 19 — Signs of a critical thinker
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="19">
+      <div class="lbl">Теорія / Ознаки людини</div>
+      <h2 class="stitle">Ознаки людини, яка <span class="a">мислить критично</span></h2>
+      <div class="col3">
+        <div class="card"><div class="ctitle">🧭 Здатність сприймати думки інших критично</div></div>
+        <div class="card"><div class="ctitle">🎓 Компетентність</div></div>
+        <div class="card"><div class="ctitle">👁 Небайдужість у сприйнятті подій</div></div>
+        <div class="card"><div class="ctitle">🗽 Незалежність думок</div></div>
+        <div class="card"><div class="ctitle">🔍 Допитливість</div></div>
+        <div class="card"><div class="ctitle">💬 Здатність до діалогу й дискусії</div></div>
+      </div>
+      <div class="hum-note" style="margin-top:12px">💡 Інформація є <strong style="color:#fff">відправним</strong>, а не кінцевим пунктом критичного мислення.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 20 — Rebus break
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="20">
+      <div class="lbl">Перерва / Розгадай</div>
+      <h2 class="stitle">Збери <span class="a">термін</span></h2>
+      <p>У ребусі переплутано зображення. Здогадайся, яке слово з сьогоднішнього уроку тут заховано, а тоді натисни кнопку, щоб перевірити себе.</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Зебра (перевернуто, читай з кінця) + пес + рука (жест «стоп»)</div>
+        <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font-size:34px">
+          🦓🔄 🐕 🤚
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="humRevealRebus()">🔍 Показати відповідь</button>
+        <div id="rebusAnswer" style="font-family:var(--fd);font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--green);text-align:center;opacity:0;transition:opacity .4s ease">БЕЗПЕКА</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 21 — Practical work intro
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="21">
+      <div class="lbl">Практична робота 1</div>
+      <h2 class="stitle">Людина в інформаційному суспільстві. <span class="a">Проблеми інформаційної безпеки</span></h2>
+      <p style="margin-bottom:10px">⚠️ Під час роботи з комп'ютером дотримуйтеся правил безпеки і санітарно-гігієнічних норм. Практична робота складається з двох вправ:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🔎 Вправа 1. Достовірність даних</div>
+          <p style="margin-bottom:0">Оцінити, чи можна довіряти відомостям на обраному сайті, за низкою критеріїв.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🖼 Вправа 2. Виявлення фейкових фото</div>
+          <p style="margin-bottom:0">Створити бібліотеку закладок з інструментами для перевірки зображень і повідомлень.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 22 — Practice 1 (Вправа 1)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="22">
+      <div class="lbl">Практика / Вправа 1</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Оцінка достовірності інтернет-ресурсу</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:10px">Обери сайт або статтю (за вказівкою вчителя чи свій приклад) і перевір її достовірність за критеріями:</p>
+      <ul class="tcl">
+        <li>Яка мета створення сайту (за підказками до критеріїв)?</li>
+        <li>Кому належить сайт? (сервіс <span class="hi">whois.domaintools.com</span>)</li>
+        <li>Чи неупереджена інформація — сайт не належить до комерційних/політичних проєктів?</li>
+        <li>Чи авторитетна організація/автор — чи посилаються на сайт інші фахові джерела (пошук <span class="hi">link:</span> в Google)?</li>
+        <li>Чи часто оновлюються відомості на сайті (дати внизу сторінки)?</li>
+        <li>Чи є контактна форма для звернення до авторів?</li>
+        <li>Чи збалансовано подано інформацію (без маніпулятивних слів на кшталт «усі», «ніхто», «найкращий»)?</li>
+        <li>Яка кваліфікація автора статті (пошук імені автора в Google)?</li>
+        <li>Чи автентичні зображення й діаграми (пошук зображення в Google)?</li>
+      </ul>
+      <div class="hint hint-g" style="margin-top:10px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Заповни форму оцінювання й зроби висновок про можливість рекомендувати цю статтю як джерело достовірної інформації — обговори висновок у класі.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 23 — Practice 2 (Вправа 2)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="23">
+      <div class="lbl">Практика / Вправа 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Бібліотека інструментів для виявлення фейків</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:10px">Створи власну бібліотеку закладок з інструментами для перевірки зображень і повідомлень. Перейди за посиланнями, перевір, чи відповідає опис сервісу реальним можливостям, і збережи закладку:</p>
+      <div class="hum-toolGrid">
+        <div class="hum-tool"><span class="ic">🔍</span><div><div class="tt">Google Пошук зображень</div><p>Перевірка походження фото за допомогою «Шукати зображення в Google»</p></div></div>
+        <div class="hum-tool"><span class="ic">👁</span><div><div class="tt">TinEye</div><p>Зворотний пошук зображень — де ще в мережі з'являлося це фото</p></div></div>
+        <div class="hum-tool"><span class="ic">🎞</span><div><div class="tt">InVID Verification Plugin</div><p>Перевірка автентичності відео та фото в соцмережах</p></div></div>
+        <div class="hum-tool"><span class="ic">🌐</span><div><div class="tt">Whois Lookup</div><p>Визначення власника сайту та дати його реєстрації</p></div></div>
+        <div class="hum-tool"><span class="ic">✅</span><div><div class="tt">VoxCheck / StopFake</div><p>Українські фактчекінгові ресурси для перевірки новин</p></div></div>
+        <div class="hum-tool"><span class="ic">🧪</span><div><div class="tt">Forensically</div><p>Аналіз метаданих і слідів редагування зображення</p></div></div>
+      </div>
+      <div class="hint hint-y" style="margin-top:10px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Закрий всі відкриті вікна та повідом вчителя про завершення роботи.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 24 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="24">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 3, сторінки 21–30 — прочитати, звернути особливу увагу на означення (виділені жирним і курсивом), уміти відповісти на запитання після параграфа.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">💻 Працюємо за комп'ютером</div>
+        <p style="margin-bottom:0">Завершити практичну роботу, сторінка 28–30.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 25 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="25">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">💻</div><div class="sumt">Інформаційна ера</div><p>Новий етап розвитку цивілізації на основі інформаційних технологій</p></div>
+        <div class="sumc"><div class="sumi">🌍</div><div class="sumt">Інформаційне суспільство</div><p>Ознаки, переваги й небезпечні тенденції</p></div>
+        <div class="sumc"><div class="sumi">🛡</div><div class="sumt">Інформаційна безпека</div><p>Загрози, атаки та тріада конфіденційність/цілісність/доступність</p></div>
+        <div class="sumc"><div class="sumi">🔐</div><div class="sumt">Захист даних</div><p>Технічний, інженерний, організаційний і криптографічний методи</p></div>
+        <div class="sumc"><div class="sumi">🪪</div><div class="sumt">Персональні дані</div><p>Конфіденційність, ЕЦП, ідентифікація та автентифікація</p></div>
+        <div class="sumc"><div class="sumi">🧠</div><div class="sumt">Критичне мислення</div><p>Ключовий засіб доступу до достовірної інформації</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Rebus reveal (slide 20)
+function humRevealRebus() {
+  document.getElementById('rebusAnswer').style.opacity = '1';
+}
+</script>
+</body>
+</html>

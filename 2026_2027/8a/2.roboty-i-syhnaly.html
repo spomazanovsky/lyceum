@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Роботи і сигнали — 8 клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition box ── */
+.rs-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.rs-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.rs-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.rs-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Form/type grid (robot kinds, sensor kinds) ── */
+.rs-formGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+.rs-form{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 10px;text-align:center;transition:transform .2s ease,border-color .2s ease}
+.rs-form:hover{transform:translateY(-4px);border-color:var(--purple)}
+.rs-form .ic{font-size:28px;margin-bottom:8px}
+.rs-form .lb{font-size:12.5px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.rs-form .sub{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.4}
+
+/* ── Pill grid (main components) ── */
+.rs-pillGrid{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 4px}
+.rs-pill{font-family:var(--fm);font-size:12px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:#c4d0e0;background:var(--card)}
+.rs-pill.main{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08);font-weight:600}
+
+/* ── Two-column system grid (vacuum robot parts) ── */
+.rs-sysCol{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+.rs-sysCol .st{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:12px;text-align:center;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.rs-sysItem{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(28,48,84,.6);font-size:12.5px}
+.rs-sysItem:last-child{border-bottom:none}
+.rs-sysItem .k{color:#e2e8f0}
+.rs-sysItem .v{color:var(--muted);font-family:var(--fm);font-size:11px;text-align:right}
+
+/* ── Flow / chain diagram (light sensor) ── */
+.rs-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.rs-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;transition:all .35s ease}
+.rs-fstep .ic{font-size:20px;margin-bottom:6px}
+.rs-fstep .tt{font-size:11.5px;color:#c4d0e0;line-height:1.3;font-family:var(--fd);font-weight:600}
+.rs-fstep.on{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.rs-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:20px}
+
+/* ── Quiz cards (click → answer) ── */
+.rs-quiz{display:flex;flex-direction:column;gap:8px}
+.rs-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.rs-qitem:hover{border-color:var(--cyan)}
+.rs-qitem .q{font-size:13px;color:#e2e8f0}
+.rs-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.rs-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+/* ── Checklist ── */
+.rs-cl{list-style:none;padding:0;margin:0}
+.rs-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.rs-cl li::before{content:'☐';color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+/* ── Practice slides ── */
+.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
+.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
+.hint{border-radius:10px;padding:12px 14px}
+.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
+.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
+.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
+.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+
+/* ── Summary ── */
+.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sumi{font-size:26px;margin-bottom:7px}
+.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sumc p{font-size:12px;color:var(--muted);margin:0}
+.ty{text-align:center;margin-top:18px}
+.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
+.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
+.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
+.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
+.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
+.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
+.dd:nth-child(5){background:var(--green);animation-delay:.48s}
+@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">роботи</span>
+        <span class="fcode">сигнали</span>
+        <span class="fcode">датчики</span>
+        <span class="fcode">сенсори</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"апаратне забезпечення і дані"</span>&gt;</div>
+        <h1 class="mtitle">Роботи<br>і сигнали</h1>
+        <div class="tul"></div>
+        <p class="tsub">Як робот «відчуває» світ навколо себе?</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 8 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ I, § 2</div>
+          <div class="mchip"><span class="ic">🤖</span> Роботи та датчики</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 8 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Що таке робот</strong>Означення та приклади застосування</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Роль робототехніки в сучасному житті</strong>Промисловість, медицина, рятувальні операції</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Складові робосистеми</strong>Механіка, сенсори, мікроконтролери, ПЗ</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Що таке сигнал</strong>Фізичний процес і властивість</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Датчики та сенсори</strong>Типи сенсорів та принцип їх роботи</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Як сенсори сприймають сигнали</strong>Світло, звук, перепони</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — What is a robot
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">робот?</span></h2>
+      <div class="rs-def">
+        <div class="dt">Означення</div>
+        <p><strong>Робот</strong> — це спеціально створений пристрій, який може виконувати певні завдання <span class="hi">автоматично, без втручання людини</span>.</p>
+      </div>
+      <p style="margin-bottom:10px">Роботи можуть мати різні форми та розміри: від маленьких роботів-пилососів до великих промислових.</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🏥 Робот-хірург</div>
+          <p style="margin-bottom:0">Роботизована хірургічна система DA VINCI допомагає лікарям виконувати точні операції з мінімальним ризиком для пацієнтів. Контролюється лікарем, за її допомогою виконуються маніпуляції з високою точністю.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🏭 Промислові роботи</div>
+          <p style="margin-bottom:0">Виконують різноманітні виробничі завдання на заводах: зварювання, збірка, фарбування, переміщення важких предметів.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Types of robots
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Різновиди роботів</div>
+      <h2 class="stitle">Роботи бувають <span class="a">дуже різні</span></h2>
+      <div class="rs-formGrid">
+        <div class="rs-form"><div class="ic">🚶</div><div class="lb">Гуманоїд ASIMO</div><div class="sub">ходить, бігає, танцює, розпізнає обличчя й голоси</div></div>
+        <div class="rs-form"><div class="ic">🚀</div><div class="lb">Марсохід Curiosity</div><div class="sub">вивчає поверхню Марса, збирає ґрунт, передає дані на Землю</div></div>
+        <div class="rs-form"><div class="ic">🧬</div><div class="lb">Наноробот</div><div class="sub">доправляє ліки до уражених клітин, мікрохірургія всередині тіла</div></div>
+      </div>
+      <div class="rs-note" style="margin-top:14px">💡 Робот-гуманоїд (людиноподібний) японського автовиробника Honda може навіть грати з м'ячем і переносити предмети.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Role of robotics
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Запитання-відповіді</div>
+      <h2 class="stitle">Роль робототехніки в <span class="a">сучасному житті</span></h2>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">🏭 Промисловість</div>
+          <p style="margin-bottom:0">Автоматизація рутинних завдань — збирання автомобілів, пакування товарів. Швидше, точніше, дешевше.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🏥 Медицина</div>
+          <p style="margin-bottom:0">Допомога лікарям у проведенні складних операцій, забезпечуючи високу точність.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🛎️ Обслуговування</div>
+          <p style="margin-bottom:0">Функції консультантів/асистентів у магазинах, готелях, ресторанах — надання інформації, прийом замовлень.</p>
+        </div>
+      </div>
+      <div class="col3" style="margin-top:12px">
+        <div class="card">
+          <div class="ctitle">🚨 Рятувальні операції</div>
+          <p style="margin-bottom:0">Проникають у небезпечні зони (пожежа, землетрус), де людям працювати ризиковано — шукають потерпілих.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🪖 Військова сфера</div>
+          <p style="margin-bottom:0">Розмінування територій, зменшення ризику для саперів, проведення розвідки в небезпечних зонах.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">☢️ Хімічна й ядерна промисловість</div>
+          <p style="margin-bottom:0">Робота з небезпечними речовинами — знижує ризик радіаційного та хімічного забруднення для людини.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Robot system components
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Запитання-відповіді</div>
+      <h2 class="stitle">Складові <span class="a">робосистеми</span></h2>
+      <div class="rs-def">
+        <div class="dt">Означення</div>
+        <p>Основні складові робосистеми: <span class="hi">механічна складова</span>, <span class="hi">сенсори</span>, <span class="hi">мікроконтролери</span> (мікрочип, який містить центральний процесор, пам'ять, порти введення / виведення) та <span class="hi">програмне забезпечення</span>.</p>
+      </div>
+      <div class="rs-pillGrid">
+        <span class="rs-pill main">механічна складова</span>
+        <span class="rs-pill main">сенсори</span>
+        <span class="rs-pill main">мікроконтролери</span>
+        <span class="rs-pill main">програмне забезпечення</span>
+      </div>
+      <div class="rs-note" style="margin-top:10px">🤖 Ці складові працюють разом, щоб створити функціонального й корисного робота — якщо прибрати хоча б одну, робот не зможе працювати повноцінно.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Vacuum robot example
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Мал. — робот-пилосос</div>
+      <h2 class="stitle">Приклад: <span class="a">робот-пилосос</span></h2>
+      <p style="margin-bottom:10px">Робот-пилосос керується через мобільний застосунок і поєднує кілька складових в одну інформаційну систему:</p>
+      <div class="col2">
+        <div class="rs-sysCol">
+          <div class="st" style="color:var(--cyan)">⚙ Механіка та обчислення</div>
+          <div class="rs-sysItem"><span class="k">Гіроскоп та акселерометр</span><span class="v">орієнтація в просторі</span></div>
+          <div class="rs-sysItem"><span class="k">Приводна система, двигуни</span><span class="v">колесні, щіткові</span></div>
+          <div class="rs-sysItem"><span class="k">Мікропроцесор і пам'ять</span><span class="v">керування, зберігання даних</span></div>
+        </div>
+        <div class="rs-sysCol">
+          <div class="st" style="color:var(--purple)">📡 Сенсори та зв'язок</div>
+          <div class="rs-sysItem"><span class="k">Датчики перепон, висоти</span><span class="v">уникнення падінь/зіткнень</span></div>
+          <div class="rs-sysItem"><span class="k">Датчики забруднення, заряду</span><span class="v">контроль роботи й батареї</span></div>
+          <div class="rs-sysItem"><span class="k">Лідар (LiDAR), Wi-Fi/Bluetooth</span><span class="v">карта приміщення, зв'язок з телефоном</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — What is a signal
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">сигнал?</span></h2>
+      <div class="rs-def">
+        <div class="dt">Означення</div>
+        <p><strong>Сигнал</strong> — фізичний процес, властивості якого визначаються взаємодією між матеріальним об'єктом та засобом його дослідження.</p>
+      </div>
+      <p>Складно? Спробуємо простіше:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🌀 Фізичний процес</div>
+          <p style="margin-bottom:0">Будь-яка зміна або дія в природі. Наприклад: кипіння води, рух автомобіля, ваше серцебиття.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🏷️ Властивість</div>
+          <p style="margin-bottom:0">Характеристики або особливості чогось. Наприклад: звук може бути гучним або тихим, світло — яскравим або тьмяним.</p>
+        </div>
+      </div>
+      <div class="rs-note" style="margin-top:12px">💡 Сигнал — це щось, що ми можемо виміряти або відчути і що дає нам інформацію про навколишній світ. Людина сприймає сигнали органами чуття, а робот — за допомогою <strong style="color:#fff">датчиків</strong>.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Sensor vs датчик
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Запитання-відповіді</div>
+      <h2 class="stitle">Датчик і <span class="a">сенсор</span></h2>
+      <div class="rs-def">
+        <div class="dt">Означення</div>
+        <p><strong>Датчик</strong> — це прилад для отримання відомостей із навколишнього світу технічними пристроями.</p>
+      </div>
+      <div class="rs-quiz">
+        <div class="rs-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Датчик і сенсор — це синоніми?</div>
+          <div class="ans">→ Ні: датчик — це повна назва пристрою, а сенсор — вимірювальний елемент, що входить до складу датчика.</div>
+        </div>
+      </div>
+      <div class="rs-note" style="margin-top:12px">Існують різні тлумачення поняття «сенсор»: для одних — «чутливий прилад», для інших — «аналізатор», для третіх — датчик певної фізичної величини (температури, тиску, кута повороту), для четвертих — орган чуття тварини чи рослини.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Types of sensors
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Типи сенсорів</div>
+      <h2 class="stitle">Які бувають <span class="a">сенсори?</span></h2>
+      <div class="rs-formGrid">
+        <div class="rs-form"><div class="ic">💡</div><div class="lb">Світлові</div><div class="sub">камери, світлочутливі сенсори — орієнтація, розпізнавання об'єктів і кольорів</div></div>
+        <div class="rs-form"><div class="ic">🎙️</div><div class="lb">Звукові</div><div class="sub">мікрофони — сприйняття звуку</div></div>
+        <div class="rs-form"><div class="ic">🌡️</div><div class="lb">Теплові</div><div class="sub">сприйняття температури</div></div>
+        <div class="rs-form"><div class="ic">📏</div><div class="lb">Дальності</div><div class="sub">ультразвукові, інфрачервоні, лідари — вимірюють відстань, уникнення перешкод</div></div>
+        <div class="rs-form"><div class="ic">✋</div><div class="lb">Тактильні</div><div class="sub">сенсори тиску — контакт з об'єктом, форма, вага, текстура</div></div>
+        <div class="rs-form"><div class="ic">☁️</div><div class="lb">Газові</div><div class="sub">виявлення газів — забруднення, витік, аналіз повітря</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Light sensor
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Теорія / Запитання-відповіді</div>
+      <h2 class="stitle">Як сенсор світла <span class="a">сприймає сигнал?</span></h2>
+      <p style="margin-bottom:10px">Датчики світла вимірюють інтенсивність видимого або інфрачервоного світла за допомогою фоточутливих елементів — <span class="hi">фотодіодів</span> (або фототранзисторів):</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Живе демо — натисни «Відтворити»</div>
+        <div class="rs-flow" id="flow1">
+          <div class="rs-fstep" data-step="1"><div class="ic">💡</div><div class="tt">Світло потрапляє на чутливий елемент (сенсор)</div></div>
+          <div class="rs-farrow">→</div>
+          <div class="rs-fstep" data-step="2"><div class="ic">⚡</div><div class="tt">Змінюється електричний струм або напруга</div></div>
+          <div class="rs-farrow">→</div>
+          <div class="rs-fstep" data-step="3"><div class="ic">📶</div><div class="tt">Світловий сигнал перетворюється на електричний</div></div>
+          <div class="rs-farrow">→</div>
+          <div class="rs-fstep" data-step="4"><div class="ic">🧮</div><div class="tt">Можна вимірювати й опрацьовувати далі</div></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="rsPlayFlow('flow1')">▶ Відтворити</button>
+      </div>
+      <div class="rs-note" style="margin-top:14px">💡 Інтенсивність світла прямо пропорційна кількості електронів, які генеруються під час взаємодії світла з фоточутливим матеріалом.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Sound & obstacle sensors
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Теорія / Запитання-відповіді</div>
+      <h2 class="stitle">Датчик звуку та <span class="a">датчик перепон</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🎙️ Датчик звуку</div>
+          <p style="margin-bottom:0">Сприймає звукові сигнали як зміни тиску повітря, перетворюючи їх на електричні. У мікрофонах коливання мембрани створює аналоговий сигнал; у п'єзоелектричних датчиках струм виникає внаслідок деформації кристалів; MEMS-мікрофони можуть одразу оцифровувати звук.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📡 Датчик перепон</div>
+          <p style="margin-bottom:0">Ультразвуковий датчик працює за принципом <span class="hi">ехолокації</span>: випромінює ультразвук високої частоти й вимірює час, за який сигнал відбивається від перешкоди та повертається назад. На основі цього часу обчислюється відстань до об'єкта.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Practice 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Який сенсор потрібен роботу?</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>Для кожної ситуації визнач, який тип сенсора знадобиться роботу. Клікни на пункт, обміркуй свою відповідь, а тоді перевір себе.</p>
+      <div class="rs-quiz">
+        <div class="rs-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Робот повинен вчасно зупинитися перед стіною</div><div class="ans">→ датчик перепон (ультразвуковий/інфрачервоний) — вимірює відстань до об'єкта</div></div>
+        <div class="rs-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Робот повинен визначити температуру приміщення</div><div class="ans">→ тепловий сенсор — сприймає температуру</div></div>
+        <div class="rs-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Робот повинен розпізнати голосову команду</div><div class="ans">→ звуковий сенсор (мікрофон) — сприймає зміни тиску повітря як звук</div></div>
+        <div class="rs-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Робот повинен їхати вздовж кольорової лінії на підлозі</div><div class="ans">→ світловий сенсор (фотодіод) — розпізнає колір/яскравість поверхні</div></div>
+        <div class="rs-qitem" onclick="this.classList.toggle('show')"><div class="q">д) Робот повинен виявити витік газу на виробництві</div><div class="ans">→ газовий сенсор — виявляє наявність небезпечних газів у повітрі</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Питай себе: яку саме фізичну властивість (світло, звук, тиск, температура, відстань, склад повітря) потрібно виміряти в цій ситуації?</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Practice 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Досліди робота-пилососа та вдоскональ його</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p>Об'єднайтесь у групи. Розгляньте схему робота-пилососа зі слайду 7 та підготуйте відповіді:</p>
+      <ul class="rs-cl">
+        <li>Які пристрої використовуються для збору даних у робота-пилососа?</li>
+        <li>Які саме дані збираються цією системою (про приміщення, маршрут, стан батареї тощо)?</li>
+        <li>Де і як, на вашу думку, зберігаються дані про приміщення, маршрути й рівень зарядки?</li>
+        <li>Запропонуйте вдосконалення робота-пилососа: які додаткові датчики або технології можна інтегрувати для покращення збору інформації чи ухвалення рішень?</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Згадайте чотири складові робосистеми зі слайду 6 (механіка, сенсори, мікроконтролери, ПЗ) — вдосконалення можна пропонувати для кожної з них окремо.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 2 «Роботи і сигнали» — прочитати, звернути особливу увагу на означення понять «робот», «сигнал», «датчик», «сенсор».</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">✏️ Перевір себе, завдання 4</div>
+        <p style="margin-bottom:0">На окремому аркуші паперу намалюй, як ти уявляєш звуковий, тепловий і світловий сигнали. Поясни, чому саме так зобразив кожен сигнал, і зобрази на малюнку зміну сигналу.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🤖</div><div class="sumt">Робот</div><p>Пристрій, що виконує завдання автоматично, без втручання людини</p></div>
+        <div class="sumc"><div class="sumi">🌍</div><div class="sumt">Роль робототехніки</div><p>Промисловість, медицина, обслуговування, рятувальні операції, військова сфера</p></div>
+        <div class="sumc"><div class="sumi">⚙️</div><div class="sumt">Складові робосистеми</div><p>Механіка, сенсори, мікроконтролери, програмне забезпечення</p></div>
+        <div class="sumc"><div class="sumi">📶</div><div class="sumt">Сигнал</div><p>Фізичний процес, властивості якого можна виміряти або відчути</p></div>
+        <div class="sumc"><div class="sumi">🔬</div><div class="sumt">Датчик і сенсор</div><p>Датчик — повний пристрій, сенсор — його вимірювальний елемент</p></div>
+        <div class="sumc"><div class="sumi">💡</div><div class="sumt">Типи сенсорів</div><p>Світлові, звукові, теплові, дальності, тактильні, газові</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Sequential flow-step highlight demo (slide 11)
+let rsFlowBusy = false;
+function rsPlayFlow(id) {
+  if (rsFlowBusy) return;
+  rsFlowBusy = true;
+  const steps = document.querySelectorAll(`#${id} .rs-fstep`);
+  steps.forEach(s => s.classList.remove('on'));
+  steps.forEach((s, i) => {
+    setTimeout(() => s.classList.add('on'), i * 500);
+  });
+  setTimeout(() => { rsFlowBusy = false; }, steps.length * 500 + 900);
+}
+</script>
+</body>
+</html>

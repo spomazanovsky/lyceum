@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Інформаційні системи — 8 клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition box ── */
+.is-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.is-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.is-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.is-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Layer stack (slide 3) ── */
+.is-stack{display:flex;flex-direction:column;gap:8px}
+.is-layer{border-radius:10px;padding:13px 16px;font-family:var(--fd);font-weight:700;font-size:14px;text-align:center;color:#07101f}
+.is-layer .sub{display:block;font-family:var(--fb);font-weight:400;font-size:11px;margin-top:3px;opacity:.85}
+
+/* ── Flow / chain diagram (generic) ── */
+.is-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.is-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;transition:all .35s ease;position:relative}
+.is-fstep .ic{font-size:20px;margin-bottom:6px}
+.is-fstep .tt{font-size:11.5px;color:#c4d0e0;line-height:1.3;font-family:var(--fd);font-weight:600}
+.is-fstep .tag{display:inline-block;margin-top:7px;font-family:var(--fm);font-size:9.5px;padding:2px 7px;border-radius:20px;letter-spacing:.5px}
+.is-fstep.on{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.is-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:20px}
+.tag-p{background:rgba(0,212,255,.15);color:var(--cyan)}
+.tag-o{background:rgba(167,139,250,.15);color:var(--purple)}
+.tag-z{background:rgba(255,217,61,.15);color:var(--yellow)}
+
+/* ── Exchange diagram (slide 5) ── */
+.is-exch{display:flex;flex-direction:column;align-items:center;gap:6px}
+.is-exBox{width:100%;max-width:420px;border:1px dashed var(--border);border-radius:14px;padding:14px;text-align:center}
+.is-exBox .lb{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--text);margin-bottom:10px}
+.is-exRow{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;border-radius:8px;font-family:var(--fm);font-size:11.5px}
+.is-exRow.sw{background:rgba(167,139,250,.1);color:var(--purple)}
+.is-exRow.hw{background:rgba(0,212,255,.1);color:var(--cyan)}
+.is-exArrows{display:flex;justify-content:center;gap:24px;font-size:11px;color:var(--muted);font-family:var(--fm);margin:2px 0}
+.is-exSide{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.is-exWrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;width:100%}
+
+/* ── Two-column system grid ── */
+.is-sysCol{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+.is-sysCol .st{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:12px;text-align:center;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.is-sysItem{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(28,48,84,.6);font-size:12.5px}
+.is-sysItem:last-child{border-bottom:none}
+.is-sysItem .k{color:#e2e8f0}
+.is-sysItem .v{color:var(--muted);font-family:var(--fm);font-size:11px;text-align:right}
+
+/* ── Device type grid (slide 8) ── */
+.is-formGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
+.is-form{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 8px;text-align:center;transition:transform .2s ease,border-color .2s ease}
+.is-form:hover{transform:translateY(-4px);border-color:var(--purple)}
+.is-form .ic{font-size:28px;margin-bottom:8px}
+.is-form .lb{font-size:12px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.is-form .sub{font-size:10px;color:var(--muted);margin-top:3px}
+
+/* ── Approach-style comparison cards ── */
+.is-appr{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px;transition:border-color .2s}
+.is-appr:hover{border-color:var(--cyan)}
+.is-appr .at{font-family:var(--fd);font-weight:700;font-size:13.5px;margin-bottom:6px}
+.is-appr .aauth{font-family:var(--fm);font-size:10.5px;color:var(--muted);margin-bottom:8px}
+.is-appr p{font-size:12.5px;margin:0}
+.is-appr ul{margin:6px 0 0;padding-left:18px;font-size:12px;color:#c4d0e0}
+.is-appr.sel{border-color:var(--green);box-shadow:0 0 0 1px rgba(107,203,119,.3)}
+
+/* ── Checklist / skills ── */
+.is-skillGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.is-skill{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
+.is-skill .ic{color:var(--green);font-size:14px;margin-top:1px}
+.is-skill p{margin:0;font-size:12.5px}
+
+/* ── Practice slides ── */
+.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
+.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
+.hint{border-radius:10px;padding:12px 14px}
+.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
+.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
+.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
+.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+
+.is-quiz{display:flex;flex-direction:column;gap:8px}
+.is-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.is-qitem:hover{border-color:var(--cyan)}
+.is-qitem .q{font-size:13px;color:#e2e8f0}
+.is-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.is-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+.is-cl{list-style:none;padding:0;margin:0}
+.is-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.is-cl li::before{content:'☐';color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+/* ── Summary ── */
+.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sumi{font-size:26px;margin-bottom:7px}
+.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sumc p{font-size:12px;color:var(--muted);margin:0}
+.ty{text-align:center;margin-top:18px}
+.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
+.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
+.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
+.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
+.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
+.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
+.dd:nth-child(5){background:var(--green);animation-delay:.48s}
+@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">апаратне забезпечення</span>
+        <span class="fcode">програмне забезпечення</span>
+        <span class="fcode">дані</span>
+        <span class="fcode">процеси</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"апаратне забезпечення і дані"</span>&gt;</div>
+        <h1 class="mtitle">Інформаційні<br>системи</h1>
+        <div class="tul"></div>
+        <p class="tsub">Що обов'язково входить до складу будь-якої інформаційної системи?</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 8 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ I, § 1</div>
+          <div class="mchip"><span class="ic">✨</span> Вступний урок</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 8 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Що таке інформаційна система</strong>Широке й вузьке означення поняття</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Схема роботи інформаційної системи</strong>Отримання, опрацювання, передавання, зворотний зв'язок</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Апаратна й програмна складові</strong>Як вони взаємодіють між собою</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Комп'ютер як інформаційна система</strong>Пристрої введення, пам'ять, процесор, виведення</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Типи персональних комп'ютерів</strong>Стаціонарні та портативні, їх особливості</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Потужні комп'ютери</strong>Суперкомп'ютери, сервери, кластери, грід-системи</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">інформаційна система?</span></h2>
+      <div class="is-def">
+        <div class="dt">Означення (широке розуміння)</div>
+        <p><strong>Інформаційна система</strong> — це система, яка здійснює або в якій відбуваються <span class="hi">інформаційні процеси</span>: пошук, збирання, зберігання, передавання та опрацювання інформації.</p>
+      </div>
+      <div class="is-def" style="border-color:rgba(167,139,250,.22);background:rgba(167,139,250,.06);border-left-color:var(--purple)">
+        <div class="dt" style="color:var(--purple)">Означення (вузьке розуміння)</div>
+        <p><strong>Інформаційна система</strong> — це комплекс інформаційних, технічних, програмних та організаційних засобів, необхідних для <span class="hp">автоматизованого</span> опрацювання інформації.</p>
+      </div>
+      <p style="margin-bottom:6px">Прикладами інформаційних систем є: телебачення, цифрові фотоапарати й відеокамери, людина — і, звісно, <strong style="color:#fff">комп'ютер</strong>, який автоматизує опрацювання інформації в усіх галузях людської діяльності.</p>
+      <div class="is-note">💡 Комп'ютер — це лише один із різновидів більш широкого поняття «інформаційна система».</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Layered model (task 1)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Завдання № 1</div>
+      <h2 class="stitle">Складові <span class="a">комп'ютера</span> як системи</h2>
+      <p>Графічна модель показує, з яких «шарів» складається робота комп'ютера — від найнижчого рівня (обладнання) до найвищого (людина):</p>
+      <div class="is-stack">
+        <div class="is-layer" style="background:var(--green)">Користувач<span class="sub">людина, яка користується системою</span></div>
+        <div class="is-layer" style="background:var(--purple)">Прикладні програми<span class="sub">текстовий процесор, браузер, гра тощо</span></div>
+        <div class="is-layer" style="background:var(--coral)">Операційна система<span class="sub">керує апаратною складовою й програмами</span></div>
+        <div class="is-layer" style="background:var(--muted)">Апаратна складова<span class="sub">процесор, пам'ять, пристрої введення-виведення</span></div>
+      </div>
+      <div class="is-note" style="margin-top:12px">💡 Кожен вищий шар спирається на нижчий: без апаратної складової не запуститься операційна система, без операційної системи — прикладні програми.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Work scheme (feedback loop)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Схема роботи</div>
+      <h2 class="stitle">Як працює <span class="a">інформаційна система?</span></h2>
+      <p style="margin-bottom:10px">У кожній інформаційній системі відбуваються такі процеси:</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Живе демо — натисни «Відтворити»</div>
+        <div class="is-flow" id="flow1">
+          <div class="is-fstep" data-step="1"><div class="ic">📥</div><div class="tt">Джерело інформації</div></div>
+          <div class="is-farrow">→</div>
+          <div class="is-fstep" data-step="2"><div class="ic">📨</div><div class="tt">Отримання інформації</div><span class="tag tag-p">введення</span></div>
+          <div class="is-farrow">→</div>
+          <div class="is-fstep" data-step="3"><div class="ic">🧮</div><div class="tt">Збереження та опрацювання</div><span class="tag tag-o">опрацювання</span></div>
+          <div class="is-farrow">→</div>
+          <div class="is-fstep" data-step="4"><div class="ic">📤</div><div class="tt">Передавання інформації</div><span class="tag tag-p">виведення</span></div>
+          <div class="is-farrow">→</div>
+          <div class="is-fstep" data-step="5"><div class="ic">🙋</div><div class="tt">Споживач інформації</div></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="isPlayFlow('flow1')">▶ Відтворити</button>
+      </div>
+      <div class="is-note" style="margin-top:14px">🔄 Між споживачем і системою часто встановлюється <strong style="color:#fff">зворотний зв'язок</strong>: споживач стає джерелом нової інформації — наприклад, коли ти вводиш команду у відповідь на повідомлення програми.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Hardware/software exchange
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Комп'ютерна інформаційна система</div>
+      <h2 class="stitle">Апаратна й <span class="a">програмна складові</span></h2>
+      <p>Комп'ютерна інформаційна система обов'язково містить апаратне та програмне забезпечення. Програмне забезпечення керує апаратним, надсилаючи йому команди — а дані рухаються в обох напрямках.</p>
+      <div class="is-exch" style="margin-top:14px">
+        <div class="is-exWrap">
+          <div class="is-exSide">ℹ️ Інформаційні джерела</div>
+          <div></div>
+          <div class="is-exSide">🙋 Споживачі інформації</div>
+        </div>
+        <div class="is-exArrows"><span>дані ↑ / запити ↓</span><span style="opacity:0">·</span><span>запити ↑ / дані ↓</span></div>
+        <div class="is-exBox">
+          <div class="lb">Інформаційна система</div>
+          <div class="is-exRow sw" style="margin-bottom:6px">&lt;/&gt; Програмне забезпечення</div>
+          <div style="font-family:var(--fm);font-size:10.5px;color:var(--muted);margin:4px 0">дані ↑ &nbsp;·&nbsp; дані, команди ↓</div>
+          <div class="is-exRow hw">⚙ Апаратне забезпечення</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Computer as IS
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Мал. — схема роботи ІС «комп'ютер»</div>
+      <h2 class="stitle">Комп'ютер як <span class="a">інформаційна система</span></h2>
+      <div class="is-flow">
+        <div class="is-fstep on"><div class="ic">⌨️</div><div class="tt">Пристрої введення</div></div>
+        <div class="is-farrow">→</div>
+        <div class="is-fstep on"><div class="ic">🧠</div><div class="tt">Пам'ять ↔ Процесор</div><span class="tag tag-o">опрацювання</span></div>
+        <div class="is-farrow">→</div>
+        <div class="is-fstep on"><div class="ic">🖨️</div><div class="tt">Пристрої виведення</div></div>
+      </div>
+      <p style="margin-top:14px">Дані зберігаються на пристроях зберігання даних, які працюють повільно, тому для швидкого доступу в комп'ютерах є <span class="hi">оперативна пам'ять</span>. Якщо програма чи файл потрібні для роботи, їх спочатку завантажують із пристрою зберігання даних до оперативної пам'яті. Процесор опрацьовує інформацію, виконуючи обчислення та керуючи процесами.</p>
+      <div class="is-note">💾 Постійна пам'ять (ROM) · тимчасова пам'ять (RAM, Cache) · пристрої зберігання даних (HDD, SSD, флеш-накопичувач)</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Input/output devices
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Основні пристрої</div>
+      <h2 class="stitle">Пристрої <span class="a">введення та виведення</span></h2>
+      <div class="col2">
+        <div class="is-sysCol">
+          <div class="st" style="color:var(--cyan)">📥 Пристрої введення</div>
+          <div class="is-sysItem"><span class="k">Клавіатура</span><span class="v">текст, команди</span></div>
+          <div class="is-sysItem"><span class="k">Миша</span><span class="v">керування курсором</span></div>
+          <div class="is-sysItem"><span class="k">Мікрофон</span><span class="v">звук</span></div>
+          <div class="is-sysItem"><span class="k">Сканер</span><span class="v">зображення, документи</span></div>
+        </div>
+        <div class="is-sysCol">
+          <div class="st" style="color:var(--purple)">📤 Пристрої виведення</div>
+          <div class="is-sysItem"><span class="k">Монітор</span><span class="v">зображення</span></div>
+          <div class="is-sysItem"><span class="k">Принтер</span><span class="v">друк на папері</span></div>
+          <div class="is-sysItem"><span class="k">Колонки</span><span class="v">звук</span></div>
+          <div class="is-sysItem"><span class="k">Плотер</span><span class="v">креслення, схеми</span></div>
+        </div>
+      </div>
+      <div class="is-note" style="margin-top:12px">💡 Один і той самий пристрій може бути одночасно і джерелом даних, і споживачем — наприклад, сенсорний екран приймає дотик (введення) і показує зображення (виведення).</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Types of personal computers
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Завдання № 4</div>
+      <h2 class="stitle">Типи сучасних <span class="a">комп'ютерів</span></h2>
+      <p>Персональні комп'ютери поділяють на стаціонарні та портативні:</p>
+      <div class="is-formGrid">
+        <div class="is-form"><div class="ic">🖥️</div><div class="lb">Стаціонарний</div><div class="sub">офісний / домашній / ігровий</div></div>
+        <div class="is-form"><div class="ic">💻</div><div class="lb">Ноутбук</div><div class="sub">портативний, з тачпадом</div></div>
+        <div class="is-form"><div class="ic">📱</div><div class="lb">Планшет</div><div class="sub">сенсорний екран</div></div>
+        <div class="is-form"><div class="ic">📲</div><div class="lb">Смартфон</div><div class="sub">кишеньковий, завжди з собою</div></div>
+      </div>
+      <div class="is-note" style="margin-top:14px">💡 Далі порівняємо ці типи за мобільністю, можливостями апгрейду, вартістю та типовими задачами.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Stationary computers
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Стаціонарні комп'ютери</div>
+      <h2 class="stitle">Офісні, домашні та <span class="a">ігрові</span></h2>
+      <div class="col2">
+        <div class="is-appr">
+          <div class="at" style="color:var(--cyan)">Офісні та домашні</div>
+          <div class="aauth">не потребують високої продуктивності</div>
+          <p>Мінімальний набір пристроїв: системний блок, монітор, клавіатура, миша. Не виконують складних завдань.</p>
+        </div>
+        <div class="is-appr sel">
+          <div class="at" style="color:var(--coral)">Ігрові ✦</div>
+          <div class="aauth">потребують найвищої продуктивності</div>
+          <ul>
+            <li>потужна відеокарта</li>
+            <li>великий обсяг оперативної пам'яті</li>
+            <li>швидкий процесор</li>
+            <li>колонки та/або навушники</li>
+          </ul>
+        </div>
+      </div>
+      <div class="is-note" style="margin-top:12px">🖥️ <strong style="color:#fff">Моноблок</strong> — різновид стаціонарного комп'ютера, у якому системний блок і монітор становлять єдине ціле.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Portable computers
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Теорія / Портативні комп'ютери</div>
+      <h2 class="stitle">Ноутбук і <span class="a">планшет</span></h2>
+      <p>Ноутбук виконує ті самі функції, що й стаціонарний ПК, проте має вказівний пристрій — тачпад. Основна перевага порівняно зі стаціонарними ПК — <span class="hi">мобільність</span>:</p>
+      <div class="is-skillGrid">
+        <div class="is-skill"><span class="ic">✓</span><p>Малі вага і габарити</p></div>
+        <div class="is-skill"><span class="ic">✓</span><p>Не обов'язково під'єднувати зовнішні пристрої</p></div>
+        <div class="is-skill"><span class="ic">✓</span><p>Можливість автономної роботи (від акумулятора)</p></div>
+        <div class="is-skill"><span class="ic">✓</span><p>Автоматичне під'єднання до бездротових мереж</p></div>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">📱 Планшет</div>
+        <p style="margin-bottom:0">Пристрій із сенсорним екраном, який можна використовувати як ноутбук, проте без фізичної клавіатури. Зручний для перегляду контенту, читання електронних книг, а також популярний серед художників і фотографів — для створення та редагування зображень.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Powerful computers
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Теорія / Для великої кількості обчислень</div>
+      <h2 class="stitle">Потужні <span class="a">комп'ютери</span></h2>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">🚀 Суперкомп'ютери</div>
+          <p style="margin-bottom:0">Найпотужніші комп'ютери — величезна кількість обчислень за короткий час. Моделювання погоди, клімату, наукові дослідження.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🗄️ Сервери</div>
+          <p style="margin-bottom:0">Забезпечують збереження, обробку й доступ до даних у мережевих середовищах: банківська сфера, е-комерція, хмарні сервіси.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🎨 Робочі станції</div>
+          <p style="margin-bottom:0">Для професійної роботи з великими обсягами даних: графічний дизайн, архітектура, інженерія.</p>
+        </div>
+      </div>
+      <div class="col2" style="margin-top:12px">
+        <div class="card">
+          <div class="ctitle">🔗 Кластер</div>
+          <p style="margin-bottom:0">Об'єднання пов'язаних мережею комп'ютерів для розв'язання складної обчислювальної задачі — алгоритм <em>розпаралелюється</em> між ними.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🌐 Грід-системи</div>
+          <p style="margin-bottom:0">Різновид кластера, що об'єднує географічно віддалені комп'ютери, зокрема звичайні комп'ютери користувачів, які обчислюють у фоновому режимі.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Practice 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Що є інформаційною системою?</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>У широкому розумінні інформаційною системою можна назвати дуже широке коло об'єктів. Клікни на кожен пункт, обміркуй свою відповідь, а тоді перевір себе.</p>
+      <div class="is-quiz">
+        <div class="is-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Літак</div><div class="ans">→ так: приладова панель приймає, опрацьовує й передає інформацію (навігація, автопілот)</div></div>
+        <div class="is-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Мобільний телефон</div><div class="ans">→ так: типова інформаційна система — приймає, зберігає, опрацьовує й передає дані</div></div>
+        <div class="is-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Шафа</div><div class="ans">→ ні: у шафі не відбуваються інформаційні процеси, лише фізичне зберігання речей</div></div>
+        <div class="is-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Підручник</div><div class="ans">→ ні (сам по собі): підручник — джерело даних, але не здійснює інформаційних процесів самостійно</div></div>
+        <div class="is-qitem" onclick="this.classList.toggle('show')"><div class="q">д) Людина</div><div class="ans">→ так: людина отримує, зберігає, опрацьовує і передає інформацію — класичний приклад ІС</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Питай себе: чи об'єкт сам здійснює хоча б один інформаційний процес (пошук, збирання, зберігання, передавання, опрацювання), чи він лише пасивно існує?</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Practice 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Спроєктуй інформаційну систему бібліотеки</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p>Уяви, що ти у складі команди, яка має створити інформаційну систему для керування шкільною бібліотекою. Спроєктуй її основні компоненти — заповни чек-лист і опиши, що саме входитиме в кожен пункт.</p>
+      <ul class="is-cl">
+        <li>Джерела інформації: хто/що передає дані в систему (учні, вчителі, нові книги)</li>
+        <li>Пристрої введення: як дані потрапляють у систему (клавіатура, сканер штрих-кодів)</li>
+        <li>Опрацювання та зберігання: що система обчислює й де зберігає дані (база книг, читачів)</li>
+        <li>Пристрої виведення: як система показує результат (монітор, принтер квитанцій)</li>
+        <li>Споживачі: хто отримує результат (бібліотекар, учень)</li>
+        <li>Зворотний зв'язок: як споживач впливає на систему далі (запит, повернення книги)</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Скористайся схемою зі слайду 5 (Джерело → Отримання → Опрацювання → Передавання → Споживач) як каркасом для своєї відповіді.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 1 «Інформаційні системи» — прочитати, звернути особливу увагу на означення (виділені жирним і курсивом), уміти відповісти на запитання-відповіді після параграфа.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">🏠 Перевір себе, завдання 1</div>
+        <p style="margin-bottom:0">У текстовому процесорі склади список десяти інформаційних систем, з якими ти взаємодієш щодня.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🔎</div><div class="sumt">Інформаційна система</div><p>Система, яка здійснює інформаційні процеси: пошук, збирання, зберігання, передавання, опрацювання</p></div>
+        <div class="sumc"><div class="sumi">🔄</div><div class="sumt">Схема роботи</div><p>Джерело → отримання → опрацювання/зберігання → передавання → споживач, зі зворотним зв'язком</p></div>
+        <div class="sumc"><div class="sumi">⚙️</div><div class="sumt">Апаратна й програмна складові</div><p>Програмне забезпечення керує апаратним, дані рухаються в обох напрямках</p></div>
+        <div class="sumc"><div class="sumi">💻</div><div class="sumt">Комп'ютер як ІС</div><p>Пристрої введення → пам'ять і процесор → пристрої виведення</p></div>
+        <div class="sumc"><div class="sumi">📱</div><div class="sumt">Типи ПК</div><p>Стаціонарні (офісні, домашні, ігрові) та портативні (ноутбук, планшет, смартфон)</p></div>
+        <div class="sumc"><div class="sumi">🚀</div><div class="sumt">Потужні комп'ютери</div><p>Суперкомп'ютери, сервери, робочі станції, кластери, грід-системи</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Sequential flow-step highlight demo (slide 5)
+let isFlowBusy = false;
+function isPlayFlow(id) {
+  if (isFlowBusy) return;
+  isFlowBusy = true;
+  const steps = document.querySelectorAll(`#${id} .is-fstep`);
+  steps.forEach(s => s.classList.remove('on'));
+  steps.forEach((s, i) => {
+    setTimeout(() => s.classList.add('on'), i * 500);
+  });
+  setTimeout(() => { isFlowBusy = false; }, steps.length * 500 + 900);
+}
+</script>
+</body>
+</html>
