@@ -40,7 +40,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 #slides{position:relative;flex:1;overflow:hidden}
 
 /* ── Slides ── */
-.slide{position:absolute;inset:0;padding:44px 68px 16px;opacity:0;transform:translateX(44px);transition:opacity .42s cubic-bezier(.4,0,.2,1),transform .42s cubic-bezier(.4,0,.2,1);pointer-events:none;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.slide{position:absolute;inset:0;padding:44px 68px 16px;opacity:0;transform:translateX(44px);transition:opacity .42s cubic-bezier(.4,0,.2,1),transform .42s cubic-bezier(.4,0,.2,1);pointer-events:none;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .slide::-webkit-scrollbar{width:4px}
 .slide::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:all}
@@ -70,8 +70,8 @@ code{font-family:var(--fm);font-size:12.5px;background:rgba(0,212,255,.1);border
 .hp{color:var(--purple);font-weight:600}
 
 /* ── Layout helpers ── */
-.col2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
-.col3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.col2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
+.col3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
 .ctitle{font-family:var(--fd);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
 
@@ -147,3 +147,36 @@ h1.mtitle{font-family:var(--fd);font-size:clamp(38px,5.5vw,68px);font-weight:800
 .pnum{font-family:var(--fd);font-size:21px;font-weight:800;color:var(--border);min-width:30px}
 .ptxt{font-size:13.5px;color:#c4d0e0;line-height:1.4}
 .ptxt strong{display:block;font-size:14.5px;color:var(--text);font-family:var(--fd);font-weight:600}
+
+/* ─────────────────────────────────────────────────────────────
+   Mobile (телефони, шеринг екрана зі смартфона в укритті).
+   Опирається на узгоджену систему суфіксів класів з THEORY.md /
+   COMPONENTS.md (*Grid, *-flow, *-fstep, *-farrow тощо) — тому
+   працює для всіх поточних і майбутніх уроків без правок кожного
+   окремого файлу.
+───────────────────────────────────────────────────────────── */
+@media (max-width:680px){
+  .slide{padding:20px 16px 14px}
+  #nav{padding:9px 14px;gap:12px}
+  .nbtn{width:36px;height:36px;font-size:15px}
+  #ctr{font-size:12px;min-width:44px}
+
+  .lbl{font-size:9px;letter-spacing:2px}
+  h1.stitle{font-size:clamp(26px,8vw,40px)}
+  h2.stitle{font-size:clamp(19px,6.5vw,26px);margin-bottom:14px}
+  p,ul li{font-size:13.5px}
+
+  .col2,.col3,[class$="Grid"]{grid-template-columns:1fr!important}
+
+  .s1{min-height:calc(100vh - 54px)}
+  h1.mtitle{font-size:clamp(28px,9.5vw,44px)}
+  .tsub{font-size:14.5px;margin-bottom:20px}
+  .tmeta{gap:9px}
+  .mchip{font-size:11px;padding:6px 12px}
+
+  .th{flex-wrap:wrap}
+  .tnum{font-size:32px}
+
+  [class$="-flow"]{flex-direction:column}
+  [class$="-farrow"]{transform:rotate(90deg);padding:2px 0}
+}
