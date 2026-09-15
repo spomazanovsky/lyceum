@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Робототехніка в різних галузях людської діяльності – 8-б клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition box ── */
+.gal-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.gal-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.gal-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.gal-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Quiz cards (click → answer) ── */
+.gal-quiz{display:flex;flex-direction:column;gap:8px}
+.gal-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.gal-qitem:hover{border-color:var(--cyan)}
+.gal-qitem .q{font-size:13px;color:#e2e8f0}
+.gal-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.gal-qitem.show .ans{max-height:60px;opacity:1;margin-top:7px}
+
+/* ── Checklist ── */
+.gal-cl{list-style:none;padding:0;margin:0}
+.gal-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.gal-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">робот</span>
+        <span class="fcode">дрон</span>
+        <span class="fcode">сенсор</span>
+        <span class="fcode">галузь</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"апаратне забезпечення і дані"</span>&gt;</div>
+        <h1 class="mtitle">Робототехніка в різних галузях<br>людської діяльності</h1>
+        <div class="tul"></div>
+        <p class="tsub">Сільське господарство · транспорт · космос · освіта та побут</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 8 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ I, § 2</div>
+          <div class="mchip"><span class="ic">🤖</span> Урок 3</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 3 / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Пригадай</strong>Що таке робот, робосистема та сигнал</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Нові галузі застосування</strong>Сільське господарство, транспорт, космос, освіта</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Професії робототехніки</strong>Механіка, електроніка, програмування</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Плюси й мінуси</strong>Як робототехніка може змінити майбутнє</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Практика: дослідники новинок</strong>Пошук і презентація сучасних розробок</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Практика: власний проєкт</strong>Проєктуємо робосистему для обраної задачі</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Recap
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Пригадай / Минулий урок</div>
+      <h2 class="stitle">Пригадай <span class="a">попередній урок</span></h2>
+      <p style="margin-bottom:8px">Клацни на кожне питання, щоб перевірити, чи пам'ятаєш відповідь:</p>
+      <div class="gal-quiz">
+        <div class="gal-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Що таке робот?</div>
+          <div class="ans">→ Спеціально створений пристрій, який виконує певні завдання автоматично, без втручання людини</div>
+        </div>
+        <div class="gal-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">З яких чотирьох складових складається робосистема?</div>
+          <div class="ans">→ Механічна складова, сенсори, мікроконтролери, програмне забезпечення</div>
+        </div>
+        <div class="gal-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Що таке сигнал і як робот його сприймає?</div>
+          <div class="ans">→ Фізичний процес чи властивість, яку можна вимірити; робот сприймає сигнали за допомогою датчиків</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Agriculture
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Галузі застосування</div>
+      <h2 class="stitle">Робототехніка в <span class="a">сільському господарстві</span></h2>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">🛰️ Агродрони</div>
+          <p style="margin-bottom:0">Мультиспектральні камери оцінюють стан посівів, вологість ґрунту, виявляють хворі чи пошкоджені рослини на великих площах.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🚜 Автономні трактори</div>
+          <p style="margin-bottom:0">Рухаються за GPS-навігацією без водія, забезпечуючи точний обробіток ґрунту та економію ресурсів.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🍓 Роботи-збирачі</div>
+          <p style="margin-bottom:0">Розпізнають стиглість плодів за кольором і формою, обережно збирають ягоди й овочі без пошкодження.</p>
+        </div>
+      </div>
+      <div class="gal-note" style="margin-top:12px">💡 Такі роботи поєднують ті самі складові, що й будь-яка робосистема, — лише сенсори й механіка підібрані під конкретну задачу в полі.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Transport & logistics
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Галузі застосування</div>
+      <h2 class="stitle">Робототехніка в <span class="a">транспорті й логістиці</span></h2>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">🚗 Безпілотні автомобілі</div>
+          <p style="margin-bottom:0">Лідар, радар і камери аналізують дорожню ситуацію в реальному часі й дозволяють авто рухатися без водія.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📦 Дрони-доставники</div>
+          <p style="margin-bottom:0">Доставляють посилки, ліки чи продукти туди, куди важко дістатися звичайним транспортом.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🏗️ Складські роботи</div>
+          <p style="margin-bottom:0">Переміщують і сортують товари на великих складах, значно прискорюючи логістику інтернет-магазинів.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Space & underwater
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Галузі застосування</div>
+      <h2 class="stitle">Робототехніка у <span class="a">космосі та під водою</span></h2>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">🚀 Марсоходи та місячні роботи</div>
+          <p style="margin-bottom:0">Досліджують поверхню інших планет; у майбутньому — допомагатимуть будувати бази на Місяці.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🌊 Підводні дрони (ROV)</div>
+          <p style="margin-bottom:0">Досліджують океанське дно, ремонтують підводні трубопроводи, шукають затонулі об'єкти на глибині, недосяжній для людини.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🛰️ Роботи-супутники</div>
+          <p style="margin-bottom:0">Обслуговують і ремонтують обладнання на орбіті Землі без потреби відправляти туди людину.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Education, home, entertainment
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Галузі застосування</div>
+      <h2 class="stitle">Робототехніка в <span class="a">освіті, побуті й розвагах</span></h2>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">🧩 Навчальні робото-конструктори</div>
+          <p style="margin-bottom:0">LEGO Mindstorms, VEX, micro:bit — школярі вчаться програмувати й конструювати власних роботів.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🏠 Роботи-компаньйони</div>
+          <p style="margin-bottom:0">Допомагають літнім людям і людям з інвалідністю у побуті, нагадують про прийом ліків.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🎭 Роботи в розважальній сфері</div>
+          <p style="margin-bottom:0">Аніматори в парках атракціонів, роботи-офіціанти в кафе та ресторанах.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — What you need to know
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Професії майбутнього</div>
+      <h2 class="stitle">Що потрібно знати, щоб <span class="a">займатися робототехнікою?</span></h2>
+      <p style="margin-bottom:8px">Щоб створювати роботів для будь-якої з розглянутих галузей, потрібно опанувати три пов'язані напрями:</p>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">🔧 Механіка</div>
+          <p style="margin-bottom:0">Конструкція, рухомі частини, приводи — усе, що дозволяє роботу фізично взаємодіяти зі світом.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">⚡ Електроніка</div>
+          <p style="margin-bottom:0">Сенсори, мікроконтролери, електричні схеми — «нервова система» робота.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">💻 Програмування</div>
+          <p style="margin-bottom:0">Алгоритми керування та обробка даних із сенсорів — «мозок», що приймає рішення.</p>
+        </div>
+      </div>
+      <div class="gal-note" style="margin-top:12px">🤖 Це ті самі чотири складові робосистеми з попереднього уроку (механіка, сенсори, мікроконтролери, ПЗ) — просто з погляду того, які знання потрібні людині, щоб їх створити.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Pros and cons
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Дискусія</div>
+      <h2 class="stitle">Плюси й мінуси <span class="a">розвитку робототехніки</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">✅ Плюси</div>
+          <p style="margin-bottom:0">Вища продуктивність і точність; безпека людей у шкідливих чи небезпечних умовах; звільнення часу для творчих і важливих завдань.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">⚠️ Мінуси</div>
+          <p style="margin-bottom:0">Втрата робочих місць у деяких професіях; висока вартість впровадження; залежність від технологій і збоїв; етичні питання використання.</p>
+        </div>
+      </div>
+      <div class="gal-note" style="margin-top:12px">💬 <strong style="color:#fff">Вислови власну думку:</strong> як розвиток робототехніки може змінити майбутнє? Яка галузь виграє від цього найбільше, а де варто бути обережними?</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Practice 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Дослідники новинок робототехніки</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:8px">Обери одну з галузей і знайди в Інтернеті реальний приклад новітньої розробки в робототехніці. Підготуй короткий усний виступ (2–3 речення): що це, яку проблему вирішує, які сенсори чи технології, на твою думку, використовує.</p>
+      <ul class="gal-cl">
+        <li>Сільське господарство</li>
+        <li>Транспорт і логістика</li>
+        <li>Медицина</li>
+        <li>Космос або підводні дослідження</li>
+        <li>Освіта, побут чи розваги</li>
+      </ul>
+      <div class="hint hint-g" style="margin-top:10px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Шукай за запитами типу «новий робот 2026» + назва галузі — новини технологічних сайтів часто описують саме такі розробки.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Practice 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Проєктуємо власну робосистему</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:8px">Об'єднайтесь у пари або малі групи. Оберіть проблему в будь-якій галузі й спроєктуйте робота для її вирішення. Опишіть свій проєкт за пунктами:</p>
+      <ul class="gal-cl">
+        <li>Назва робота і галузь, у якій він працює</li>
+        <li>Яку проблему він вирішує</li>
+        <li>Які сенсори потрібні та чому саме вони</li>
+        <li>Яка механічна частина (колеса, руки, крила тощо)</li>
+        <li>Що має «вміти» його програмне забезпечення</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:10px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Презентуйте свій проєкт класу — коротко й за пунктами, як справжня команда розробників на захисті ідеї.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">✏️ Довершити проєкт робосистеми</div>
+        <p style="margin-bottom:0">Якщо не встигли на уроці — довершити опис власної робосистеми та підготувати короткий (до 1 хвилини) усний виступ для наступного уроку.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">💭 Вислови власну думку</div>
+        <p style="margin-bottom:0">Письмово (3–4 речення) відповісти: як розвиток робототехніки може змінити майбутнє? Назвати плюси й мінуси цієї технології.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🚜</div><div class="sumt">Сільське господарство</div><p>Агродрони, автономні трактори, роботи-збирачі врожаю</p></div>
+        <div class="sumc"><div class="sumi">🚗</div><div class="sumt">Транспорт і логістика</div><p>Безпілотні авто, дрони-доставники, складські роботи</p></div>
+        <div class="sumc"><div class="sumi">🚀</div><div class="sumt">Космос і океан</div><p>Марсоходи, підводні дрони, роботи-супутники</p></div>
+        <div class="sumc"><div class="sumi">🧩</div><div class="sumt">Освіта, побут, розваги</div><p>Навчальні конструктори, роботи-компаньйони, аніматори</p></div>
+        <div class="sumc"><div class="sumi">🔧</div><div class="sumt">Три напрями професії</div><p>Механіка, електроніка й програмування працюють разом</p></div>
+        <div class="sumc"><div class="sumi">⚖️</div><div class="sumt">Плюси й мінуси</div><p>Продуктивність і безпека проти втрати робочих місць</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+</body>
+</html>

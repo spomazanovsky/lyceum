@@ -58,6 +58,59 @@ function xxPlayFlow(id) {
 }
 ```
 
+⚠️ Цей варіант (кнопка «Відтворити» → автопрогравання по таймеру) годиться лише тоді, коли
+кроки самодостатні — підписів `.tt` достатньо, читати більше нічого не треба. Якщо в кожного
+кроку є **власний текстовий приклад/пояснення**, яке має прочитати учень (а не просто побачити
+підпис) — автопрогравання не залишає на це часу: стани змінюються за таймером незалежно від
+того, встиг хтось дочитати чи ні. У такому разі використовуй варіант нижче.
+
+## Ланцюжок з прикладом на hover (крок → живий приклад)
+
+Той самий ланцюжок кроків, але без кнопки й таймера: учень сам керує темпом, наводячи курсор
+на потрібний крок, — під схемою одразу з'являється розгорнутий приклад саме для цього кроку.
+Підходить для демонстрації "як факт/сигнал поступово перетворюється на щось вище" (наприклад,
+повідомлення → судження → знання), де кожен перехід хочеться проілюструвати конкретним
+прикладом, а не лише назвою.
+
+**Чому не автопрогравання:** у першій версії цього компонента (урок 8 кл. «Інформація —
+фундаментальне поняття інформатики», слайд «Від повідомлення до знання») кроки підсвічувались
+по черзі з інтервалом ~1 с через кнопку — і показ був занадто швидким, щоб встигнути прочитати
+приклад під кожним кроком. Заміна на `:hover` розв'язала це: тепер темп читання задає сам
+глядач.
+
+```html
+<div class="xx-flow" id="ladder1">
+  <div class="xx-fstep" onmouseenter="xxShowEx(this,'ladder1ex')" onmouseleave="xxHideEx('ladder1ex')" data-ex="Розгорнутий приклад для кроку 1."><div class="ic">🌧️</div><div class="tt">Крок 1</div></div>
+  <div class="xx-farrow">→</div>
+  <div class="xx-fstep" onmouseenter="xxShowEx(this,'ladder1ex')" onmouseleave="xxHideEx('ladder1ex')" data-ex="Розгорнутий приклад для кроку 2."><div class="ic">🎓</div><div class="tt">Крок 2</div></div>
+</div>
+<div class="xx-exBox" id="ladder1ex" data-default="Наведи курсор на будь-який крок, щоб побачити приклад.">Наведи курсор на будь-який крок, щоб побачити приклад.</div>
+```
+```css
+.xx-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.xx-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;transition:all .25s ease;cursor:default}
+.xx-fstep .ic{font-size:20px;margin-bottom:6px}
+.xx-fstep .tt{font-size:11.5px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.xx-fstep:hover{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.xx-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:20px}
+.xx-exBox{min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(0,212,255,.05);border:1px solid var(--border);border-radius:10px;padding:12px 18px;font-size:13px;color:#c4d0e0;transition:opacity .2s ease}
+```
+```js
+function xxShowEx(el, boxId) {
+  const box = document.getElementById(boxId);
+  box.style.opacity = '0';
+  setTimeout(() => { box.textContent = el.dataset.ex; box.style.opacity = '1'; }, 100);
+}
+function xxHideEx(boxId) {
+  const box = document.getElementById(boxId);
+  box.style.opacity = '0';
+  setTimeout(() => { box.textContent = box.dataset.default; box.style.opacity = '1'; }, 100);
+}
+```
+
+⚠️ Реальний приклад використання — `2026_2027/8a/4.informaciya-fundamentalne-ponyattya.html`
+(і копія в `8b/`), слайд 5.
+
 ## Терміни-бейджі (process/tag pills)
 
 Компактний перелік понять, з виділенням "основних" серед них.
@@ -121,6 +174,29 @@ function xxPlayFlow(id) {
 .xx-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
 .xx-qitem.show .ans{max-height:60px;opacity:1;margin-top:7px}
 ```
+
+## Чеклист завдання (checkbox list)
+
+Список кроків/пунктів для практики без стартового коду — кожен пункт з візуальним ☐.
+Раніше цей компонент копіювався з уроку в урок під різними іменами (`.tcl`, `.is-cl`,
+`.rs-cl`, `.gal-cl`, `.pk-cl`) — використовуй `.xx-cl` (заміни `xx-` на префікс уроку).
+
+```html
+<ul class="xx-cl">
+  <li>Перший крок або пункт</li>
+  <li>Другий крок або пункт</li>
+</ul>
+```
+```css
+.xx-cl{list-style:none;padding:0;margin:0}
+.xx-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.xx-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+```
+
+⚠️ `position:static` в `::before` — обов'язковий, інакше псевдоелемент успадковує
+`position:absolute;left:0` з глобального `ul li::before` у `base.css` (стрілка `▸` для
+звичайних списків) і накладається на перший символ тексту замість того, щоб стояти
+flex-елементом з відступом `gap:9px`.
 
 ## Рядок рішення (питання ↔ відповідь, для слайда-рішення)
 
@@ -187,4 +263,4 @@ function xxPlayFlow(id) {
 </div>
 ```
 
-`.th`, `.tnum`, `.tinf`, `.hint`/`.hint-g`/`.hint-y`/`.hlbl` — спільні для code- і theory-уроків, з `COMPONENTS.md`, варто винести в `base.css` (поки що дублюються в кожному уроці — TODO).
+`.th`, `.tnum`, `.tinf`, `.hint`/`.hint-g`/`.hint-y`/`.hlbl` — спільні для code- і theory-уроків, вже визначені в `_shared/base.css` (не дублювати в `<style>` уроку).

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Аналогові й цифрові сигнали – 8-а клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── sg- : урок-специфічні компоненти ── */
+.sg-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.sg-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.sg-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+
+.sg-sigCard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+.sg-sigCard .ic{font-size:26px;margin-bottom:8px}
+.sg-sigCard h3{font-family:var(--fd);font-size:16px;margin-bottom:8px}
+.sg-sigCard p{font-size:13px;margin-bottom:8px}
+.sg-sigCard .ex{font-family:var(--fm);font-size:11.5px;color:var(--muted);border-top:1px dashed var(--border);padding-top:8px}
+
+.sg-pillGrid{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 14px}
+.sg-pill{font-family:var(--fm);font-size:12px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:#c4d0e0;background:var(--card)}
+
+.sg-quiz{display:flex;flex-direction:column;gap:8px}
+.sg-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.sg-qitem:hover{border-color:var(--cyan)}
+.sg-qitem .q{font-size:13px;color:#e2e8f0;display:flex;align-items:center;gap:8px}
+.sg-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.sg-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+.sg-gateWrap{display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap}
+.sg-gate{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 28px;text-align:center;cursor:pointer;transition:all .25s ease;min-width:180px}
+.sg-gate:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.sg-gate .tap{font-size:38px;transition:transform .25s ease}
+.sg-gate.open .tap{transform:rotate(35deg)}
+.sg-gate .drop{font-size:24px;height:30px;opacity:0;transition:opacity .2s ease}
+.sg-gate.open .drop{opacity:1;animation:sgDrop 1s ease-in-out infinite}
+@keyframes sgDrop{0%{transform:translateY(-4px)}50%{transform:translateY(6px)}100%{transform:translateY(-4px)}}
+.sg-gate .st{font-family:var(--fm);font-size:12px;color:var(--muted);margin-top:8px}
+.sg-gate .bitv{font-family:var(--fd);font-size:34px;font-weight:800;color:var(--border);margin-top:4px}
+.sg-gate.open .bitv{color:var(--green)}
+.sg-gate.open .st{color:var(--green)}
+
+.sg-scaleWrap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+.sg-scaleRow{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.sg-scaleRow:last-child{margin-bottom:0}
+.sg-scaleLbl{font-family:var(--fm);font-size:10.5px;color:var(--muted);width:110px;flex-shrink:0}
+.sg-scaleBar{flex:1;height:10px;border-radius:6px;position:relative;overflow:hidden}
+.sg-scaleBar.an{background:linear-gradient(90deg,#0b1120,var(--cyan))}
+.sg-scaleBar.dg{display:flex;gap:2px}
+.sg-scaleBar.dg .seg{flex:1;height:10px;background:#0b1120;border-radius:2px}
+.sg-scaleBar.dg .seg.on{background:var(--green)}
+
+.sg-cl{list-style:none;padding:0;margin:0}
+.sg-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.sg-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+.sg-statCard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center}
+.sg-statCard .v{font-family:var(--fd);font-weight:800;font-size:26px;color:var(--cyan)}
+.sg-statCard .l{font-size:11.5px;color:var(--muted);margin-top:4px}
+
+.sg-pinGrid{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.sg-pinC{font-family:var(--fm);font-size:12px;padding:9px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);text-align:center}
+.sg-pinC.p{border-color:rgba(0,212,255,.35);color:var(--cyan)}
+.sg-pinC.g{border-color:rgba(255,107,107,.35);color:var(--coral)}
+
+@media (max-width:680px){
+  .sg-gateWrap{flex-direction:column}
+  .sg-scaleLbl{width:80px;font-size:9.5px}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="fcode">0 / 1</div>
+        <div class="fcode">HIGH / LOW</div>
+        <div class="fcode">3V ⚡ GND</div>
+        <div class="fcode">P0 P1 P2</div>
+        <div class="ttag">// <span class="tn">8 клас</span> · Інформатика</div>
+        <h1 class="mtitle">Як сигнали стають<br>цифровими даними?</h1>
+        <div class="tul"></div>
+        <p class="tsub">Аналогові й цифрові сигнали, транзистор і micro:bit</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📡</span> Сигнали</div>
+          <div class="mchip"><span class="ic">🔌</span> Транзистор</div>
+          <div class="mchip"><span class="ic">💡</span> Практика</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="2">
+      <div class="lbl">Сьогодні на уроці</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem">
+          <div class="pnum">01</div>
+          <div class="ptxt"><strong>Що таке сигнал</strong>фізична величина, яка передає дані</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">02</div>
+          <div class="ptxt"><strong>Аналогові й цифрові сигнали</strong>чим відрізняються</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">03</div>
+          <div class="ptxt"><strong>Приклади навколо нас</strong>вчимося розпізнавати обидва типи</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">04</div>
+          <div class="ptxt"><strong>Чому комп'ютер — цифровий</strong>транзистор — мільярди перемикачів 0/1</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">05</div>
+          <div class="ptxt"><strong>Від сигналу до числа</strong>як АЦП "оцифровує" реальність</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">06</div>
+          <div class="ptxt"><strong>micro:bit на практиці</strong>піни, режими, практична робота</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="3">
+      <div class="lbl">Розділ 01 · Сигнали</div>
+      <h2 class="stitle">Що таке <span class="a">сигнал</span>?</h2>
+      <div class="sg-def">
+        <div class="dt">Означення</div>
+        <p><strong>Сигнал</strong> — фізична величина (сила струму, напруга, наявність світла тощо), за допомогою якої пристрій отримує, зберігає чи передає <span class="hi">дані</span>. Дані кодуються сигналами, "зручними" для технічного пристрою.</p>
+      </div>
+      <p>У природі більшість сигналів — <span class="hy">неперервні</span>: звук, світло, температура плавно змінюються, без "стрибків" і "сходинок".</p>
+      <div class="sg-pillGrid">
+        <span class="sg-pill">🔊 гучність звуку</span>
+        <span class="sg-pill">💡 яскравість світла</span>
+        <span class="sg-pill">🌡️ температура повітря</span>
+        <span class="sg-pill">🎚️ сила струму</span>
+      </div>
+      <p>Що менший алфавіт сигналів (кількість можливих станів) — то <span class="hg">простіше</span> реалізувати його технічно. Найменший можливий алфавіт — усього з двох станів.</p>
+    </div>
+
+    <div class="slide" data-n="4">
+      <div class="lbl">Розділ 01 · Сигнали</div>
+      <h2 class="stitle">Аналогові й <span class="a">цифрові</span></h2>
+      <div class="col2">
+        <div class="sg-sigCard">
+          <div class="ic">🎚️</div>
+          <h3>Аналоговий</h3>
+          <p>Може набувати <span class="hi">будь-якого</span> значення в діапазоні — плавно, без "сходинок".</p>
+          <div class="ex">приклад: гучність музичного програвача, потенціометр на micro:bit (0–1023)</div>
+        </div>
+        <div class="sg-sigCard">
+          <div class="ic">🔘</div>
+          <h3>Цифровий</h3>
+          <p>Має лише <span class="hi">два стани</span>: увімкнено / вимкнено, HIGH (3V) / LOW (0V).</p>
+          <div class="ex">приклад: кнопка натиснута (1) чи ні (0)</div>
+        </div>
+      </div>
+      <div class="sg-scaleWrap" style="margin-top:16px">
+        <div class="sg-scaleRow">
+          <div class="sg-scaleLbl">аналоговий →</div>
+          <div class="sg-scaleBar an"></div>
+        </div>
+        <div class="sg-scaleRow">
+          <div class="sg-scaleLbl">цифровий →</div>
+          <div class="sg-scaleBar dg">
+            <div class="seg"></div><div class="seg"></div><div class="seg on"></div><div class="seg on"></div><div class="seg"></div><div class="seg on"></div><div class="seg on"></div><div class="seg on"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="5">
+      <div class="lbl">Розділ 01 · Приклади</div>
+      <h2 class="stitle">Впізнай <span class="a">сигнал</span></h2>
+      <p>Клікай на приклад, щоб перевірити свою відповідь.</p>
+      <div class="sg-quiz">
+        <div class="sg-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">🎛️ Димер (регулятор яскравості світла, крутиться плавно)</div>
+          <div class="ans">→ аналоговий сигнал — яскравість плавно змінюється між мінімумом і максимумом</div>
+        </div>
+        <div class="sg-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">🔲 Звичайний вимикач світла (клац — увімкнено/вимкнено)</div>
+          <div class="ans">→ цифровий сигнал — лише два стани</div>
+        </div>
+        <div class="sg-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">🌡️ Ртутний термометр (стовпчик рідини)</div>
+          <div class="ans">→ аналоговий — температура змінюється плавно, без "сходинок"</div>
+        </div>
+        <div class="sg-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">⌚ Електронний годинник із цифрами на дисплеї</div>
+          <div class="ans">→ цифровий — час показано дискретними числами-"кадрами", а не плавною стрілкою</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="6">
+      <div class="lbl">Розділ 02 · Апаратне забезпечення</div>
+      <h2 class="stitle">Чому комп'ютер <span class="a">цифровий</span>?</h2>
+      <p>Основний "будівельний блок" процесора — <span class="hi">транзистор</span>. Уяви його як кран: подаєш керуючий струм — вода (струм) тече; не подаєш — не тече. Тільки два стани.</p>
+      <div class="sg-gateWrap">
+        <div class="sg-gate" id="sgGate" onclick="sgToggleGate()">
+          <div class="tap">🚰</div>
+          <div class="drop">💧</div>
+          <div class="bitv" id="sgGateBit">0</div>
+          <div class="st" id="sgGateSt">струму немає</div>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:10px">Клікни на кран 👆 — таких "кранів"-перемикачів у процесорі мільярди, і кожен подає сигнал «є струм» (1) або «немає струму» (0).</p>
+    </div>
+
+    <div class="slide" data-n="7">
+      <div class="lbl">Розділ 02 · Цікавий факт</div>
+      <h2 class="stitle">Наскільки малий <span class="a">транзистор?</span></h2>
+      <p>Перші транзистори (1947 рік) були розміром із <span class="hi">горошину</span>. Сучасні — у тисячі разів менші за клітину людини.</p>
+      <div class="col3">
+        <div class="sg-statCard">
+          <div class="v">~3 нм</div>
+          <div class="l">розмір сучасного транзистора (2024)</div>
+        </div>
+        <div class="sg-statCard">
+          <div class="v">&gt;100 млрд</div>
+          <div class="l">транзисторів у топовому процесорі</div>
+        </div>
+        <div class="sg-statCard">
+          <div class="v">×2 / ~2 роки</div>
+          <div class="l"><span title="Закон Мура">закон Мура</span>: кількість транзисторів подвоюється</div>
+        </div>
+      </div>
+      <p style="margin-top:14px">Для порівняння: діаметр вірусу грипу — близько <span class="hy">100 нм</span>, тобто у 30 разів більший за сучасний транзистор. Саме тому в одному чипі розміром з ніготь вміщаються мільярди перемикачів 0/1.</p>
+    </div>
+
+    <div class="slide" data-n="8">
+      <div class="lbl">Розділ 03 · Оцифрування</div>
+      <h2 class="stitle">Від сигналу до <span class="a">числа</span></h2>
+      <div class="sg-def">
+        <div class="dt">Означення</div>
+        <p><strong>Дискретизація</strong> — перетворення неперервного (аналогового) сигналу на послідовність окремих числових значень, які вже може зберегти цифровий пристрій.</p>
+      </div>
+      <p>Аналогово-цифровий перетворювач (<span class="hi">АЦП</span>) micro:bit зчитує напругу 0–3V і перетворює її на число від 0 до 1023 — 1024 можливі "сходинки".</p>
+      <div class="sg-pillGrid">
+        <span class="sg-pill">🎵 цифрове аудіо: 44 100 відліків/секунду</span>
+        <span class="sg-pill">📷 цифрове фото: мільйони пікселів-відліків світла</span>
+        <span class="sg-pill">🌡️ мікро:біт: 1024 "сходинки" напруги</span>
+      </div>
+      <p>Що <span class="hg">більше</span> відліків береться за секунду (чи на дюйм зображення) — то <span class="hg">точніше</span> цифрова копія відповідає оригінальному аналоговому сигналу.</p>
+    </div>
+
+    <div class="slide" data-n="9">
+      <div class="lbl">Розділ 04 · Практика</div>
+      <h2 class="stitle">micro:bit: <span class="a">піни й режими</span></h2>
+      <p>На нижньому краї micro:bit — 25 контактів (пінів) для підключення датчиків та пристроїв.</p>
+      <div class="sg-pinGrid">
+        <div class="sg-pinC p">P0</div>
+        <div class="sg-pinC p">P1</div>
+        <div class="sg-pinC p">P2</div>
+        <div class="sg-pinC">3V</div>
+        <div class="sg-pinC g">GND</div>
+      </div>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">Цифровий режим</div>
+          <p>Пін подає або зчитує лише <span class="hi">два значення</span>: HIGH (3V) або LOW (0V). Використовують для кнопок, світлодіодів.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">Аналоговий режим</div>
+          <p>Пін зчитує значення в діапазоні <span class="hi">0–1023</span> (0–3V) — напр. з потенціометра, або плавно регулює яскравість.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="10">
+      <div class="lbl">Практика · Завдання 1</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf"><h2>Аналоговий чи цифровий?</h2><span class="badge be">⭐ Базовий рівень</span></div>
+      </div>
+      <p>Для кожного пристрою визнач тип сигналу, який він подає чи зчитує, потім клікни на відповідь для самоперевірки.</p>
+      <div class="sg-quiz">
+        <div class="sg-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Педаль газу в автомобілі</div>
+          <div class="ans">→ аналоговий — глибина натискання плавна</div>
+        </div>
+        <div class="sg-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Клавіша клавіатури комп'ютера</div>
+          <div class="ans">→ цифровий — натиснута (1) або ні (0)</div>
+        </div>
+        <div class="sg-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Мікрофон, що записує звук</div>
+          <div class="ans">→ аналоговий на вході, потім дискретизується в цифровий запис</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="11">
+      <div class="lbl">Практика · Завдання 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf"><h2>Керування яскравістю світлодіода</h2><span class="badge bm">⭐⭐ Середній рівень</span></div>
+      </div>
+      <p>Відкрий середовище Tinkercad (е-додаток 5.1) і повтори схему з підключенням потенціометра до micro:bit.</p>
+      <ul class="sg-cl">
+        <li>Підключи світлодіод до піна P1 та GND</li>
+        <li>Підключи потенціометр до піна P0 (аналоговий вхід)</li>
+        <li>Запусти симуляцію та зміни положення ручки потенціометра</li>
+        <li>Зафіксуй, як змінюється яскравість світлодіода залежно від зчитаного значення (0–1023)</li>
+      </ul>
+      <div class="hint hint-g" style="margin-top:14px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Команда <code>write analog pin P1 to read analog pin P0</code> передає аналогове значення з одного піна на інший напряму.</p>
+      </div>
+    </div>
+
+    <div class="slide" data-n="12">
+      <div class="lbl">Підсумок уроку</div>
+      <h2 class="stitle">Що варто <span class="a">запам'ятати</span></h2>
+      <div class="sumGrid">
+        <div class="sumc">
+          <div class="sumi">📡</div>
+          <div class="sumt">Сигнали</div>
+          <p>аналоговий — плавний, цифровий — лише 0 і 1</p>
+        </div>
+        <div class="sumc">
+          <div class="sumi">🔌</div>
+          <div class="sumt">Транзистор</div>
+          <p>мільярди перемикачів "струм є / струму немає"</p>
+        </div>
+        <div class="sumc">
+          <div class="sumi">🔢</div>
+          <div class="sumt">Дискретизація</div>
+          <p>АЦП перетворює аналоговий сигнал на числа 0–1023</p>
+        </div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+<script src="../../_shared/nav.js"></script>
+<script>
+function sgToggleGate() {
+  const gate = document.getElementById('sgGate');
+  const open = gate.classList.toggle('open');
+  document.getElementById('sgGateBit').textContent = open ? '1' : '0';
+  document.getElementById('sgGateSt').textContent = open ? 'струм є' : 'струму немає';
+}
+</script>
+</body>
+</html>

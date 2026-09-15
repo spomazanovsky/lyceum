@@ -47,7 +47,24 @@
 .g3-vidCap .tt{font-family:var(--fd);font-weight:700;font-size:12px;color:var(--text);margin-bottom:2px}
 .g3-vidCap .sub{font-size:10px;color:var(--muted)}
 
+/* ── Photo (real image) — TRIAL ── */
+.g3-photo{width:100%;height:auto;border-radius:10px;margin-bottom:10px;display:block;border:1px solid var(--border)}
+.g3-photoRow{display:flex;gap:16px;align-items:flex-start;margin-bottom:10px}
+.g3-photoRow p{margin-bottom:0;flex:1}
+.g3-photoRow .thumb{flex-shrink:0;text-align:right}
+.g3-photoRow .thumb img{width:150px;height:110px;object-fit:cover;border-radius:10px;border:1px solid var(--border);margin-bottom:2px}
+.g3-cred{font-size:9px;color:var(--muted);opacity:.65;margin-top:6px;display:block}
+
 /* ── Practice slides ── */
+.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
+.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
+.hint{border-radius:10px;padding:12px 14px}
+.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
+.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
+.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
+.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+
 .g3-quiz{display:flex;flex-direction:column;gap:8px}
 .g3-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
 .g3-qitem:hover{border-color:var(--cyan)}
@@ -57,13 +74,29 @@
 
 .g3-cl{list-style:none;padding:0;margin:0}
 .g3-cl li{display:flex;align-items:flex-start;gap:9px;padding:6px 0;font-size:13px;color:#c4d0e0}
-.g3-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+.g3-cl li::before{content:'☐';color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
 
 /* ── Summary questions ── */
 .g3-qlist{list-style:none;padding:0;margin:0;counter-reset:qn}
 .g3-qlist li{counter-increment:qn;display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 15px;margin-bottom:7px;font-size:13px;color:#c4d0e0}
 .g3-qlist li::before{content:counter(qn);font-family:var(--fd);font-weight:800;font-size:14px;color:var(--cyan);flex-shrink:0}
 
+.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sumi{font-size:26px;margin-bottom:7px}
+.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sumc p{font-size:12px;color:var(--muted);margin:0}
+.ty{text-align:center;margin-top:18px}
+.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
+.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
+.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
+.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
+.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
+.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
+.dd:nth-child(5){background:var(--green);animation-delay:.48s}
+@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
 </style>
 </head>
 <body>
@@ -208,6 +241,8 @@
         </div>
       </div>
       <div class="g3-note">💡 Створена модель може як відповідати об'єкту реального світу (наприклад, чашка), так і бути абстрактною.</div>
+      <img class="g3-photo" style="margin-top:12px;max-height:230px;width:auto;max-width:100%;display:block;margin-left:auto;margin-right:auto" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Blender_4.3.2_screenshot.png/960px-Blender_4.3.2_screenshot.png" alt="Інтерфейс програми Blender під час моделювання об'єкта">
+      <span class="g3-cred">Так виглядає процес моделювання зсередини — програма Blender. Wikimedia Commons, CC0</span>
     </div>
 
     <!-- ═══════════════════════════════════
@@ -219,6 +254,13 @@
       <div class="g3-def">
         <div class="dt">Меш-об'єкт (mesh object)</div>
         <p>Тривимірний об'єкт — це набір поверхонь, які називаються <strong style="color:#fff">полігонами</strong> і поєднані <strong style="color:#fff">ребрами</strong> та <strong style="color:#fff">вершинами</strong>. Найчастіше як полігони використовують чотирикутники, рідше — трикутники.</p>
+      </div>
+      <div class="g3-photoRow">
+        <p>На малюнку праворуч — синя оболонка це полігони, тонкі лінії поверх неї — ребра, а точки їх перетину — вершини меш-об'єкта.</p>
+        <div class="thumb">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Blender_suzanne.jpg/960px-Blender_suzanne.jpg" alt="Каркас (wireframe) 3D-моделі з видимими вершинами, ребрами й полігонами">
+          <span class="g3-cred">Wikimedia Commons, CC BY 3.0</span>
+        </div>
       </div>
       <div class="col2">
         <div class="g3-note">📍 <strong style="color:#fff">Меш-об'єкт</strong> описується сукупністю вершин разом із їх просторовими координатами.</div>
@@ -251,6 +293,8 @@
       <div class="lbl">Сфери застосування / 3D-друк</div>
       <h2 class="stitle">3D-друк у побуті <span class="a">й навчанні</span></h2>
       <p>Найпростіші тривимірні об'єкти можна створити та роздрукувати на 3D-принтері самостійно: іграшки для молодшого братика чи сестрички, підставку під мобільний телефон, кошик для олівців і ручок тощо.</p>
+      <img class="g3-photo" style="max-height:200px;width:auto;max-width:100%;display:block;margin:12px auto 4px" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/03/3D_Printing_an_Object_using_FDM_Printer.jpg/960px-3D_Printing_an_Object_using_FDM_Printer.jpg" alt="3D-принтер друкує об'єкт шар за шаром (технологія FDM)">
+      <span class="g3-cred" style="display:block;text-align:center;margin-bottom:8px">Wikimedia Commons, CC BY-SA 4.0</span>
       <div class="col2" style="margin-top:10px">
         <div class="g3-note">🧪 Навчальні моделі — кульки й пружинки для фізики, стереометричні фігури для математики, моделі РНК і ДНК для біології. Можливості обмежуються лише фантазією.</div>
         <a class="g3-vid" href="https://www.youtube.com/watch?v=Vx0Z6LplaMU" target="_blank" rel="noopener">
@@ -268,12 +312,16 @@
       <h2 class="stitle">Архітектура <span class="a">та медицина</span></h2>
       <div class="col2">
         <div class="card">
+          <img class="g3-photo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Apis_cor_%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D1%8C_%D1%81%D1%82%D0%B5%D0%BD%D1%8B.jpg/960px-Apis_cor_%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D1%8C_%D1%81%D1%82%D0%B5%D0%BD%D1%8B.jpg" alt="Будівельний 3D-принтер друкує бетонну стіну">
           <div class="ctitle">🏛 Архітектура</div>
           <p style="margin-bottom:0">Першу повністю функціональну офісну будівлю було надруковано в Дубаї (ОАЕ). Завдяки цьому час на будівництво зменшився на <strong style="color:#fff">50–70%</strong>, а трудові витрати — на <strong style="color:#fff">50–80%</strong>.</p>
+          <span class="g3-cred">Wikimedia Commons, CC BY-SA 4.0</span>
         </div>
         <div class="card">
+          <img class="g3-photo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/3-D_Printed_Prosthetic_Hand_%285229%29_%2818306292659%29.jpg/960px-3-D_Printed_Prosthetic_Hand_%285229%29_%2818306292659%29.jpg" alt="3D-надрукований протез кисті руки">
           <div class="ctitle">🩺 Медицина</div>
           <p style="margin-bottom:0">Протези кінцівок, заміна гіпсовим пов'язкам і незручним ортодонтичним брекетам. Ізраїльські вчені навіть надрукували людське серце, здатне функціонувати.</p>
+          <span class="g3-cred">Wikimedia Commons, суспільне надбання</span>
         </div>
       </div>
       <div class="g3-note" style="margin-top:12px">🎨 Тривимірне моделювання застосовують навіть у мистецтві та харчовій промисловості — існує харчовий 3D-принтер для авторських солодощів.</div>

@@ -50,12 +50,43 @@
 .rs-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
 .rs-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
 
+/* ── Photo (real image) in cards/tiles — TRIAL ── */
+.rs-photo{width:100%;height:auto;border-radius:10px;margin-bottom:10px;display:block;border:1px solid var(--border)}
+.rs-form .rs-photo{height:130px;object-fit:contain;object-position:center;background:rgba(0,0,0,.18);margin-bottom:8px}
+.rs-cred{font-size:9px;color:var(--muted);opacity:.65;margin-top:6px;display:block}
+
 /* ── Checklist ── */
 .rs-cl{list-style:none;padding:0;margin:0}
 .rs-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
-.rs-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+.rs-cl li::before{content:'☐';color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
 
 /* ── Practice slides ── */
+.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
+.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
+.hint{border-radius:10px;padding:12px 14px}
+.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
+.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
+.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
+.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+
+/* ── Summary ── */
+.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.sumi{font-size:26px;margin-bottom:7px}
+.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.sumc p{font-size:12px;color:var(--muted);margin:0}
+.ty{text-align:center;margin-top:18px}
+.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
+@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
+.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
+.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
+.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
+.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
+.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
+.dd:nth-child(5){background:var(--green);animation-delay:.48s}
+@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
 </style>
 </head>
 <body>
@@ -121,12 +152,16 @@
       <p style="margin-bottom:10px">Роботи можуть мати різні форми та розміри: від маленьких роботів-пилососів до великих промислових.</p>
       <div class="col2">
         <div class="card">
+          <img class="rs-photo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/New_Da_Vinci_Xi.jpg/960px-New_Da_Vinci_Xi.jpg" alt="Хірургічна система da Vinci Xi">
           <div class="ctitle">🏥 Робот-хірург</div>
           <p style="margin-bottom:0">Роботизована хірургічна система DA VINCI допомагає лікарям виконувати точні операції з мінімальним ризиком для пацієнтів. Контролюється лікарем, за її допомогою виконуються маніпуляції з високою точністю.</p>
+          <span class="rs-cred">Wikimedia Commons, CC BY-SA 4.0</span>
         </div>
         <div class="card">
+          <img class="rs-photo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Industrial_robots_perched.jpg/960px-Industrial_robots_perched.jpg" alt="Промислові роботи-маніпулятори на заводі">
           <div class="ctitle">🏭 Промислові роботи</div>
           <p style="margin-bottom:0">Виконують різноманітні виробничі завдання на заводах: зварювання, збірка, фарбування, переміщення важких предметів.</p>
+          <span class="rs-cred">Wikimedia Commons, CC BY 3.0</span>
         </div>
       </div>
     </div>
@@ -138,11 +173,12 @@
       <div class="lbl">Теорія / Різновиди роботів</div>
       <h2 class="stitle">Роботи бувають <span class="a">дуже різні</span></h2>
       <div class="rs-formGrid">
-        <div class="rs-form"><div class="ic">🚶</div><div class="lb">Гуманоїд ASIMO</div><div class="sub">ходить, бігає, танцює, розпізнає обличчя й голоси</div></div>
-        <div class="rs-form"><div class="ic">🚀</div><div class="lb">Марсохід Curiosity</div><div class="sub">вивчає поверхню Марса, збирає ґрунт, передає дані на Землю</div></div>
+        <div class="rs-form"><img class="rs-photo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Honda_ASIMO_%28ver._2011%29_2011_Tokyo_Motor_Show.jpg/960px-Honda_ASIMO_%28ver._2011%29_2011_Tokyo_Motor_Show.jpg" alt="Робот-гуманоїд ASIMO"><div class="lb">Гуманоїд ASIMO</div><div class="sub">ходить, бігає, танцює, розпізнає обличчя й голоси</div></div>
+        <div class="rs-form"><img class="rs-photo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Curiosity_-_Robot_Geologist_and_Chemist_in_One%21.jpg/960px-Curiosity_-_Robot_Geologist_and_Chemist_in_One%21.jpg" alt="Марсохід Curiosity (ілюстрація NASA/JPL-Caltech)"><div class="lb">Марсохід Curiosity</div><div class="sub">вивчає поверхню Марса, збирає ґрунт, передає дані на Землю</div></div>
         <div class="rs-form"><div class="ic">🧬</div><div class="lb">Наноробот</div><div class="sub">доправляє ліки до уражених клітин, мікрохірургія всередині тіла</div></div>
       </div>
       <div class="rs-note" style="margin-top:14px">💡 Робот-гуманоїд (людиноподібний) японського автовиробника Honda може навіть грати з м'ячем і переносити предмети.</div>
+      <span class="rs-cred" style="display:block;text-align:right;margin-top:6px">Фото ASIMO та Curiosity: Wikimedia Commons / NASA (суспільне надбання), CC BY-SA</span>
     </div>
 
     <!-- ═══════════════════════════════════
@@ -206,7 +242,13 @@
     <div class="slide" data-n="7">
       <div class="lbl">Теорія / Мал. — робот-пилосос</div>
       <h2 class="stitle">Приклад: <span class="a">робот-пилосос</span></h2>
-      <p style="margin-bottom:10px">Робот-пилосос керується через мобільний застосунок і поєднує кілька складових в одну інформаційну систему:</p>
+      <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:10px">
+        <p style="margin-bottom:0;flex:1">Робот-пилосос керується через мобільний застосунок і поєднує кілька складових в одну інформаційну систему:</p>
+        <div style="flex-shrink:0;text-align:right">
+          <img class="rs-photo" style="width:130px;height:130px;margin-bottom:2px" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/IRobot-Roomba-Top-view-01.jpg/960px-IRobot-Roomba-Top-view-01.jpg" alt="Робот-пилосос Roomba, вигляд згори">
+          <span class="rs-cred">Wikimedia Commons, CC BY-SA 4.0</span>
+        </div>
+      </div>
       <div class="col2">
         <div class="rs-sysCol">
           <div class="st" style="color:var(--cyan)">⚙ Механіка та обчислення</div>
@@ -276,10 +318,11 @@
         <div class="rs-form"><div class="ic">💡</div><div class="lb">Світлові</div><div class="sub">камери, світлочутливі сенсори — орієнтація, розпізнавання об'єктів і кольорів</div></div>
         <div class="rs-form"><div class="ic">🎙️</div><div class="lb">Звукові</div><div class="sub">мікрофони — сприйняття звуку</div></div>
         <div class="rs-form"><div class="ic">🌡️</div><div class="lb">Теплові</div><div class="sub">сприйняття температури</div></div>
-        <div class="rs-form"><div class="ic">📏</div><div class="lb">Дальності</div><div class="sub">ультразвукові, інфрачервоні, лідари — вимірюють відстань, уникнення перешкод</div></div>
+        <div class="rs-form"><img class="rs-photo" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/HC_SR04_Ultrasonic_Module.jpg/960px-HC_SR04_Ultrasonic_Module.jpg" alt="Ультразвуковий датчик відстані HC-SR04"><div class="lb">Дальності</div><div class="sub">ультразвукові, інфрачервоні, лідари — вимірюють відстань, уникнення перешкод</div></div>
         <div class="rs-form"><div class="ic">✋</div><div class="lb">Тактильні</div><div class="sub">сенсори тиску — контакт з об'єктом, форма, вага, текстура</div></div>
         <div class="rs-form"><div class="ic">☁️</div><div class="lb">Газові</div><div class="sub">виявлення газів — забруднення, витік, аналіз повітря</div></div>
       </div>
+      <span class="rs-cred" style="display:block;text-align:right;margin-top:8px">Фото датчика HC-SR04: Wikimedia Commons, CC BY-SA 4.0</span>
     </div>
 
     <!-- ═══════════════════════════════════

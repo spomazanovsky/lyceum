@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Навчання в Інтернеті. Професії майбутнього – 10-а клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition box ── */
+.prf-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.prf-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.prf-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.prf-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+.prf-src{font-family:var(--fm);font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:.3px}
+
+/* ── Pills ── */
+.prf-pillGrid{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 14px}
+.prf-pill{font-family:var(--fm);font-size:12px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:#c4d0e0;background:var(--card)}
+.prf-pill.main{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08);font-weight:600}
+.prf-pill.up{border-color:var(--green);color:var(--green);background:rgba(107,203,119,.08)}
+.prf-pill.down{border-color:var(--coral);color:var(--coral);background:rgba(255,107,107,.08)}
+
+/* ── Form/type grid (icon + label + sub) ── */
+.prf-formGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.prf-form{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.prf-form .ic{font-size:22px;margin-bottom:7px}
+.prf-form .lb{font-family:var(--fd);font-weight:700;font-size:13px;margin-bottom:4px}
+.prf-form .sub{font-size:11.5px;color:#94a3b8}
+
+/* ── Quiz cards ── */
+.prf-quiz{display:flex;flex-direction:column;gap:8px}
+.prf-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.prf-qitem:hover{border-color:var(--cyan)}
+.prf-qitem .q{font-size:13px;color:#e2e8f0}
+.prf-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.prf-qitem.show .ans{max-height:60px;opacity:1;margin-top:7px}
+
+/* ── Checklist ── */
+.prf-cl{list-style:none;padding:0;margin:0}
+.prf-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.prf-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">MOOC</span>
+        <span class="fcode">кар'єра</span>
+        <span class="fcode">AI</span>
+        <span class="fcode">ринок праці</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"інформаційне суспільство"</span>&gt;</div>
+        <h1 class="mtitle">Навчання в Інтернеті.<br>Професії майбутнього</h1>
+        <div class="tul"></div>
+        <p class="tsub">Тенденції ринку праці · роль ІТ у роботі сучасного працівника</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 10 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ 1, § 5</div>
+          <div class="mchip"><span class="ic">💼</span> Урок 5</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 5 / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Дистанційне навчання</strong>Платформи, СДН, тьютор, чого можна навчитись</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Технології й ринок праці</strong>Які професії зникають, а які з'являються</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Професії майбутнього</strong>Прогнози й актуальні тенденції 2026 року</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Ринок праці України сьогодні</strong>Дефіцит кадрів і найпопулярніші напрями</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>ІТ у роботі працівника</strong>Big Data, медицина, держсектор, робототехніка, ШІ</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Практика</strong>Аналізуємо тенденції та прогнозуємо власну кар'єру</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Distance learning definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">дистанційне навчання?</span></h2>
+      <div class="prf-def">
+        <div class="dt">Означення</div>
+        <p>На відміну від звичайного навчання в класі, освітні послуги в умовах <strong>дистанційного навчання</strong> надаються за допомогою комп'ютерних мереж: учні реєструються на навчальних порталах, отримують матеріали й індивідуальні завдання, а виконані роботи надсилають на перевірку через <span class="hi">систему дистанційного навчання (СДН)</span>.</p>
+      </div>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">👩‍🏫 Тьютор</div>
+          <p style="margin-bottom:0">Так у системі дистанційного навчання називають учителя: він перевіряє завдання, виставляє оцінки в електронний журнал і консультує учнів.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">💬 Комунікація</div>
+          <p style="margin-bottom:0">На порталі є засоби, щоб консультуватися з тьютором і спілкуватися між собою, а знання перевіряють тестуванням.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Learning platforms
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Платформи</div>
+      <h2 class="stitle">Платформи для <span class="a">навчання в Інтернеті</span></h2>
+      <div class="prf-formGrid">
+        <div class="prf-form"><div class="ic">🇺🇦</div><div class="lb">Prometheus</div><div class="sub">найбільша платформа безкоштовних онлайн-курсів в Україні (MOOC)</div></div>
+        <div class="prf-form"><div class="ic">🎓</div><div class="lb">EdEra</div><div class="sub">українська студія онлайн-освіти — 200+ курсів, 2+ млн користувачів, є навіть курс Google AI Essentials</div></div>
+        <div class="prf-form"><div class="ic">🌍</div><div class="lb">Khan Academy</div><div class="sub">безкоштовні лекції з математики, фізики, історії, економіки, інформатики</div></div>
+        <div class="prf-form"><div class="ic">🏛️</div><div class="lb">MIT OCW / Yale</div><div class="sub">відкриті курси провідних університетів світу (ocw.mit.edu, ctl.yale.edu)</div></div>
+        <div class="prf-form"><div class="ic">🗣️</div><div class="lb">British Council MOOC</div><div class="sub">безкоштовні курси англійської мови від Британської ради</div></div>
+        <div class="prf-form"><div class="ic">📺</div><div class="lb">Науково-популярні канали</div><div class="sub">короткі навчальні відео, що пояснюють основи наук</div></div>
+      </div>
+      <div class="prf-src">Джерело: Prometheus (prometheus.org.ua), EdEra (ed-era.com) — станом на 2026 рік обидві платформи активні</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — What can you learn + translators
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Можливості</div>
+      <h2 class="stitle">Чого можна навчитися <span class="a">завдяки Інтернету?</span></h2>
+      <div class="prf-pillGrid">
+        <span class="prf-pill main">іноземні мови й комунікація</span>
+        <span class="prf-pill main">профорієнтація</span>
+        <span class="prf-pill main">поглиблення профільних знань</span>
+        <span class="prf-pill main">історія та культура своєї країни</span>
+        <span class="prf-pill main">планування дозвілля</span>
+        <span class="prf-pill main">підготовка до олімпіад і ЗНО/НМТ</span>
+      </div>
+      <p style="margin:6px 0">Для роботи з іноземними текстами використовують онлайн-перекладачі:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🌐 Google Перекладач</div>
+          <p style="margin-bottom:0">Понад 100 мов, опція «показати транслітерацію», пояснення всіх значень слова — корисно для складних для вимови слів.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📖 Українські сервіси перекладу</div>
+          <p style="margin-bottom:0">translate.meta.ua, pereklad.online.ua та інші — альтернативи для швидкого перекладу текстів українською.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Virtual museums
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Приклади</div>
+      <h2 class="stitle">Віртуальні музеї та <span class="a">пізнавальний контент</span></h2>
+      <p style="margin-bottom:8px">Пошук навчальних матеріалів, зображень і відео може суттєво допомогти під час підготовки домашніх завдань, рефератів і проєктів. Наприклад:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🏛️ Смітсонівський музей природної історії</div>
+          <p style="margin-bottom:0">Віртуальний тур музеєм безпосередньо в браузері, без потреби фізично відвідувати США.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🔬 Музей Галілея (Флоренція)</div>
+          <p style="margin-bottom:0">Доступ до віртуального музею та електронної бібліотеки історії науки.</p>
+        </div>
+      </div>
+      <div class="prf-note" style="margin-top:12px">💡 Так само в Інтернеті можна поновлювати антивірусні бази, дізнаватися про конкурси в Україні та за кордоном і брати в них участь.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — How tech affects labor market
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Ринок праці</div>
+      <h2 class="stitle">Як розвиток технологій <span class="a">впливає на ринок праці?</span></h2>
+      <div class="prf-def">
+        <div class="dt">Тенденція</div>
+        <p>Розвиток інформаційних технологій і штучного інтелекту має величезний вплив на професійну діяльність людини: одні професії поступово зникають, а натомість з'являються нові — деякі з них ще донедавна не існували.</p>
+      </div>
+      <div class="prf-pillGrid">
+        <span class="prf-pill main">170 млн нових робочих місць до 2030 р.</span>
+        <span class="prf-pill down">92 млн місць зникне</span>
+        <span class="prf-pill up">+78 млн — чистий приріст</span>
+        <span class="prf-pill main">22% усіх посад зміняться</span>
+      </div>
+      <div class="prf-src">Джерело: World Economic Forum, Future of Jobs Report 2025</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Two trends: declining vs growing
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Дві тенденції</div>
+      <h2 class="stitle">Що <span class="a">зникає, а що зростає?</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle" style="color:var(--coral)">📉 Найшвидше зникають</div>
+          <p style="margin-bottom:0">Касири, клерки, оператори введення даних, працівники пошти, банківські операціоністи — рутинну паперову роботу автоматизують першою.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle" style="color:var(--green)">📈 Найшвидше зростають</div>
+          <p style="margin-bottom:0">Фахівці з великих даних, ШІ та машинного навчання, фінтех-інженери, розробники ПЗ, спеціалісти з кібербезпеки, інженери з відновлюваної енергетики.</p>
+        </div>
+      </div>
+      <p style="margin:10px 0 6px">Водночас у світі одночасно зростає попит і на:</p>
+      <div class="prf-pillGrid">
+        <span class="prf-pill">низькокваліфікованих працівників (охорона, догляд за людьми)</span>
+        <span class="prf-pill main">висококваліфікованих фахівців (право, аналіз даних, ІТ)</span>
+      </div>
+      <div class="prf-src">Джерело: World Economic Forum, Future of Jobs Report 2025</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Professions of the future
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Прогнози</div>
+      <h2 class="stitle">Професії <span class="a">майбутнього</span></h2>
+      <p style="margin-bottom:8px">Дослідники стверджують: значна частина професій, які будуть потрібні через 10 років, ще навіть не вигадані. Приклади прогнозованих напрямів:</p>
+      <div class="prf-formGrid">
+        <div class="prf-form"><div class="ic">🚁</div><div class="lb">Оператор дронів</div><div class="sub">доставка, аграрний моніторинг, аерозйомка</div></div>
+        <div class="prf-form"><div class="ic">🕶️</div><div class="lb">Архітектор віртуальної реальності</div><div class="sub">проєктування просторів у VR/метасвіті</div></div>
+        <div class="prf-form"><div class="ic">🌇</div><div class="lb">Сіті-фермер</div><div class="sub">вирощує рослини на дахах будинків</div></div>
+        <div class="prf-form"><div class="ic">🧬</div><div class="lb">Наномедик / генетичний консультант</div><div class="sub">лікування на молекулярному рівні</div></div>
+        <div class="prf-form"><div class="ic">🤖</div><div class="lb">Промт-інженер / AI-етик</div><div class="sub">налаштовує роботу нейромереж і оцінює етичні ризики ШІ</div></div>
+        <div class="prf-form"><div class="ic">📊</div><div class="lb">MLOps- / LLM-архітектор</div><div class="sub">впроваджує й супроводжує моделі штучного інтелекту в бізнесі</div></div>
+      </div>
+      <div class="prf-src">Джерело: колишні прогнози презентації §5 + актуальні дані ain.ua, 2025–2026</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Ukrainian labor market today
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Ринок праці України</div>
+      <h2 class="stitle">Ринок праці <span class="a">України сьогодні</span></h2>
+      <div class="prf-def">
+        <div class="dt">Ситуація 2026 року</div>
+        <p>В Україні — дефіцит кадрів: демографічна криза, наслідки війни та міграція створюють парадокс: мільйони вакансій, але бракує рук для їх заповнення, особливо в будівництві, транспорті й торгівлі.</p>
+      </div>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🚧 Найдефіцитніші напрями</div>
+          <p style="margin-bottom:0">Водії, мулярі, покрівельники, електрозварювальники, інженери-проєктувальники — особливо через відбудову інфраструктури.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🎓 Без досвіду — це нормально</div>
+          <p style="margin-bottom:0">47% вакансій на Work.ua — для людей без досвіду: роботодавцям дешевше навчити мотивовану людину під конкретні процеси.</p>
+        </div>
+      </div>
+      <div class="prf-src">Джерело: ain.ua, Work.ua (2025–2026)</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — IT role: Big Data
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Теорія / Роль ІТ у роботі</div>
+      <h2 class="stitle">Big Data — <span class="a">«великі дані»</span></h2>
+      <div class="prf-def">
+        <div class="dt">Означення</div>
+        <p><strong>Big Data</strong> — група технологій і методів для аналізу й опрацювання величезної кількості структурованих і неструктурованих даних, яку неможливо опрацювати класичними способами через її об'єм, для отримання якісно нових знань.</p>
+      </div>
+      <p style="margin-bottom:6px">Проєкти на основі Big Data вже сьогодні допомагають:</p>
+      <div class="prf-pillGrid">
+        <span class="prf-pill main">лікувати хвороби</span>
+        <span class="prf-pill main">боротися з голодом</span>
+        <span class="prf-pill main">запобігати злочинам</span>
+        <span class="prf-pill main">відкривати нові планети</span>
+        <span class="prf-pill main">прогнозувати надзвичайні ситуації</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — IT in medicine & public sector
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Теорія / Роль ІТ у роботі</div>
+      <h2 class="stitle">ІТ у <span class="a">медицині й держсекторі</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🏥 Телемедицина</div>
+          <p style="margin-bottom:0">Моніторинг показників здоров'я через смартфон, електронні рецепти (ePrescription), перегляд кардіо- й енцефалограм лікарем віддалено.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🏛️ Електронне урядування</div>
+          <p style="margin-bottom:0">Системи публічних закупівель <span class="hi">ProZorro</span> та <span class="hi">RIALTO</span>, моделювання «Бюджет України», прогнозування ВВП.</p>
+        </div>
+      </div>
+      <div class="prf-note" style="margin-top:12px">💡 Комп'ютерна томографія, МРТ і УЗД-дослідження опрацьовують такий обсяг даних, що без комп'ютера людина була б не здатна їх сприйняти.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Robotics, graphics, VR
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Роль ІТ у роботі</div>
+      <h2 class="stitle">Робототехніка, графіка <span class="a">і віртуальна реальність</span></h2>
+      <p style="margin-bottom:8px">Багато сучасних професій пов'язані з <span class="hi">робототехнікою</span> — прикладною наукою про проєктування й використання роботів та систем їх керування.</p>
+      <div class="prf-pillGrid">
+        <span class="prf-pill main">162 роботи на 10 тис. працівників (2023)</span>
+        <span class="prf-pill up">удвічі більше, ніж 7 років тому</span>
+      </div>
+      <div class="col2" style="margin-top:6px">
+        <div class="card">
+          <div class="ctitle">🎨 Комп'ютерна графіка</div>
+          <p style="margin-bottom:0">Візуалізація наукових даних, коли результат неможливо подати в текстовій формі.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🕶️ Віртуальна реальність</div>
+          <p style="margin-bottom:0">Нові можливості для дизайнерів, скульпторів, архітекторів — розкриває творчий потенціал людини.</p>
+        </div>
+      </div>
+      <div class="prf-src">Джерело: International Federation of Robotics, World Robotics 2024</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — AI at work today
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Теорія / Актуальні тенденції</div>
+      <h2 class="stitle">Штучний інтелект <span class="a">на робочому місці сьогодні</span></h2>
+      <p style="margin-bottom:8px">Якщо раніше штучний інтелект лише допомагав, сьогодні він виконує частину роботи самостійно — у бізнес-застосунках, low-code платформах і корпоративних системах.</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">⚡ Що це дає працівнику</div>
+          <p style="margin-bottom:0">Економію часу через автоматизацію рутинних завдань, миттєве опрацювання великих масивів документів, точніше прогнозування ризиків.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🧭 Як залишатися потрібним фахівцем</div>
+          <p style="margin-bottom:0">Гнучкість, здатність швидко адаптуватися й навчатися використовувати ШІ як «суперсилу» — а не боятися заміни ним.</p>
+        </div>
+      </div>
+      <div class="prf-src">Джерело: World Economic Forum, Future of Jobs Report 2025 (2026)</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Practice 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Тенденція чи випадковість?</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:8px">Для кожної професії визнач, до якої тенденції ринку праці вона належить. Клацни на картку, щоб перевірити себе.</p>
+      <div class="prf-quiz">
+        <div class="prf-qitem" onclick="this.classList.toggle('show')"><div class="q">Оператор call-центру, який лише відповідає на типові запитання за скриптом</div><div class="ans">→ Професія, що зникає — рутинні розмови автоматизують чат-боти й ШІ</div></div>
+        <div class="prf-qitem" onclick="this.classList.toggle('show')"><div class="q">Спеціаліст із кібербезпеки</div><div class="ans">→ Професія, що зростає — одна з топ-5 навичок майбутнього за версією WEF</div></div>
+        <div class="prf-qitem" onclick="this.classList.toggle('show')"><div class="q">Касир у супермаркеті</div><div class="ans">→ Професія, що зникає — заміщується самообслуговуванням і автоматизацією</div></div>
+        <div class="prf-qitem" onclick="this.classList.toggle('show')"><div class="q">Фахівець із відновлюваної енергетики (сонячні/вітрові станції)</div><div class="ans">→ Професія, що зростає — «зелений» перехід у топ-15 найшвидше зростаючих професій</div></div>
+        <div class="prf-qitem" onclick="this.classList.toggle('show')"><div class="q">Медсестра / соціальний працівник</div><div class="ans">→ Професія, що зростає — «care jobs» суттєво зростають попри автоматизацію</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Practice 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Прогнозуємо власну кар'єру</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:8px">Обери професію, яка тебе цікавить (наявну зараз або з переліку професій майбутнього). Дослідь і підготуй короткий виступ за пунктами:</p>
+      <ul class="prf-cl">
+        <li>Як ця професія виглядає сьогодні — основні обов'язки</li>
+        <li>Які інформаційні технології вже застосовують у цій сфері</li>
+        <li>Як ця професія може змінитися через 10 років під впливом ШІ й автоматизації</li>
+        <li>Які саме навички (технічні та людські) варто розвивати вже зараз</li>
+      </ul>
+      <div class="hint hint-g" style="margin-top:10px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Скористайся сервісами для вибору професії (напр. careerhub.in.ua) або пошукай свіжі новини про твою сферу за запитом «[професія] + 2026 + ШІ».</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 5, сторінки 41–50 — прочитати, звернути увагу на приклади дистанційних платформ і тенденції ринку праці.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">💻 Працюємо за комп'ютером</div>
+        <p style="margin-bottom:0">Виконати завдання, сторінка 43–50; довершити прогноз кар'єри із завдання 2, якщо не встигли на уроці.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 18 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="18">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🎓</div><div class="sumt">Навчання в Інтернеті</div><p>Дистанційні платформи, СДН, тьютори, переклад і віртуальні музеї</p></div>
+        <div class="sumc"><div class="sumi">📊</div><div class="sumt">Технології й ринок праці</div><p>170 млн нових і 92 млн зниклих посад до 2030 року за даними WEF</p></div>
+        <div class="sumc"><div class="sumi">🚀</div><div class="sumt">Професії майбутнього</div><p>Від оператора дронів до промт-інженера й AI-етика</p></div>
+        <div class="sumc"><div class="sumi">🇺🇦</div><div class="sumt">Ринок праці України</div><p>Дефіцит кадрів і зростання вакансій без досвіду</p></div>
+        <div class="sumc"><div class="sumi">💾</div><div class="sumt">Big Data й держсектор</div><p>ProZorro, телемедицина, прогнозування надзвичайних ситуацій</p></div>
+        <div class="sumc"><div class="sumi">🤖</div><div class="sumt">ШІ на робочому місці</div><p>Гнучкість і навчання — головні навички сучасного працівника</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Мікрокомп'ютери, мікроконтролери та сфери їх застосування – 8-а клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition box ── */
+.mc-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.mc-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.mc-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.mc-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Compare cards ── */
+.mc-cmp{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px}
+.mc-cmp .ct{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:8px}
+.mc-cmp p{font-size:12.5px;margin:0}
+
+/* ── Device cards (Arduino / Raspberry Pi / micro:bit) ── */
+.mc-devGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mc-devCard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;transition:border-color .2s,transform .2s}
+.mc-devCard:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.mc-devCard .dic{font-size:26px;margin-bottom:8px}
+.mc-devCard .dnm{font-family:var(--fd);font-weight:700;font-size:14.5px;margin-bottom:6px;color:#fff}
+.mc-devCard .dsp{font-family:var(--fm);font-size:10.5px;color:var(--muted);margin-bottom:8px}
+.mc-devCard p{font-size:12px;margin:0;color:#c4d0e0}
+
+/* ── Board anatomy (micro:bit) ── */
+.mc-board{background:#0b0f1a;border:2px solid var(--border);border-radius:16px;padding:22px;position:relative;max-width:340px;margin:0 auto}
+.mc-ledgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:130px;margin:10px auto 14px;justify-content:center}
+.mc-ledgrid span{width:100%;aspect-ratio:1;border-radius:50%;background:rgba(255,80,80,.18);border:1px solid rgba(255,80,80,.3)}
+.mc-ledgrid span.f{background:var(--coral);box-shadow:0 0 6px var(--coral)}
+.mc-btnrow{display:flex;justify-content:space-between;padding:0 6px}
+.mc-btnrow .mb{width:26px;height:26px;border-radius:6px;background:#1a2233;border:1px solid var(--border)}
+.mc-sensorGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:6px}
+.mc-sbtn{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 8px;text-align:center;cursor:pointer;transition:all .2s}
+.mc-sbtn:hover{border-color:var(--cyan)}
+.mc-sbtn.on{border-color:var(--cyan);background:rgba(0,212,255,.08)}
+.mc-sbtn .ic{font-size:19px;margin-bottom:5px}
+.mc-sbtn .lb{font-size:10.5px;font-family:var(--fd);color:#c4d0e0}
+.mc-sensorDesc{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(0,212,255,.05);border:1px solid var(--border);border-radius:10px;padding:12px 18px;font-size:12.5px;color:#c4d0e0;margin-top:10px;transition:opacity .2s ease}
+
+/* ── App icon grid (data logger uses) ── */
+.mc-appGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+.mc-app{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;transition:transform .2s ease,border-color .2s ease}
+.mc-app:hover{transform:translateY(-4px);border-color:var(--purple)}
+.mc-app .ic{font-size:22px;margin-bottom:7px}
+.mc-app .lb{font-size:11px;color:#c4d0e0;font-family:var(--fd)}
+
+/* ── Modern device grid (smart things around us) ── */
+.mc-thingGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mc-thing{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;text-align:center}
+.mc-thing .ic{font-size:24px;margin-bottom:6px}
+.mc-thing .tt{font-family:var(--fd);font-weight:600;font-size:12px;color:#e2e8f0;margin-bottom:3px}
+.mc-thing .sb{font-size:10.5px;color:var(--muted)}
+
+/* ── Project picker (select-driven demo) ── */
+.mc-pickWrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.mc-pickWrap select{background:var(--card);color:#e2e8f0;border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-family:var(--fm);font-size:13px}
+#mcPickOut{font-family:var(--fd);font-weight:700;font-size:15px;color:var(--green)}
+.mc-pickReason{margin-top:10px;font-size:12.5px;color:#c4d0e0;text-align:center;min-height:38px}
+
+/* ── Stat row ── */
+.mc-statRow{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.mc-statRow .num{font-family:var(--fd);font-weight:800;font-size:20px;color:var(--cyan);min-width:100px}
+.mc-statRow .lb{font-size:12px;color:#94a3b8}
+
+/* ── Quiz (click to reveal) ── */
+.mc-quiz{display:flex;flex-direction:column;gap:8px}
+.mc-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.mc-qitem:hover{border-color:var(--cyan)}
+.mc-qitem .q{font-size:13px;color:#e2e8f0}
+.mc-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.mc-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+/* ── Checklist ── */
+.mc-cl{list-style:none;padding:0;margin:0}
+.mc-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.mc-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+/* ── Fun-fact break ── */
+.mc-factCard{background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(0,212,255,.06));border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.mc-factCard .ic{font-size:34px;margin-bottom:10px}
+.mc-factCard p{margin:0;font-size:14px;color:#e2e8f0}
+
+@media(max-width:680px){
+  .mc-devGrid,.mc-sensorGrid,.mc-appGrid,.mc-thingGrid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">Arduino</span>
+        <span class="fcode">Raspberry Pi</span>
+        <span class="fcode">micro:bit</span>
+        <span class="fcode">IoT</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"апаратне забезпечення і дані"</span>&gt;</div>
+        <h1 class="mtitle">Мікрокомп'ютери<br>і мікроконтролери</h1>
+        <div class="tul"></div>
+        <p class="tsub">Крихітні пристрої, які керують великим світом навколо нас</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 8 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ 1, § 4</div>
+          <div class="mchip"><span class="ic">✨</span> Теоретичний урок</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 8 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Мікрокомп'ютер vs мікроконтролер</strong>У чому різниця й чому це важливо</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Arduino, Raspberry Pi, micro:bit</strong>Хто є хто серед популярних пристроїв</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Анатомія micro:bit</strong>Сенсори, кнопки, LED-екран</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Мікроконтролери навколо нас</strong>Від смарт-годинника до розумного дому</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Реєстратори даних</strong>Як пристрої збирають і зберігають дані</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Практика</strong>Обери пристрій і сенсор під задачу</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Hook intro
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Вступ</div>
+      <h2 class="stitle">Комп'ютер, який <span class="a">поміщається в кишеню</span></h2>
+      <p>Мікрокомп'ютери відкривають перед нами захопливий світ сучасних технологій, які активно використовуються в щоденному житті. Серед найпопулярніших — <strong style="color:#fff">Arduino</strong>, <strong style="color:#fff">Raspberry Pi</strong> та <strong style="color:#fff">micro:bit</strong>. За їхньою допомогою можна створювати розумні пристрої для дому, розробляти ігри, програмувати роботів і навіть реалізовувати власні наукові експерименти.</p>
+      <div class="mc-note">🤔 <strong style="color:#fff">Питання для роздуму:</strong> як думаєш, звідки маленький пристрій розміром із кредитну картку «знає», що надворі стемніло, чи що його нахилили?</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Мікрокомп'ютер definition + features
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">мікрокомп'ютер?</span></h2>
+      <div class="mc-def">
+        <div class="dt">Означення</div>
+        <p><strong>Мікрокомп'ютери</strong> — це комп'ютери, що мають невеликий розмір і зазвичай використовуються для виконання <span class="hi">спеціалізованих завдань</span> або як навчальні платформи.</p>
+      </div>
+      <p style="margin-bottom:6px">Основні особливості мікрокомп'ютера:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🧠 Мікропроцесор</div>
+          <p style="margin-bottom:0">Виконує всі основні функції звичайного процесора, але значно менший за розмірами.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">💾 Обмежена пам'ять</div>
+          <p style="margin-bottom:0">Обсяг оперативної пам'яті зазвичай достатній лише для невеликої кількості завдань.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📦 Компактність</div>
+          <p style="margin-bottom:0">Малі розміри дають змогу зручно використовувати пристрій в обмеженому просторі.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🎓 Простота</div>
+          <p style="margin-bottom:0">Спрощений інтерфейс і легке програмування — ідеально для навчання й простих проєктів.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Мікрокомп'ютер vs мікроконтролер
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Порівняння понять</div>
+      <h2 class="stitle">Мікрокомп'ютер чи <span class="a">мікроконтролер?</span></h2>
+      <p>Ці слова часто плутають, хоча позначають вони не зовсім те саме:</p>
+      <div class="col2">
+        <div class="mc-cmp">
+          <div class="ct" style="color:var(--cyan)">💻 Мікрокомп'ютер</div>
+          <p>Повноцінна система: процесор, оперативна пам'ять, постійна пам'ять, порти вводу/виводу. Може запускати <span class="hi">операційну систему</span> (Linux, Windows) і працювати з багатьма програмами одночасно. Приклад — <strong style="color:#fff">Raspberry Pi</strong>.</p>
+        </div>
+        <div class="mc-cmp">
+          <div class="ct" style="color:var(--purple)">🔩 Мікроконтролер</div>
+          <p>Менша й більш спеціалізована система: процесор, пам'ять і порти вводу/виводу — <span class="hi">в одному чипі</span>. Виконує конкретні завдання, не потребує окремої ОС. Приклад — плата <strong style="color:#fff">Arduino</strong>.</p>
+        </div>
+      </div>
+      <div class="mc-note" style="margin-top:12px">💡 А <strong style="color:#fff">micro:bit</strong> — це насправді мікроконтролер, який має вбудовані датчики, кнопки, LED-дисплей і Bluetooth, тож поводиться майже як мікрокомп'ютер.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Device comparison cards
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Три популярні пристрої</div>
+      <h2 class="stitle">Arduino, Raspberry Pi <span class="a">та micro:bit</span></h2>
+      <div class="mc-devGrid">
+        <div class="mc-devCard">
+          <div class="dic">🔧</div>
+          <div class="dnm">Arduino Uno R4</div>
+          <div class="dsp">32 кБ SRAM · 256 кБ флеш-пам'яті</div>
+          <p>Мікроконтролер, ідеальний для керування електронними компонентами — часто використовують у роботехніці.</p>
+        </div>
+        <div class="mc-devCard">
+          <div class="dic">🖥️</div>
+          <div class="dnm">Raspberry Pi 4</div>
+          <div class="dsp">до 8 ГБ ОЗП · USB, HDMI, Wi-Fi</div>
+          <p>Повноцінний мінікомп'ютер під керуванням ОС — виконує складніші завдання: обробку зображень, IoT-проєкти.</p>
+        </div>
+        <div class="mc-devCard">
+          <div class="dic">💡</div>
+          <div class="dnm">BBC micro:bit</div>
+          <div class="dsp">32 біт · 16 кБ ОЗП · 5×5 см</div>
+          <p>Простий у використанні мікрокомп'ютер для навчання програмування та електроніки — з вбудованими сенсорами.</p>
+        </div>
+      </div>
+      <div class="mc-note" style="margin-top:12px">🌍 Сучасні хобі-проєкти дедалі частіше використовують і бюджетніші родичі — наприклад <strong style="color:#fff">ESP32</strong> чи <strong style="color:#fff">Raspberry Pi Pico</strong>, які коштують лише кілька доларів, але мають Wi-Fi і Bluetooth «з коробки».</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — micro:bit anatomy + interactive sensors
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Анатомія micro:bit</div>
+      <h2 class="stitle">Якими сенсорами <span class="a">обладнано micro:bit?</span></h2>
+      <p style="margin-bottom:8px">Натисни на сенсор, щоб дізнатися, що він вимірює:</p>
+      <div class="mc-sensorGrid" id="mcSensors">
+        <div class="mc-sbtn" data-d="Вимірює прискорення за трьома осями (X, Y, Z) — визначає рух, нахил або струшування плати."><div class="ic">📈</div><div class="lb">Акселерометр</div></div>
+        <div class="mc-sbtn" data-d="Магнітометр (компас) — визначає напрямок, орієнтацію щодо півночі."><div class="ic">🧭</div><div class="lb">Компас</div></div>
+        <div class="mc-sbtn" data-d="Термометр — вимірює температуру плати, яка відповідає температурі навколишнього середовища."><div class="ic">🌡️</div><div class="lb">Термометр</div></div>
+        <div class="mc-sbtn" data-d="Датчик світла — вимірює рівень освітлення за допомогою LED-матриці."><div class="ic">☀️</div><div class="lb">Датчик світла</div></div>
+        <div class="mc-sbtn" data-d="Мікрофон реагує на гучні й тихі звуки, а також вимірює рівень шуму (у версії V2)."><div class="ic">🎤</div><div class="lb">Мікрофон</div></div>
+        <div class="mc-sbtn" data-d="Логотип на micro:bit працює як сенсор дотику — реагує на торкання."><div class="ic">👆</div><div class="lb">Датчик дотику</div></div>
+      </div>
+      <div class="mc-sensorDesc" id="mcSensorDesc">Обери сенсор вище, щоб побачити опис.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — micro:bit connects
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Зв'язок і живлення</div>
+      <h2 class="stitle">Як micro:bit <span class="a">спілкується зі світом?</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🔌 USB та порти</div>
+          <p style="margin-bottom:0">Під'єднується до комп'ютера мікро-USB-кабелем, який живить пристрій і дає змогу завантажувати програми. Порти введення/виведення (0, 1, 2, 3V, GND) — для сенсорів, двигунів і плат розширення.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📡 Радіо та Bluetooth</div>
+          <p style="margin-bottom:0">Радіопередавач/приймач дає змогу кільком micro:bit спілкуватися між собою. Bluetooth дає змогу керувати micro:bit із телефонів і планшетів — взаємодія працює в обох напрямках.</p>
+        </div>
+      </div>
+      <div class="mc-note" style="margin-top:12px">💬 Micro:bit можна програмувати різними мовами — найпоширеніші: <strong style="color:#fff">Microsoft MakeCode</strong> (блоки), <strong style="color:#fff">MicroPython</strong> і <strong style="color:#fff">Scratch</strong>.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Мікроконтролери навколо нас (modernized)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Цікаво / Сфери застосування</div>
+      <h2 class="stitle">Мікроконтролери <span class="a">навколо нас</span></h2>
+      <p>Мікроконтролери — не лише в навчальних наборах. Вони приховані практично в <span class="hi">кожному сучасному пристрої</span> навколо тебе:</p>
+      <div class="mc-thingGrid">
+        <div class="mc-thing"><div class="ic">⌚</div><div class="tt">Смарт-годинник</div><div class="sb">пульс, кроки, сповіщення</div></div>
+        <div class="mc-thing"><div class="ic">🤖</div><div class="tt">Робот-пилосос</div><div class="sb">лідар, карта кімнати</div></div>
+        <div class="mc-thing"><div class="ic">🌡️</div><div class="tt">Розумний термостат</div><div class="sb">температура, розклад</div></div>
+        <div class="mc-thing"><div class="ic">🚗</div><div class="tt">Електромобіль</div><div class="sb">десятки датчиків і блоків</div></div>
+        <div class="mc-thing"><div class="ic">🚁</div><div class="tt">Дрон</div><div class="sb">гіроскоп, GPS, камера</div></div>
+        <div class="mc-thing"><div class="ic">🔔</div><div class="tt">Розумний дзвінок</div><div class="sb">рух, відео, сповіщення</div></div>
+        <div class="mc-thing"><div class="ic">🧺</div><div class="tt">Пральна машина</div><div class="sb">програми прання, датчики</div></div>
+        <div class="mc-thing"><div class="ic">🎮</div><div class="tt">Ігровий контролер</div><div class="sb">вібрація, кнопки, жести</div></div>
+        <div class="mc-thing"><div class="ic">🩺</div><div class="tt">Медичні гаджети</div><div class="sb">моніторинг стану здоров'я</div></div>
+      </div>
+      <div class="mc-note" style="margin-top:12px">🌐 Сукупність таких «розумних», з'єднаних з інтернетом пристроїв називають <strong style="color:#fff">Інтернетом речей (IoT — Internet of Things)</strong>.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Data logger definition + registrator example
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Завдання № 3</div>
+      <h2 class="stitle">Реєстратор <span class="a">даних</span></h2>
+      <div class="mc-def">
+        <div class="dt">Означення</div>
+        <p><strong>Реєстратор даних (даталогер)</strong> — пристрій на основі мікроконтролера, призначений для <span class="hi">автоматичного збирання, опрацювання та зберігання</span> даних через датчики протягом певного періоду.</p>
+      </div>
+      <div class="card">
+        <div class="ctitle">🫀 Приклад — реєстратор ЕКГ «Амулет»</div>
+        <p style="margin-bottom:0">Електроди на тілі пацієнта вловлюють електричні сигнали серця → реєстратор перетворює їх на цифрові дані та зберігає у пам'яті (іноді кілька днів) → дані передають на комп'ютер через USB, бездротово або через інтернет — лікар аналізує їх у медичній інформаційній системі.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Data logger applications
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Теорія / Де використовують реєстратори даних</div>
+      <h2 class="stitle">Від екології <span class="a">до клімату</span></h2>
+      <div class="mc-appGrid">
+        <div class="mc-app"><div class="ic">🌱</div><div class="lb">Екологічний моніторинг</div></div>
+        <div class="mc-app"><div class="ic">🌾</div><div class="lb">Сільське господарство</div></div>
+        <div class="mc-app"><div class="ic">🩺</div><div class="lb">Медицина</div></div>
+        <div class="mc-app"><div class="ic">🚚</div><div class="lb">Транспорт і логістика</div></div>
+        <div class="mc-app"><div class="ic">🏗️</div><div class="lb">Інженерія та будівництво</div></div>
+        <div class="mc-app"><div class="ic">🌍</div><div class="lb">Дослідження клімату</div></div>
+      </div>
+      <div class="mc-note" style="margin-top:14px">💡 Реєстратор збирає інформацію через датчики → опрацьовує мікроконтролером → зберігає в пам'яті → передає через інтерфейси зв'язку для подальшого аналізу (графіки, таблиці).</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Fun fact break
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Перерва / Цікавий факт</div>
+      <h2 class="stitle">А ти знав<span class="a">(-ла)?</span></h2>
+      <div class="mc-factCard">
+        <div class="ic">🔢</div>
+        <p>У світі щороку продають <strong>мільярди мікроконтролерів</strong> — набагато більше, ніж людей на планеті. У середньому будинку сучасної родини їх можуть приховувати десятки пристроїв: від пульта телевізора до кавомашини — а ти навіть про це не здогадуєшся!</p>
+      </div>
+      <div class="mc-note" style="margin-top:14px">💬 Спробуй пригадати й порахувати, скільки пристроїв із мікроконтролерами є вдома у тебе.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Project picker (interactive select demo)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Обери правильний інструмент</div>
+      <h2 class="stitle">Який пристрій <span class="a">обрати для проєкту?</span></h2>
+      <p>Обери ідею проєкту — дізнайся, який пристрій найкраще підходить і чому:</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="mc-pickWrap">
+          <select id="mcPickSel" onchange="mcPick()">
+            <option value="0">🤖 Робот, що уникає перешкод</option>
+            <option value="1">🏠 Домашня медіа-станція з екраном</option>
+            <option value="2">🌡️ Навчальний проєкт із датчиком температури</option>
+            <option value="3">📷 Розпізнавання облич на камері</option>
+          </select>
+          <span style="color:var(--muted)">→</span>
+          <span id="mcPickOut">Arduino</span>
+        </div>
+        <div class="mc-pickReason" id="mcPickReason">Керування моторами й датчиками без ОС — ідеальна робота для мікроконтролера.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Practice 1 (classify devices)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Мікрокомп'ютер чи мікроконтролер?</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>Для кожного пристрою визнач, чим він є — <span class="hi">мікрокомп'ютером</span> чи <span class="hg">мікроконтролером</span>. Натисни на пункт, щоб перевірити себе.</p>
+      <div class="mc-quiz">
+        <div class="mc-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Raspberry Pi, що працює під управлінням Linux</div><div class="ans">→ мікрокомп'ютер (має ОС, виконує кілька задач)</div></div>
+        <div class="mc-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Плата Arduino, що керує світлодіодною стрічкою</div><div class="ans">→ мікроконтролер (одна спеціалізована задача, без ОС)</div></div>
+        <div class="mc-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Чип усередині пральної машини, що керує програмами прання</div><div class="ans">→ мікроконтролер (спеціалізована вбудована система)</div></div>
+        <div class="mc-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Медіаплеєр, який одночасно відтворює відео й показує погоду з інтернету</div><div class="ans">→ мікрокомп'ютер (кілька програм одночасно, потребує ОС)</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Питай себе: чи пристрій виконує лише одну конкретну функцію без окремої операційної системи, чи може запускати різні програми одночасно?</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Practice 2 (choose sensor for scenario)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Обери сенсор під задачу</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p>Уяви, що потрібно розробити сигналізацію для події «відчинення дверей» за допомогою micro:bit. Для кожної із задач нижче визнач, який сенсор micro:bit підійде найкраще.</p>
+      <div class="mc-quiz">
+        <div class="mc-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Визначити, що двері відчинили (плату прикріпили до дверей)</div><div class="ans">→ акселерометр — реагує на рух і нахил плати</div></div>
+        <div class="mc-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Визначити, чи в кімнаті стало темно (хтось прийшов уночі)</div><div class="ans">→ датчик світла — реагує на рівень освітлення</div></div>
+        <div class="mc-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Реагувати на голосний стукіт у двері</div><div class="ans">→ мікрофон — реагує на гучні звуки</div></div>
+        <div class="mc-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Дозволити власнику вимкнути сигналізацію дотиком</div><div class="ans">→ датчик дотику (логотип на платі)</div></div>
+      </div>
+      <div class="hint hint-y" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Питання для обговорення</div>
+        <p>Запропонуй власний варіант розв'язання задачі «сигналізація для відчинення дверей» — які сенсори поєднав би саме ти, і чому?</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 4, сторінки 27–36 — прочитати, звернути увагу на відмінності мікрокомп'ютера й мікроконтролера, уміти відповісти на запитання рубрики «Перевір себе».</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">🏠 Перевір себе (ст. 36)</div>
+        <ul class="mc-cl">
+          <li>Пояснити, як micro:bit може допомогти в навчанні не лише на уроках інформатики</li>
+          <li>Описати, які сигнали може сприймати micro:bit з навколишнього середовища, а які — передавати назовні</li>
+          <li>Запропонувати розв'язання проблеми «сигналізація для відчинення дверей» за допомогою micro:bit</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">💻</div><div class="sumt">Мікрокомп'ютер</div><p>Повноцінна система з ОС — може виконувати кілька програм одночасно</p></div>
+        <div class="sumc"><div class="sumi">🔩</div><div class="sumt">Мікроконтролер</div><p>Спеціалізований чип для однієї конкретної задачі, без окремої ОС</p></div>
+        <div class="sumc"><div class="sumi">💡</div><div class="sumt">Arduino · Raspberry Pi · micro:bit</div><p>Три популярні платформи з різними перевагами та сферами застосування</p></div>
+        <div class="sumc"><div class="sumi">🧭</div><div class="sumt">Сенсори micro:bit</div><p>Акселерометр, компас, термометр, датчик світла, мікрофон, датчик дотику</p></div>
+        <div class="sumc"><div class="sumi">🌐</div><div class="sumt">Мікроконтролери навколо нас</div><p>Смарт-годинники, роботи-пилососи, авто, дрони — Інтернет речей (IoT)</p></div>
+        <div class="sumc"><div class="sumi">📊</div><div class="sumt">Реєстратори даних</div><p>Збирають, опрацьовують і зберігають дані в екології, медицині, транспорті</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Sensor picker demo (slide 7)
+document.querySelectorAll('#mcSensors .mc-sbtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#mcSensors .mc-sbtn').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    const desc = document.getElementById('mcSensorDesc');
+    desc.style.opacity = '0';
+    setTimeout(() => {
+      desc.textContent = btn.dataset.d;
+      desc.style.opacity = '1';
+    }, 150);
+  });
+});
+
+// Project → device picker demo (slide 13)
+const mcProjects = [
+  { device: 'Arduino', reason: 'Керування моторами й датчиками без ОС — ідеальна робота для мікроконтролера.' },
+  { device: 'Raspberry Pi', reason: 'Потрібно відтворювати медіа й працювати з екраном — знадобиться повноцінна операційна система.' },
+  { device: 'micro:bit', reason: 'Простий навчальний проєкт з одним сенсором — micro:bit ідеальний для швидкого старту в програмуванні.' },
+  { device: 'Raspberry Pi', reason: 'Розпізнавання облич потребує потужнішого процесора й обробки зображень — під силу мінікомп\'ютеру.' }
+];
+function mcPick() {
+  const idx = parseInt(document.getElementById('mcPickSel').value, 10);
+  const p = mcProjects[idx];
+  document.getElementById('mcPickOut').textContent = p.device;
+  document.getElementById('mcPickReason').textContent = p.reason;
+}
+</script>
+</body>
+</html>

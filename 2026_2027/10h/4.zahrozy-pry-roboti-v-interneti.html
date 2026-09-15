@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Загрози при роботі в Інтернеті і їх уникнення – 10-г клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition box ── */
+.isec-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.isec-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.isec-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.isec-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Pills ── */
+.isec-pillGrid{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 14px}
+.isec-pill{font-family:var(--fm);font-size:12px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:#c4d0e0;background:var(--card)}
+.isec-pill.main{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.08);font-weight:600}
+.isec-pill.warn{border-color:var(--coral);color:var(--coral);background:rgba(255,107,107,.08)}
+
+/* ── Triad / 3-col scheme ── */
+.isec-triad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.isec-tcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.isec-tcard .tt{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:7px}
+.isec-tcard p{font-size:12px;color:#94a3b8;margin:0}
+
+/* ── Case examples ── */
+.isec-caseGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.isec-case{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px}
+.isec-case .tt{font-family:var(--fd);font-weight:700;font-size:12.5px;color:var(--yellow);margin-bottom:6px}
+.isec-case p{font-size:12px;color:#c4d0e0;margin:0}
+
+/* ── Method 2-column grid ── */
+.isec-methodGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.isec-method{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px}
+.isec-method .tt{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--purple);margin-bottom:6px}
+.isec-method p{font-size:12px;color:#94a3b8;margin:0}
+
+/* ── Warning list ── */
+.isec-warnList{display:flex;flex-direction:column;gap:8px}
+.isec-warn{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--coral);border-radius:0 10px 10px 0;padding:10px 14px}
+.isec-warn .ic{color:var(--coral);font-size:15px;margin-top:1px}
+.isec-warn p{margin:0;font-size:12.5px;color:#c4d0e0}
+
+/* ── Quiz cards (click → answer) ── */
+.isec-quiz{display:flex;flex-direction:column;gap:8px}
+.isec-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.isec-qitem:hover{border-color:var(--cyan)}
+.isec-qitem .q{font-size:13px;color:#e2e8f0}
+.isec-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.isec-qitem.show .ans{max-height:60px;opacity:1;margin-top:7px}
+
+/* ── Practice slides ── */
+.tcl{list-style:none;padding:0}
+.tcl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.tcl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+/* ── Rebus break ── */
+.isec-tile{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-family:var(--fm);font-weight:700;font-size:15px;color:var(--yellow)}
+
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">вірус</span>
+        <span class="fcode">фішинг</span>
+        <span class="fcode">wi-fi</span>
+        <span class="fcode">захист</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"інформаційна безпека"</span>&gt;</div>
+        <h1 class="mtitle">Загрози при роботі<br>в Інтернеті і їх уникнення</h1>
+        <div class="tul"></div>
+        <p class="tsub">Шкідливе ПЗ · публічний Wi-Fi · здоров'я · авторське право</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 10 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ 1, § 4</div>
+          <div class="mchip"><span class="ic">🛡</span> Урок 4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 4 / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Шкідливе програмне забезпечення</strong>Що це таке і які категорії шкоди воно завдає</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Типи шкідливих програм</strong>Віруси, хробаки, троянські програми, експлойти</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Публічний Wi-Fi</strong>Загрози й правила безпечного користування</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Здоров'я користувача</strong>Психологічні загрози від необдуманого користування</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Авторське право</strong>Що охороняється й як його захистити в мережі</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Правила безпеки</strong>Загальні рекомендації для роботи в Інтернеті</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Malware definition + sources
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Шкідливе <span class="a">програмне забезпечення</span></h2>
+      <div class="isec-def">
+        <div class="dt">Означення</div>
+        <p><strong>Шкідливе програмне забезпечення</strong> — будь-яке програмне забезпечення, призначене для отримання <span class="hi">несанкціонованого доступу</span> до обчислювальних ресурсів комп'ютера або до інформаційних ресурсів, які на ньому зберігаються, для несанкціонованого власником їх використання чи спричинення шкоди шляхом копіювання, спотворення, видалення або підміни інформації.</p>
+      </div>
+      <p style="margin-bottom:8px">Основні загрози інформаційній безпеці користувача Інтернету:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🙋 Від авторизованих користувачів</div>
+          <p style="margin-bottom:0">Зумисне пошкодження чи викрадення даних хакерами; пошкодження даних унаслідок необережних дій.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">💻 Електронні методи впливу</div>
+          <p style="margin-bottom:0">Комп'ютерні віруси, спам, фішинг.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Harm categories
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Категорії шкоди</div>
+      <h2 class="stitle">За завданим <span class="a">збитком</span></h2>
+      <p style="margin-bottom:8px">Шкідливі програми за нанесеним збитком можна віднести до декількох категорій — вони:</p>
+      <div class="isec-methodGrid">
+        <div class="isec-method"><div class="tt">🚧 Створюють перешкоди</div><p>Блокують антивірусні сайти й адміністративні функції ОС, ускладнюючи лікування.</p></div>
+        <div class="isec-method"><div class="tt">📉 Зменшують ресурси</div><p>Завантажують (downloader) або розпаковують (dropper) інше шкідливе ПЗ.</p></div>
+        <div class="isec-method"><div class="tt">🗃 Виконують несанкціоновані дії з даними</div><p>Крадіжка, шахрайство, здирство, шпигунство за користувачем.</p></div>
+        <div class="isec-method"><div class="tt">⚙ Дестабілізують роботу</div><p>Саботаж виробничих процесів, керованих комп'ютером.</p></div>
+      </div>
+      <div class="isec-note" style="margin-top:12px">💡 Для крадіжки застосовують сканування диска, <strong style="color:#fff">Keylogger</strong> (реєстрація натиснень клавіш), перенаправлення на підроблені сайти, викрадання акаунтів пошти, месенджерів, ігрових серверів і платіжних систем.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Botnet + illegal activity
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Незаконна діяльність</div>
+      <h2 class="stitle">Заражений комп'ютер <span class="a">у ботнеті</span></h2>
+      <p style="margin-bottom:8px">Заражений комп'ютер (у складі ботнета) може бути використаний зловмисником для:</p>
+      <div class="isec-pillGrid">
+        <span class="isec-pill warn">проведення DDoS-атак</span>
+        <span class="isec-pill warn">збирання адрес e-mail і поширення спаму</span>
+        <span class="isec-pill warn">накручування електронних голосувань</span>
+        <span class="isec-pill warn">накручування кліків по рекламних банерах</span>
+        <span class="isec-pill warn">генерування монет Bitcoin</span>
+      </div>
+      <div class="isec-def" style="margin-top:6px">
+        <div class="dt">Backdoor</div>
+        <p>Шкідливі програми також отримують несанкціонований (і дармовий) доступ до ресурсів самого комп'ютера або третіх ресурсів, доступних через нього, у т. ч. пряме управління комп'ютером (<span class="hi">backdoor</span>), а також організовують на комп'ютері відкриті релеї й загальнодоступні проксі-сервери.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Types by replication method
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Класифікація</div>
+      <h2 class="stitle">Типи шкідливих програм <span class="a">за методом розмноження</span></h2>
+      <div class="isec-caseGrid">
+        <div class="isec-case"><div class="tt">1. Експлойт</div><p>Теоретично нешкідливий набір даних (напр. графічний файл), що некоректно сприймається вразливою програмою — шкоду завдає не файл, а помилка ПЗ.</p></div>
+        <div class="isec-case"><div class="tt">2. Логічна бомба</div><p>Спрацьовує в програмі за певної умови, є невід'ємною частиною корисної програми-носія.</p></div>
+        <div class="isec-case"><div class="tt">3. Троянська програма</div><p>Не має власного механізму розмноження — маскується під корисну програму.</p></div>
+      </div>
+      <div class="isec-caseGrid" style="margin-top:12px">
+        <div class="isec-case"><div class="tt">4. Комп'ютерний вірус</div><p>Розмножується в межах комп'ютера та через змінні диски чи локальну мережу, якщо користувач сам викладе заражений файл у мережу.</p></div>
+        <div class="isec-case"><div class="tt">5. Мережевий хробак</div><p>Здатний самостійно розмножуватися мережею: поштові, IRC, ті, що використовують експлойти.</p></div>
+        <div class="isec-case" style="border-color:rgba(255,217,61,.3)"><div class="tt" style="color:var(--yellow)">🔗 Ланцюжок зараження</div><p>Наприклад, за допомогою експлойта на комп'ютері жертви розгортається завантажувач, який встановлює з мережі хробака.</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Adware, Spyware + prevention
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Небажане ПЗ</div>
+      <h2 class="stitle">Небажане ПЗ <span class="a">та захист</span></h2>
+      <p style="margin-bottom:8px">Не всі небажані записувані файли є істинно шкідливими — таке ПЗ здебільшого просто <span class="hi">непокоїть</span> користувача:</p>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">📢 Adware</div>
+          <p style="margin-bottom:0">Показує рекламу без згоди користувача.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🕵 Spyware</div>
+          <p style="margin-bottom:0">Пересилає через мережу Інтернет інформацію, несанкціоновану користувачем.</p>
+        </div>
+      </div>
+      <div class="isec-note" style="margin-top:12px">💡 Значна частина шпигунських програм установлюється як навантаження до іншого ПЗ, про що зазначається дрібним шрифтом — тому важливо читати всі умови встановлення. Не забувайте користуватись <strong style="color:#fff">антивірусом</strong>: спеціалізовані захисні програми істотно підсилюють рівень безпеки персональної інформації.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Manual malware removal
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Видалення шкідливого ПЗ</div>
+      <h2 class="stitle">Якщо антивірус <span class="a">не впорався</span></h2>
+      <p style="margin-bottom:6px">Для видалення зловмисного ПЗ, з яким не справляється антивірусна програма, можна зробити декілька кроків:</p>
+      <ul class="tcl">
+        <li>Перевірити у вікні <span class="hi">Панель керування → Програми та засоби</span> наявність підозрілої програми — насторожити мають відсутність видавця, іконки чи версії</li>
+        <li>Перевірити автозавантаження: у пошуку ввести <span class="hi">cmd</span>, у командному рядку — <span class="hi">msconfig</span>, у вкладці «Автозавантаження» шукати програми поза папкою Program Files</li>
+        <li>Перевірити розширення для браузера в меню налаштувань і видалити підозрілі</li>
+      </ul>
+      <div class="isec-note" style="margin-top:8px">⚠️ Вимикайте в цьому списку тільки ті програми, у шкідливості яких ви впевнені!</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Public Wi-Fi risks
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Публічний Wi-Fi</div>
+      <h2 class="stitle">Чи безпечний <span class="a">публічний Wi-Fi?</span></h2>
+      <p style="margin-bottom:8px">Користувача в загальнодоступних Wi-Fi мережах (кафе, готелі, торговельні центри) очікує ряд загроз — зловмисник може зібрати:</p>
+      <div class="isec-triad">
+        <div class="isec-tcard"><div class="tt">📡 Пристрої</div><p>Які пристрої підключені до мережі</p></div>
+        <div class="isec-tcard"><div class="tt">📁 Ресурси</div><p>Чи є загальнодоступні файли, папки, принтери на підключених пристроях</p></div>
+        <div class="isec-tcard"><div class="tt">🌐 Сайти</div><p>На які сайти заходять користувачі цих пристроїв</p></div>
+      </div>
+      <div class="isec-note" style="margin-top:12px">💡 Такі програми, як <strong style="color:#fff">Zenmap</strong>, <strong style="color:#fff">Inssider</strong> чи <strong style="color:#fff">Wi-Fi Analyzer</strong>, можна легально знайти в Інтернеті. При більш серйозному підході зловмисники можуть отримати навіть введені логіни та паролі.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Public Wi-Fi rules
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Правила</div>
+      <h2 class="stitle">Правила при використанні <span class="a">мережі Wi-Fi</span></h2>
+      <div class="col2">
+        <ul class="tcl">
+          <li>Відключіть доступ до своїх даних</li>
+          <li>Використовуйте VPN (virtual private network)</li>
+          <li>Не підключайтеся автоматично до Wi-Fi мереж</li>
+          <li>Використовуйте SSL — обмін даними в зашифрованому вигляді</li>
+        </ul>
+        <ul class="tcl">
+          <li>Не нехтуйте двоетапною автентифікацією</li>
+          <li>Уточнюйте назву мережі (напр. THOMSON проти THOMPSON)</li>
+          <li>Захищайте свої паролі — не використовуйте однакові на різних сайтах</li>
+          <li>Вмикайте «фаєрвол» (мережевий екран)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Psychological health threats
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Теорія / Здоров'я користувача</div>
+      <h2 class="stitle">Загрози психічному <span class="a">здоров'ю</span></h2>
+      <p style="margin-bottom:8px">Надмірне, неконтрольоване й необдумане використання Інтернету може спричиняти:</p>
+      <div class="isec-triad">
+        <div class="isec-tcard"><div class="tt">🌀 Інформаційне перевантаження</div><p>Втрата орієнтації в гіперпросторі — користувач не може локалізувати себе, забуває мотиви пошуку</p></div>
+        <div class="isec-tcard"><div class="tt">🕸 Шкідливий вплив інформації</div><p>Безконтрольне поширення інформації, що завдає психологічної травми чи провокує на протиправні дії</p></div>
+        <div class="isec-tcard"><div class="tt">🚪 Відчуження від реальності</div><p>Звуження соціальних зв'язків аж до самотності, скорочення родинного спілкування, депресивні стани</p></div>
+      </div>
+      <div class="isec-note" style="margin-top:12px">💡 Уникнути небезпек психологічного впливу Інтернету можна через власний контроль часу роботи, розвиток уміння ставити цілі й завдання; проблеми, що вже виникли, важливо обговорювати з батьками та психологами.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Copyright basics
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Теорія / Авторське право</div>
+      <h2 class="stitle">Як захистити авторське право <span class="a">в Інтернеті?</span></h2>
+      <div class="isec-note">⚖️ Авторське право в Україні регулюється Цивільним кодексом та Законом України «Про авторське право і суміжні права». Розміщення в Інтернет твору чи його частини без дозволу автора є порушенням Закону й може бути оскаржене в суді з вимогою відшкодування збитків.</div>
+      <p style="margin:12px 0 6px">До об'єктів авторського права відносять:</p>
+      <div class="isec-pillGrid">
+        <span class="isec-pill main">літературні та художні твори</span>
+        <span class="isec-pill main">комп'ютерні програми</span>
+        <span class="isec-pill main">компіляції даних (бази даних)</span>
+        <span class="isec-pill main">інші твори</span>
+      </div>
+      <p style="margin:6px 0">Не є об'єктом авторського права:</p>
+      <div class="isec-pillGrid">
+        <span class="isec-pill">новини дня</span>
+        <span class="isec-pill">фольклор</span>
+        <span class="isec-pill">офіційні документи</span>
+        <span class="isec-pill">державні символи</span>
+        <span class="isec-pill">розклади руху, телефонні довідники</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Copyright protection measures
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Захист авторських прав</div>
+      <h2 class="stitle">Заходи захисту <span class="a">авторських прав</span></h2>
+      <div class="isec-methodGrid">
+        <div class="isec-method"><div class="tt">🔒 Обмежена функціональність</div><p>Розповсюдження програм, не здатних друкувати документи чи зберігати їх у пам'яті.</p></div>
+        <div class="isec-method"><div class="tt">⏰ «Годинникова бомба»</div><p>Розповсюдження повноцінного твору з датою, після якої доступ до нього стає неможливим.</p></div>
+        <div class="isec-method"><div class="tt">🔐 Криптографічні конверти</div><p>Твір зашифровано так, що доступ до нього можливий лише з ключем до шрифту.</p></div>
+        <div class="isec-method"><div class="tt">📝 Угоди «наскрізного клацання»</div><p>Дозволи автора на використання творів, укладені через Інтернет.</p></div>
+      </div>
+      <p style="margin:12px 0 6px">Заходи <span class="hi">після</span> порушення прав:</p>
+      <div class="isec-pillGrid">
+        <span class="isec-pill warn">агенти — пошук контрафактних примірників</span>
+        <span class="isec-pill warn">стеганографія — «водяний знак»</span>
+        <span class="isec-pill warn">«маячок» — мітка для пошуку порушника</span>
+        <span class="isec-pill warn">кодові слова</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — General internet safety rules
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Теорія / Загальні правила</div>
+      <h2 class="stitle">Правила безпечного <span class="a">використання Інтернету</span></h2>
+      <div class="col2">
+        <ul class="tcl">
+          <li>Перевіряйте антивірусний захист перед підключенням до Інтернету</li>
+          <li>Не активізуйте підозрілі гіперпосилання</li>
+          <li>Не встановлюйте ПЗ з невідомих веб-сайтів</li>
+          <li>Не активізуйте рекламні банери на незнайомих сайтах</li>
+        </ul>
+        <ul class="tcl">
+          <li>Не відкривайте файли від невідомого адресанта</li>
+          <li>Не діліться особистою інформацією в Інтернеті</li>
+          <li>Не проводьте фінансові операції через неперевірені сайти</li>
+          <li>Не погоджуйтесь на зустріч з людиною, знайомою лише через Інтернет</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Rebus break
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Перерва / Розгадай</div>
+      <h2 class="stitle">Розгадай <span class="a">ребус</span></h2>
+      <p>Кожна картинка й позначка після неї — частина слова. Здогадайся, яке словосполучення тут заховано, а тоді натисни кнопку, щоб перевірити себе.</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Автобус (3 останні літери) + літера «Р» + літера «Сь» + кінь (2 останні літери) + праска (3 останні літери) + ваза (2 останні літери)</div>
+        <div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font-size:34px">
+          🚌 Р Сь 🐴 🔥 🏺
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="isecRevealRebus()">🔍 Показати відповідь</button>
+        <div id="rebusAnswer" style="font-family:var(--fd);font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--green);text-align:center;opacity:0;transition:opacity .4s ease">АВТОРСЬКІ ПРАВА</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Practice 1 (quiz)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Практика / Завдання 1</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Визнач тип загрози</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:10px">Для кожної ситуації визнач, з яким типом шкідливого ПЗ чи загрози ти маєш справу. Клацни на картку, щоб перевірити себе.</p>
+      <div class="isec-quiz">
+        <div class="isec-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Програма маскується під корисний застосунок, але власного механізму розмноження не має.</div>
+          <div class="ans">→ Троянська програма</div>
+        </div>
+        <div class="isec-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Шкідливий код самостійно розповсюджується мережею через поштові вкладення, без участі користувача.</div>
+          <div class="ans">→ Мережевий хробак</div>
+        </div>
+        <div class="isec-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Комп'ютер став частиною ботнета й бере участь у DDoS-атаці без відома власника.</div>
+          <div class="ans">→ Заражений комп'ютер (ботнет)</div>
+        </div>
+        <div class="isec-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Програма встановилася непомітно разом з іншим ПЗ і показує нав'язливу рекламу.</div>
+          <div class="ans">→ Adware</div>
+        </div>
+        <div class="isec-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Файл шифрує клавіатурний ввід і пересилає паролі зловмиснику через мережу.</div>
+          <div class="ans">→ Spyware / Keylogger</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Practice 2 (personal checklist)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Практика / Завдання 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Особистий чекліст безпеки</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:10px">Перевір свій ноутбук або смартфон за наведеним чеклістом і познач пункти, які ти вже виконуєш. Для непозначених — запиши в зошит, що саме потрібно зробити.</p>
+      <ul class="tcl">
+        <li>Увімкнено антивірусний захист і актуальні оновлення</li>
+        <li>Використовуються різні складні паролі для різних сайтів</li>
+        <li>Увімкнено двоетапну автентифікацію для основних акаунтів</li>
+        <li>При підключенні до публічного Wi-Fi не заходжу на сайти з фінансовими даними без VPN</li>
+        <li>Увімкнено «фаєрвол» (мережевий екран)</li>
+        <li>Розширення браузера й автозавантаження перевірені на підозрілі програми</li>
+      </ul>
+      <div class="hint hint-g" style="margin-top:10px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Обговоріть у класі, які пункти найчастіше не виконуються і чому — це найпоширеніші вразливості серед учнів.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 18 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="18">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 4, сторінки 31–40 — прочитати, звернути увагу на означення шкідливого ПЗ та правила безпечної роботи в Інтернеті.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">💻 Працюємо за комп'ютером</div>
+        <p style="margin-bottom:0">Виконати завдання, сторінка 38–40.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 19 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="19">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🦠</div><div class="sumt">Шкідливе ПЗ</div><p>Означення, категорії шкоди й способи проникнення на комп'ютер</p></div>
+        <div class="sumc"><div class="sumi">🧬</div><div class="sumt">Типи загроз</div><p>Віруси, хробаки, троянські програми, експлойти, adware й spyware</p></div>
+        <div class="sumc"><div class="sumi">📶</div><div class="sumt">Публічний Wi-Fi</div><p>Ризики загальнодоступних мереж і правила безпечного підключення</p></div>
+        <div class="sumc"><div class="sumi">🧠</div><div class="sumt">Здоров'я користувача</div><p>Інформаційне перевантаження, шкідливий вплив, відчуження від реальності</p></div>
+        <div class="sumc"><div class="sumi">©️</div><div class="sumt">Авторське право</div><p>Що охороняється, а що ні, та як захистити свої права в мережі</p></div>
+        <div class="sumc"><div class="sumi">✅</div><div class="sumt">Правила безпеки</div><p>Загальні рекомендації для безпечної роботи в Інтернеті</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Rebus reveal (slide 15)
+function isecRevealRebus() {
+  document.getElementById('rebusAnswer').style.opacity = '1';
+}
+</script>
+</body>
+</html>

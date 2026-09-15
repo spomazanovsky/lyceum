@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Двійкове кодування – 8-б клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── bn- : урок-специфічні компоненти ── */
+.bn-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.bn-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.bn-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+
+.bn-mamaGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.bn-mamaC{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.bn-mamaC .w{font-family:var(--fd);font-weight:700;font-size:15px;margin-bottom:6px}
+.bn-mamaC .c{font-family:var(--fm);color:var(--cyan);font-size:13px}
+
+.bn-morseGrid{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.bn-morseC{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;text-align:center;font-family:var(--fm)}
+.bn-morseC .ch{font-size:15px;color:var(--yellow)}
+.bn-morseC .code{font-size:15px;color:var(--green);margin-top:4px;letter-spacing:2px}
+
+.bn-growTable{width:100%;border-collapse:collapse;font-size:13px}
+.bn-growTable th{font-family:var(--fd);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+.bn-growTable td{padding:7px 10px;border-bottom:1px solid var(--border);color:#c4d0e0}
+.bn-growTable tr:last-child td{color:var(--green);font-weight:700}
+.bn-growTable .f{font-family:var(--fm);color:var(--muted)}
+
+.bn-quiz{display:flex;flex-direction:column;gap:8px}
+.bn-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.bn-qitem:hover{border-color:var(--cyan)}
+.bn-qitem .q{font-size:13px;color:#e2e8f0}
+.bn-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.bn-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+.bn-gameBox{background:#060e1c;border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.bn-gameNum{font-family:var(--fd);font-weight:800;font-size:52px;color:var(--cyan)}
+.bn-gameRange{font-family:var(--fm);font-size:12px;color:var(--muted)}
+.bn-gameBtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.bn-gameBtns .tbtn{margin-top:0}
+.bn-gameMsg{font-family:var(--fm);font-size:13px;color:var(--green);min-height:20px;text-align:center}
+.bn-gameStat{font-family:var(--fm);font-size:11px;color:var(--muted)}
+
+.bn-unitFlow{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center}
+.bn-uBox{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center;min-width:90px}
+.bn-uBox .n{font-family:var(--fd);font-weight:700;font-size:13.5px;color:var(--text)}
+.bn-uArr{display:flex;flex-direction:column;align-items:center;font-family:var(--fm);font-size:10.5px;color:var(--muted)}
+.bn-uArr .a{color:var(--cyan)}
+
+.bn-sysGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bn-sysC{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px;text-align:center}
+.bn-sysC .b{font-family:var(--fd);font-weight:800;font-size:22px;color:var(--cyan)}
+.bn-sysC .nm{font-size:12px;color:var(--text);margin:4px 0 3px}
+.bn-sysC .use{font-size:10.5px;color:var(--muted)}
+
+.bn-stepList{list-style:none;padding:0;counter-reset:bnstep}
+.bn-stepList li{counter-increment:bnstep;display:flex;gap:10px;padding:7px 0;font-size:13px;color:#c4d0e0}
+.bn-stepList li::before{content:counter(bnstep);flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(0,212,255,.12);color:var(--cyan);font-family:var(--fm);font-size:11.5px;display:flex;align-items:center;justify-content:center}
+
+.bn-convBox{background:#060e1c;border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.bn-convRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+.bn-convRow input{width:100px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:var(--fm);font-size:14px;text-align:center}
+.bn-convOut{font-family:var(--fm);font-size:20px;color:var(--green);min-height:28px}
+.bn-convSteps{font-family:var(--fm);font-size:11.5px;color:var(--muted);text-align:center;white-space:pre-line;min-height:20px}
+
+.bn-colorGrid{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.bn-swatch{width:52px;height:52px;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:all .2s ease}
+.bn-swatch:hover,.bn-swatch.sel{transform:translateY(-3px);border-color:#fff}
+.bn-colorPanel{display:flex;align-items:center;gap:18px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px}
+.bn-colorPrev{width:64px;height:64px;border-radius:12px;background:var(--muted);flex-shrink:0;transition:background .2s ease}
+.bn-colorHex{font-family:var(--fm)}
+.bn-colorHex .h1{font-size:20px;color:var(--text)}
+.bn-colorHex .h2{font-size:11.5px;color:var(--muted);margin-top:4px}
+
+.bn-asciiRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.bn-asciiC{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 9px;text-align:center;font-family:var(--fm)}
+.bn-asciiC .ch{font-size:14px;color:var(--yellow)}
+.bn-asciiC .bin{font-size:10px;color:var(--green);margin-top:3px}
+
+.bn-cl{list-style:none;padding:0;margin:0}
+.bn-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.bn-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+@media (max-width:680px){
+  .bn-mamaGrid{grid-template-columns:1fr}
+  .bn-sysGrid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="fcode">01001000</div>
+        <div class="fcode">2¹⁰ = 1024</div>
+        <div class="fcode">#FF6B6B</div>
+        <div class="fcode">··· −−− ···</div>
+        <div class="ttag">// <span class="tn">8 клас</span> · Інформатика</div>
+        <h1 class="mtitle">Двійкове кодування</h1>
+        <div class="tul"></div>
+        <p class="tsub">Як алфавіт із двох символів кодує весь цифровий світ</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">🔢</span> Двійковий код</div>
+          <div class="mchip"><span class="ic">🎨</span> Кольори, текст, штрихкоди</div>
+          <div class="mchip"><span class="ic">💡</span> Практика</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="2">
+      <div class="lbl">Сьогодні на уроці</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem">
+          <div class="pnum">01</div>
+          <div class="ptxt"><strong>Двійкове кодування</strong>алфавіт лише з двох символів</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">02</div>
+          <div class="ptxt"><strong>Скільки бітів потрібно?</strong>формула 2ⁿ на практиці</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">03</div>
+          <div class="ptxt"><strong>Біти, байти, одиниці інформації</strong>від біта до гігабайта</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">04</div>
+          <div class="ptxt"><strong>Системи числення</strong>переведення чисел 10 ↔ 2</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">05</div>
+          <div class="ptxt"><strong>Шістнадцяткова система</strong>кольори у вебдизайні</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">06</div>
+          <div class="ptxt"><strong>Текст і штрихкоди</strong>де двійковий код навколо нас</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="3">
+      <div class="lbl">Розділ 01 · Кодування</div>
+      <h2 class="stitle">Двійкове <span class="a">кодування</span></h2>
+      <div class="bn-def">
+        <div class="dt">Означення</div>
+        <p>Спосіб кодування даних за допомогою <span class="hi">двох сигналів</span> називають <strong>двійковим кодуванням</strong>. Умовно один сигнал позначають цифрою 0, а інший — 1.</p>
+      </div>
+      <p>Приклад: літерам М, А, Л, О зіставили двобітові коди — <code>00, 01, 10, 11</code>. Слова записуються послідовністю цих кодів:</p>
+      <div class="bn-mamaGrid">
+        <div class="bn-mamaC"><div class="w">МАМА</div><div class="c">00 01 00 01</div></div>
+        <div class="bn-mamaC"><div class="w">ЛАМА</div><div class="c">10 01 00 01</div></div>
+        <div class="bn-mamaC"><div class="w">ЛОМ</div><div class="c">10 11 00</div></div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="4">
+      <div class="lbl">Розділ 01 · Цікавий факт</div>
+      <h2 class="stitle">Двійковий код <span class="a">до комп'ютерів</span></h2>
+      <p>Задовго до появи комп'ютерів існував інший спосіб кодування лише двома символами — <span class="hi">азбука Морзе</span> (1838 рік): крапка й тире.</p>
+      <div class="bn-def">
+        <div class="dt">Цікаво знати</div>
+        <p>Морзянку передавали коротким (крапка) і довгим (тире) сигналом — електричним імпульсом, звуковим сигналом чи спалахом світла. По суті, це теж <span class="hg">двійкове кодування</span>, тільки за 100+ років до перших комп'ютерів!</p>
+      </div>
+      <div class="bn-morseGrid">
+        <div class="bn-morseC"><div class="ch">S</div><div class="code">···</div></div>
+        <div class="bn-morseC"><div class="ch">O</div><div class="code">−−−</div></div>
+        <div class="bn-morseC"><div class="ch">S</div><div class="code">···</div></div>
+      </div>
+      <p style="text-align:center;margin-top:10px;font-family:var(--fm);font-size:12.5px;color:var(--muted)">SOS — міжнародний сигнал лиха, який досі впізнають у всьому світі</p>
+    </div>
+
+    <div class="slide" data-n="5">
+      <div class="lbl">Розділ 02 · Кодування</div>
+      <h2 class="stitle">Скільки бітів <span class="a">потрібно?</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">Закономірність</div>
+          <table class="bn-growTable">
+            <tr><th>Бітів</th><th>Повідомлень</th></tr>
+            <tr><td>1</td><td class="f">2¹ = 2</td></tr>
+            <tr><td>2</td><td class="f">2² = 4</td></tr>
+            <tr><td>3</td><td class="f">2³ = 8</td></tr>
+            <tr><td>4</td><td class="f">2⁴ = 16</td></tr>
+            <tr><td>8</td><td class="f">2⁸ = 256</td></tr>
+            <tr><td>n</td><td>2ⁿ</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:12px">
+            <div class="ctitle">Чому саме так</div>
+            <p>Кожен новий біт додає ще один вибір «0 або 1» — тому з кожним бітом кількість можливих повідомлень зростає <span class="hi">вдвічі</span>.</p>
+          </div>
+          <div class="bn-quiz">
+            <div class="bn-qitem" onclick="this.classList.toggle('show')">
+              <div class="q">Скільки різних повідомлень можна закодувати 10 бітами?</div>
+              <div class="ans">→ 2¹⁰ = 1024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="6">
+      <div class="lbl">Розділ 02 · Гра</div>
+      <h2 class="stitle">Вгадай <span class="a">число</span></h2>
+      <p>Загадай число від 1 до 64 (собі, подумки) — і дивись, за скільки запитань комп'ютер його вгадає, весь час ділячи діапазон навпіл.</p>
+      <div class="bn-gameBox">
+        <div class="bn-gameRange" id="bnGameRange">Діапазон: 1–64</div>
+        <div class="bn-gameNum" id="bnGameNum">32</div>
+        <div class="bn-gameBtns">
+          <button class="tbtn" onclick="bnGameGuess('less')">Менше ↓</button>
+          <button class="tbtn" onclick="bnGameGuess('more')">Більше ↑</button>
+          <button class="tbtn" onclick="bnGameGuess('yes')">Це воно! ✓</button>
+        </div>
+        <div class="bn-gameStat" id="bnGameStat">Запитань: 0</div>
+        <div class="bn-gameMsg" id="bnGameMsg"></div>
+      </div>
+      <p style="text-align:center;margin-top:10px">Максимум знадобиться <span class="hg">6 запитань</span> — стільки ж бітів потрібно, щоб закодувати число від 1 до 64: 2⁶ = 64!</p>
+    </div>
+
+    <div class="slide" data-n="7">
+      <div class="lbl">Розділ 03 · Одиниці інформації</div>
+      <h2 class="stitle">Біт, байт і <span class="a">що далі</span></h2>
+      <div class="bn-def">
+        <div class="dt">Означення</div>
+        <p><strong>Біт</strong> — одна цифра двійкового коду (0 або 1). Найменша одиниця вимірювання обсягу інформації.</p>
+      </div>
+      <div class="bn-unitFlow">
+        <div class="bn-uBox"><div class="n">Біт</div></div>
+        <div class="bn-uArr">×8<span class="a">→</span></div>
+        <div class="bn-uBox"><div class="n">Байт</div></div>
+        <div class="bn-uArr">×1024<span class="a">→</span></div>
+        <div class="bn-uBox"><div class="n">Кілобайт</div></div>
+        <div class="bn-uArr">×1024<span class="a">→</span></div>
+        <div class="bn-uBox"><div class="n">Мегабайт</div></div>
+        <div class="bn-uArr">×1024<span class="a">→</span></div>
+        <div class="bn-uBox"><div class="n">Гігабайт</div></div>
+      </div>
+      <p style="text-align:center;margin-top:14px">Тут «кіло» означає не 1000, а <span class="hi">1024 = 2¹⁰</span> — бо все навколо рахується двійковим кодом.</p>
+    </div>
+
+    <div class="slide" data-n="8">
+      <div class="lbl">Розділ 04 · Системи числення</div>
+      <h2 class="stitle">Позиційні й <span class="a">непозиційні</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">🏛️ Непозиційна</div>
+          <p>Значення цифри <span class="hi">не залежить</span> від її позиції в числі.</p>
+          <p style="font-family:var(--fm);font-size:12px;color:var(--muted)">римська: XIV — X (10) завжди 10, незалежно від місця</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🔢 Позиційна</div>
+          <p>Значення цифри <span class="hi">залежить</span> від позиції.</p>
+          <p style="font-family:var(--fm);font-size:12px;color:var(--muted)">444 — 4 сотні, 4 десятки, 4 одиниці</p>
+        </div>
+      </div>
+      <div class="bn-sysGrid" style="margin-top:16px">
+        <div class="bn-sysC"><div class="b">2</div><div class="nm">двійкова</div><div class="use">програмування</div></div>
+        <div class="bn-sysC"><div class="b">8</div><div class="nm">вісімкова</div><div class="use">кібернетика 1960-х</div></div>
+        <div class="bn-sysC"><div class="b">10</div><div class="nm">десяткова</div><div class="use">повсюдно</div></div>
+        <div class="bn-sysC"><div class="b">16</div><div class="nm">шістнадцяткова</div><div class="use">кольори, налагодження</div></div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="9">
+      <div class="lbl">Розділ 04 · Переведення чисел</div>
+      <h2 class="stitle">Десяткова → <span class="a">двійкова</span></h2>
+      <div class="col2">
+        <div>
+          <div class="ctitle">Алгоритм</div>
+          <ul class="bn-stepList">
+            <li>Ділимо число на 2, записуємо частку й остачу</li>
+            <li>Отриману частку знову ділимо на 2</li>
+            <li>Повторюємо, доки частка не стане меншою за 2</li>
+            <li>Записуємо остачі у зворотному порядку</li>
+          </ul>
+          <p style="margin-top:6px;font-family:var(--fm);font-size:12.5px;color:var(--green)">75₁₀ = 1001011₂</p>
+        </div>
+        <div class="bn-convBox">
+          <div class="dlbl">Спробуй сам</div>
+          <div class="bn-convRow">
+            <input type="number" id="bnDecIn" min="0" max="1023" placeholder="0–1023">
+            <button class="tbtn" onclick="bnConvertDec()">▶ Перевести</button>
+          </div>
+          <div class="bn-convOut" id="bnDecOut">—</div>
+          <div class="bn-convSteps" id="bnDecSteps"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="10">
+      <div class="lbl">Розділ 04 · Переведення чисел</div>
+      <h2 class="stitle">Двійкова → <span class="a">десяткова</span></h2>
+      <p>Кожна позиція двійкового числа відповідає степеню двійки. Додаємо степені, що стоять під одиницями:</p>
+      <div class="card" style="font-family:var(--fm);text-align:center;padding:22px">
+        <div style="letter-spacing:6px;font-size:16px;color:var(--text)">1 1 0 0 1 0 1 0</div>
+        <div style="letter-spacing:2px;font-size:11.5px;color:var(--muted);margin-top:6px">2⁷ 2⁶ 2⁵ 2⁴ 2³ 2² 2¹ 2⁰</div>
+        <div style="letter-spacing:2px;font-size:11.5px;color:var(--cyan);margin-top:4px">128 64 · · 8 · 2 ·</div>
+        <div style="margin-top:12px;font-size:15px;color:var(--green)">128 + 64 + 8 + 2 = 202</div>
+      </div>
+      <div class="bn-quiz" style="margin-top:14px">
+        <div class="bn-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Чому дорівнює 101₂ у десятковій системі?</div>
+          <div class="ans">→ 4 + 0 + 1 = 5</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="11">
+      <div class="lbl">Розділ 05 · Шістнадцяткова система</div>
+      <h2 class="stitle">HEX-<span class="a">кольори</span> у вебдизайні</h2>
+      <p>Кожен колір на сайті записують як <code>#RRGGBB</code> — три пари шістнадцяткових цифр (червоний, зелений, синій, 00–FF). Одна шістнадцяткова цифра = рівно 4 біти, тому всього 24 біти — <span class="hi">16,7 млн</span> можливих кольорів.</p>
+      <div class="bn-colorGrid">
+        <div class="bn-swatch sel" style="background:#00d4ff" onclick="bnPickColor(this,'#00D4FF','ціан — акцент цієї презентації')"></div>
+        <div class="bn-swatch" style="background:#ff6b6b" onclick="bnPickColor(this,'#FF6B6B','корал')"></div>
+        <div class="bn-swatch" style="background:#ffd93d" onclick="bnPickColor(this,'#FFD93D','жовтий')"></div>
+        <div class="bn-swatch" style="background:#6bcb77" onclick="bnPickColor(this,'#6BCB77','зелений')"></div>
+        <div class="bn-swatch" style="background:#a78bfa" onclick="bnPickColor(this,'#A78BFA','фіолетовий')"></div>
+      </div>
+      <div class="bn-colorPanel" style="margin-top:16px">
+        <div class="bn-colorPrev" id="bnColorPrev" style="background:#00d4ff"></div>
+        <div class="bn-colorHex">
+          <div class="h1" id="bnColorHexTxt">#00D4FF</div>
+          <div class="h2" id="bnColorName">ціан — акцент цієї презентації</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="12">
+      <div class="lbl">Розділ 06 · Кодування тексту</div>
+      <h2 class="stitle">ASCII і <span class="a">Юнікод</span></h2>
+      <div class="bn-def">
+        <div class="dt">Означення</div>
+        <p><strong>ASCII</strong> — таблиця кодування, що ставить у відповідність кожному символу унікальний двійковий код (1 байт = 8 біт = 256 символів). <strong>Юнікод</strong> кодує символи всіх мов світу <span class="hg">та emoji</span> 😀 — уже понад 150 000 символів.</p>
+      </div>
+      <div class="bn-convBox">
+        <div class="dlbl">Спробуй сам — введи слово (латиниця, до 8 символів)</div>
+        <div class="bn-convRow">
+          <input type="text" id="bnWordIn" maxlength="8" placeholder="напр. HI" style="width:160px">
+          <button class="tbtn" onclick="bnEncodeWord()">▶ Закодувати</button>
+        </div>
+        <div class="bn-asciiRow" id="bnAsciiOut"></div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="13">
+      <div class="lbl">Розділ 06 · Двійковий код у житті</div>
+      <h2 class="stitle">Штрихкоди й <span class="a">QR-коди</span></h2>
+      <p>Штрихкод — теж двійковий код: тонка лінія = «1», подвійна ширина = «11», порожнє місце = «0». QR-код — те саме, тільки чорні й білі квадратики замість смужок.</p>
+      <div class="bn-quiz">
+        <div class="bn-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Що станеться, якщо контрольна сума штрихкоду не збіжиться?</div>
+          <div class="ans">→ сканер його не розпізнає — саме тому касир іноді сканує товар кілька разів</div>
+        </div>
+        <div class="bn-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Скільки стартових варіантів (A, B, C) у Code-128?</div>
+          <div class="ans">→ 3 — кожному відповідає своя кодова таблиця символів</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="14">
+      <div class="lbl">Практика · Завдання 1</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf"><h2>Переклади числа</h2><span class="badge be">⭐ Базовий рівень</span></div>
+      </div>
+      <p>Виконай переведення усно чи на чернетці, потім клікни, щоб перевірити себе.</p>
+      <div class="bn-quiz">
+        <div class="bn-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">23₁₀ → двійкова</div>
+          <div class="ans">→ 10111₂</div>
+        </div>
+        <div class="bn-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">41₁₀ → двійкова</div>
+          <div class="ans">→ 101001₂</div>
+        </div>
+        <div class="bn-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">1100100₂ → десяткова</div>
+          <div class="ans">→ 100</div>
+        </div>
+        <div class="bn-qitem" onclick="this.classList.toggle('show')">
+          <div class="q">Найбільше число, яке можна закодувати трьома бітами?</div>
+          <div class="ans">→ 111₂ = 7</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="15">
+      <div class="lbl">Практика · Завдання 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf"><h2>Закодуй і розкодуй слово</h2><span class="badge bm">⭐⭐ Середній рівень</span></div>
+      </div>
+      <p>Скористайся конвертером зі слайду 12 (поверни на нього стрілкою ←), щоб перевірити себе.</p>
+      <ul class="bn-cl">
+        <li>Закодуй своє ім'я в 8-бітний двійковий ASCII-код (кожна літера окремо)</li>
+        <li>Порахуй, скільки байтів займе твоє ім'я в текстовому файлі</li>
+        <li>Знайди двійкові коди чисел 25, 36, 102 та зобрази їх як штрихкод (зафарбовуючи клітинки таблиці з 8 стовпців)</li>
+      </ul>
+      <div class="hint hint-g" style="margin-top:14px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Якщо в числі менше 8 бітів — старші (ліві) біти заповнюються нулями до 8 символів.</p>
+      </div>
+    </div>
+
+    <div class="slide" data-n="16">
+      <div class="lbl">Підсумок уроку</div>
+      <h2 class="stitle">Що варто <span class="a">запам'ятати</span></h2>
+      <div class="sumGrid">
+        <div class="sumc">
+          <div class="sumi">🔢</div>
+          <div class="sumt">Двійковий код</div>
+          <p>n бітів кодують 2ⁿ повідомлень</p>
+        </div>
+        <div class="sumc">
+          <div class="sumi">🔄</div>
+          <div class="sumt">Переведення чисел</div>
+          <p>10 → 2 діленням на 2, 2 → 10 сумою степенів двійки</p>
+        </div>
+        <div class="sumc">
+          <div class="sumi">🌍</div>
+          <div class="sumt">Навколо нас</div>
+          <p>кольори, текст і штрихкоди — теж двійковий код</p>
+        </div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+<script src="../../_shared/nav.js"></script>
+<script>
+let bnGameLo = 1, bnGameHi = 64, bnGameQ = 0;
+
+function bnGameRender() {
+  const guess = Math.floor((bnGameLo + bnGameHi) / 2);
+  document.getElementById('bnGameNum').textContent = guess;
+  document.getElementById('bnGameRange').textContent = `Діапазон: ${bnGameLo}–${bnGameHi}`;
+  document.getElementById('bnGameStat').textContent = `Запитань: ${bnGameQ}`;
+}
+
+function bnGameGuess(action) {
+  const msg = document.getElementById('bnGameMsg');
+  const guess = parseInt(document.getElementById('bnGameNum').textContent, 10);
+  if (action === 'yes') {
+    msg.textContent = `Вгадав за ${bnGameQ} запитань! (максимум — 6, бо 2⁶ = 64)`;
+    return;
+  }
+  bnGameQ++;
+  if (action === 'less') bnGameHi = guess - 1;
+  if (action === 'more') bnGameLo = guess + 1;
+  if (bnGameLo >= bnGameHi) {
+    document.getElementById('bnGameNum').textContent = bnGameLo;
+    document.getElementById('bnGameRange').textContent = `Діапазон: ${bnGameLo}`;
+    document.getElementById('bnGameStat').textContent = `Запитань: ${bnGameQ}`;
+    msg.textContent = 'Залишилось лише одне число — це воно!';
+    return;
+  }
+  msg.textContent = '';
+  bnGameRender();
+}
+</script>
+<script>
+function bnConvertDec() {
+  const input = document.getElementById('bnDecIn');
+  const out = document.getElementById('bnDecOut');
+  const steps = document.getElementById('bnDecSteps');
+  let n = parseInt(input.value, 10);
+  if (isNaN(n) || n < 0 || n > 1023) {
+    out.textContent = 'введи число від 0 до 1023';
+    steps.textContent = '';
+    return;
+  }
+  const trace = [];
+  let x = n;
+  if (x === 0) trace.push('0 : 2 = 0, остача 0');
+  while (x > 0) {
+    const q = Math.floor(x / 2);
+    const r = x % 2;
+    trace.push(`${x} : 2 = ${q}, остача ${r}`);
+    x = q;
+  }
+  out.textContent = `${n}₁₀ = ${n.toString(2)}₂`;
+  out.classList.add('highlight-green');
+  setTimeout(() => out.classList.remove('highlight-green'), 1200);
+  steps.textContent = trace.join('\n');
+}
+
+function bnPickColor(el, hex, name) {
+  document.querySelectorAll('.bn-colorGrid .bn-swatch').forEach(s => s.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('bnColorPrev').style.background = hex;
+  document.getElementById('bnColorHexTxt').textContent = hex;
+  document.getElementById('bnColorName').textContent = name;
+}
+
+function bnEncodeWord() {
+  const input = document.getElementById('bnWordIn');
+  const out = document.getElementById('bnAsciiOut');
+  const word = input.value.trim();
+  out.innerHTML = '';
+  if (!word) return;
+  for (const ch of word) {
+    const code = ch.charCodeAt(0);
+    const bin = code.toString(2).padStart(8, '0');
+    const cell = document.createElement('div');
+    cell.className = 'bn-asciiC';
+    cell.innerHTML = `<div class="ch">${ch}</div><div class="bin">${bin}</div>`;
+    out.appendChild(cell);
+  }
+}
+</script>
+</body>
+</html>

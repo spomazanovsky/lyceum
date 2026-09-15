@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Інформація – фундаментальне поняття інформатики – 8-б клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition box ── */
+.fi-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.fi-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.fi-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.fi-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Flow / chain (slide 5, 11) ── */
+.fi-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.fi-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;transition:all .25s ease;cursor:default}
+.fi-fstep .ic{font-size:20px;margin-bottom:6px}
+.fi-fstep .tt{font-size:11.5px;color:#c4d0e0;line-height:1.3;font-family:var(--fd);font-weight:600}
+.fi-fstep:hover{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.fi-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:20px}
+
+/* ── Live example box under a flow (slide 5) ── */
+.fi-exBox{min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(0,212,255,.05);border:1px solid var(--border);border-radius:10px;padding:12px 18px;font-size:13px;color:#c4d0e0;transition:opacity .2s ease}
+
+/* ── Ways of representing info (pill grid) ── */
+.fi-formGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
+.fi-form{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;transition:transform .2s ease,border-color .2s ease}
+.fi-form:hover{transform:translateY(-4px);border-color:var(--purple)}
+.fi-form .ic{font-size:22px;margin-bottom:7px}
+.fi-form .lb{font-size:11px;color:#c4d0e0;font-family:var(--fd)}
+
+/* ── Compare cards (dani vs info, encoding vs encryption) ── */
+.fi-cmp{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px}
+.fi-cmp .ct{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:8px}
+.fi-cmp p{font-size:12.5px;margin:0}
+
+/* ── Braille table ── */
+.fi-brl{width:100%;border-collapse:collapse;font-size:12.5px}
+.fi-brl th{font-family:var(--fd);font-size:10.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--cyan);text-align:center;padding:6px 8px;border-bottom:1px solid var(--border)}
+.fi-brl td{text-align:center;padding:7px 8px;border-bottom:1px dashed rgba(28,48,84,.6);color:#e2e8f0}
+.fi-dots{display:inline-grid;grid-template-columns:repeat(2,10px);grid-template-rows:repeat(3,10px);gap:3px;vertical-align:middle}
+.fi-dots span{width:10px;height:10px;border-radius:50%;border:1px solid var(--border);background:transparent}
+.fi-dots span.f{background:var(--cyan);border-color:var(--cyan)}
+
+/* ── Full Braille alphabet reference grid (slide 15) ── */
+.fi-alphaGrid{display:grid;grid-template-columns:repeat(13,1fr);gap:6px;margin:6px 0 4px}
+.fi-alpha{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:7px 2px;text-align:center}
+.fi-alpha .lt{display:block;font-family:var(--fd);font-weight:700;font-size:11.5px;color:#e2e8f0}
+.fi-alpha .br{display:block;font-size:17px;color:var(--cyan);margin-top:2px}
+
+/* ── Word encoder (slide 15) ── */
+.fi-wordInput{background:var(--card);color:#e2e8f0;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--fm);font-size:15px;letter-spacing:1px;text-transform:uppercase;text-align:center;align-self:center;width:min(100%,360px)}
+.fi-wordInput:focus{outline:none;border-color:var(--cyan)}
+.fi-wordOut{font-family:var(--fm);font-size:26px;color:var(--green);text-align:center;min-height:34px;letter-spacing:3px}
+.fi-wordDots{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;min-height:44px}
+.fi-wcell{display:flex;flex-direction:column;align-items:center;gap:4px}
+.fi-wcell .lt{font-family:var(--fd);font-size:10.5px;color:var(--muted)}
+
+/* ── DNA / bio info card ── */
+.fi-statRow{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.fi-statRow .num{font-family:var(--fd);font-weight:800;font-size:20px;color:var(--cyan);min-width:92px}
+.fi-statRow .lb{font-size:12px;color:#94a3b8}
+
+/* ── Quiz (click to reveal) ── */
+.fi-quiz{display:flex;flex-direction:column;gap:8px}
+.fi-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.fi-qitem:hover{border-color:var(--cyan)}
+.fi-qitem .q{font-size:13px;color:#e2e8f0}
+.fi-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.fi-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+/* ── Checklist ── */
+.fi-cl{list-style:none;padding:0;margin:0}
+.fi-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.fi-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+/* ── Fun-fact break ── */
+.fi-factCard{background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(0,212,255,.06));border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.fi-factCard .ic{font-size:34px;margin-bottom:10px}
+.fi-factCard p{margin:0;font-size:14px;color:#e2e8f0}
+
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">інформація</span>
+        <span class="fcode">повідомлення</span>
+        <span class="fcode">дані</span>
+        <span class="fcode">код</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">розділ</span> назва=<span class="tn">"апаратне забезпечення і дані"</span>&gt;</div>
+        <h1 class="mtitle">Інформація —<br>фундаментальне поняття</h1>
+        <div class="tul"></div>
+        <p class="tsub">Що таке інформація, повідомлення, дані та код</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 8 клас</div>
+          <div class="mchip"><span class="ic">🗂</span> Розділ 1, § 3</div>
+          <div class="mchip"><span class="ic">✨</span> Теоретичний урок</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 8 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Синоніми чи ні?</strong>Інформація, повідомлення, дані, сигнали</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Що таке інформація</strong>Побутове й технічне значення терміна</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Форми існування інформації</strong>Від повідомлення до знання</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Код і кодування</strong>Види коду, кодування vs шифрування</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Способи подання інформації</strong>Від тексту до генів</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Цікаві приклади</strong>ДНК як інформаційна система, шрифт Брайля</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Cookie pyramid hook
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Завдання № 1</div>
+      <h2 class="stitle">Синоніми <span class="a">чи ні?</span></h2>
+      <p>Три людини з різним життєвим досвідом куштують <strong style="color:#fff">однакове печиво</strong>. Розглянь схему до кожного зображення — на нижньому рівні всі три однакові, а вище — різняться.</p>
+      <div class="col3" style="margin-top:10px">
+        <div class="card">
+          <div class="ctitle">🙂 «Мені подобається таке печиво»</div>
+          <p style="margin-bottom:0">↑ печиво із шоколадною крихтою<br>↑ смачне, тепле, з темною крихтою, пахне</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">👨‍🍳 «Вдалі пропорції»</div>
+          <p style="margin-bottom:0">↑ добре пропечено, смак відповідає задуманій страві<br>↑ смачне, тепле, з темною крихтою, пахне</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🧑 «Таке можна їсти»</div>
+          <p style="margin-bottom:0">↑ смачна їжа<br>↑ смачне, тепле, з темною крихтою, пахне</p>
+        </div>
+      </div>
+      <div class="fi-note" style="margin-top:12px">💬 Обговоріть: чи можна назвати всі відомості інформацією? Чому вони однакові на нижньому рівні й різняться на інших? Які відомості можна назвати повідомленнями?</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — What is information
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">інформація?</span></h2>
+      <p>Вичерпне означення поняття «інформація» дати неможливо — воно залежить від напряму наукових досліджень. Але є два корисних значення:</p>
+      <div class="col2" style="margin-top:8px">
+        <div class="fi-cmp">
+          <div class="ct" style="color:var(--yellow)">У побуті</div>
+          <p>«Інформувати» означає «повідомити щось, невідоме раніше». Інформація — це те, що <span class="hi">знімає невизначеність</span> конкретного поняття.</p>
+        </div>
+        <div class="fi-cmp">
+          <div class="ct" style="color:var(--cyan)">У техніці</div>
+          <p>Інформацією вважають <span class="hi">повідомлення, передані у формі знаків або сигналів</span> — саме так її розуміють комп'ютери й технічні пристрої.</p>
+        </div>
+      </div>
+      <div class="fi-def" style="margin-top:14px">
+        <div class="dt">Означення через заперечення</div>
+        <p>Норберт Вінер, «батько» кібернетики, дав дотепне означення: <em>«Інформація — не матерія і не енергія; інформація — це інформація»</em>.</p>
+      </div>
+      <div class="fi-note">🇺🇦 Першу у світі енциклопедію кібернетики видано 1973 року українською мовою — під редакцією академіка Віктора Глушкова.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Forms of existence pyramid
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Форми існування інформації</div>
+      <h2 class="stitle">Від повідомлення <span class="a">до знання</span></h2>
+      <p>Одне повідомлення може містити різну кількість інформації для різних людей — залежно від їхніх попередніх знань і рівня розуміння. Отримавши повідомлення, людина поступово формує вищі форми інформації. Простеж це на прикладі:</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Живий приклад — дощова погода восени (наведи курсор на крок)</div>
+        <div class="fi-flow" id="ladder1">
+          <div class="fi-fstep" onmouseenter="fiShowEx(this,'ladder1ex')" onmouseleave="fiHideEx('ladder1ex')" data-ex="За вікном справді йде дощ — це просто факт навколишнього світу, який існує незалежно від того, помітив його хтось чи ні."><div class="ic">🌧️</div><div class="tt">Реалії світу</div></div>
+          <div class="fi-farrow">→</div>
+          <div class="fi-fstep" onmouseenter="fiShowEx(this,'ladder1ex')" onmouseleave="fiHideEx('ladder1ex')" data-ex="Ти бачиш краплі на вікні й чуєш шум дощу — органи чуття сприймають сигнали. Це і є повідомлення."><div class="ic">👀👂</div><div class="tt">Повідомлення</div></div>
+          <div class="fi-farrow">→</div>
+          <div class="fi-fstep" onmouseenter="fiShowEx(this,'ladder1ex')" onmouseleave="fiHideEx('ladder1ex')" data-ex="У свідомості формується судження: «Надворі дощова погода» — повідомлення перетворилося на уявлення й поняття."><div class="ic">💭</div><div class="tt">Уявлення, поняття, судження</div></div>
+          <div class="fi-farrow">→</div>
+          <div class="fi-fstep" onmouseenter="fiShowEx(this,'ladder1ex')" onmouseleave="fiHideEx('ladder1ex')" data-ex="З багаторічного досвіду ти узагальнюєш: «Восени дощі йдуть частіше, тож варто брати парасольку» — це вже знання."><div class="ic">🎓</div><div class="tt">Знання</div></div>
+        </div>
+        <div class="fi-exBox" id="ladder1ex" data-default="Наведи курсор на будь-який крок, щоб побачити приклад.">Наведи курсор на будь-який крок, щоб побачити приклад.</div>
+      </div>
+      <div class="fi-note" style="margin-top:12px">💡 Повідомлення японською мовою не дасть жодної інформації тому, хто не знає японської — але буде цілком інформативним для того, хто її знає.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Дані vs Інформація
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle"><span class="a">Дані</span> — це не те саме, що інформація</h2>
+      <div class="fi-def">
+        <div class="dt">Означення</div>
+        <p><strong>Дані</strong> — це відомості, зафіксовані на певному носії у формі, придатній для постійного <span class="hi">зберігання, передавання та опрацювання</span>.</p>
+      </div>
+      <div class="col2">
+        <div class="demo">
+          <div class="dlbl">Приклад</div>
+          <p style="margin-bottom:0">Текст параграфа в підручнику — це <strong style="color:#fff">дані</strong>. Те, що ти зрозумів і запам'ятав, прочитавши його, — уже <strong style="color:#fff">інформація</strong>.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">Коли дані стають інформацією?</div>
+          <p style="margin-bottom:0">З погляду користувача дані можна назвати інформацією, якщо вони для нього <span class="hg">зрозумілі</span>, <span class="hg">актуальні</span> й <span class="hg">достовірні</span>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Code and encoding
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Код і <span class="a">кодування</span></h2>
+      <div class="fi-def">
+        <div class="dt">Означення</div>
+        <p><strong>Код</strong> — система знаків або символів, яка використовується для подання інформації. <strong>Кодування</strong> — процес подання відомостей за допомогою системи знаків. Зворотний процес — <strong>декодування</strong>.</p>
+      </div>
+      <p style="margin-bottom:6px">Термін «код» в інформатиці має різні значення залежно від контексту:</p>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">💻 Програмний код</div>
+          <p style="margin-bottom:0">Алгоритм, записаний мовою програмування — наприклад, Python чи JavaScript.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🔤 Символьний код</div>
+          <p style="margin-bottom:0">Подання символів чи тексту у вигляді чисел. Приклад — <strong style="color:#fff">ASCII-код</strong>.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🔐 Код у криптографії</div>
+          <p style="margin-bottom:0">Алгоритм або «ключ» для перетворення інформації з метою приховування змісту.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Encoding vs encryption
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Порівняння понять</div>
+      <h2 class="stitle">Кодування та шифрування — <span class="a">це синоніми?</span></h2>
+      <div class="col2">
+        <div class="fi-cmp">
+          <div class="ct" style="color:var(--cyan)">Кодування</div>
+          <p>Процес перетворення даних у певний формат для зберігання або передавання. Наприклад, перетворення тексту українського алфавіту на текст шрифтом Брайля.</p>
+        </div>
+        <div class="fi-cmp">
+          <div class="ct" style="color:var(--coral)">Шифрування</div>
+          <p>Перетворення даних так, щоб їх могла прочитати лише особа з ключем для розшифрування. Мета — забезпечити <span class="hc">конфіденційність</span> даних.</p>
+        </div>
+      </div>
+      <div class="demo" style="margin-top:12px">
+        <div class="dlbl">Приклад — онлайн-банкінг 🏦</div>
+        <p style="margin-bottom:0">Коли ти вводиш логін і пароль на сайті банку, ці дані передаються через інтернет <strong style="color:#fff">зашифрованими</strong>. Якщо їх перехопить зловмисник — прочитати без ключа він їх не зможе. Так шифрування захищає персональні та фінансові дані користувача.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Ways of representing info
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">За допомогою чого <span class="a">подається інформація?</span></h2>
+      <div class="fi-formGrid">
+        <div class="fi-form"><div class="ic">📝</div><div class="lb">Тексти, малюнки, фото</div></div>
+        <div class="fi-form"><div class="ic">💡</div><div class="lb">Світлові й звукові сигнали</div></div>
+        <div class="fi-form"><div class="ic">📡</div><div class="lb">Радіохвилі</div></div>
+        <div class="fi-form"><div class="ic">🧲</div><div class="lb">Магнітні записи</div></div>
+        <div class="fi-form"><div class="ic">👃</div><div class="lb">Запахи й смаки</div></div>
+        <div class="fi-form"><div class="ic">⚡</div><div class="lb">Електричні й нервові імпульси</div></div>
+        <div class="fi-form"><div class="ic">🤟</div><div class="lb">Жести й міміка</div></div>
+        <div class="fi-form"><div class="ic">🧬</div><div class="lb">Гени</div></div>
+      </div>
+      <div class="fi-note" style="margin-top:14px">💡 Подивись на табличку «Виклик персоналу» з піктограмою, текстом і шрифтом Брайля — вона одразу поєднує <strong style="color:#fff">кілька способів подання</strong> однієї й тієї самої інформації.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — DNA / bio info (own added content)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Цікаво / Завдання № 2</div>
+      <h2 class="stitle">Інформація в <span class="a">живій природі</span></h2>
+      <p>Живі організми теж можна розглядати як <span class="hi">інформаційні системи</span>: інформація в них зберігається, опрацьовується й передається для забезпечення життєдіяльності.</p>
+      <div class="col2" style="margin-top:8px">
+        <div class="card">
+          <div class="ctitle">🧬 Генетичний код</div>
+          <p style="margin-bottom:0">Записаний у ДНК код містить інструкції для синтезу білків. Він передається від покоління до покоління, забезпечуючи спадковість.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🧠 Нервова система</div>
+          <p style="margin-bottom:0">Організми опрацьовують зовнішні сигнали через нервову систему та сенсорні механізми — це дає змогу адаптуватися до змін середовища.</p>
+        </div>
+      </div>
+      <div class="demo" style="margin-top:12px">
+        <div class="dlbl">Цікавий факт — скільки «даних» у твоєму ДНК?</div>
+        <div class="fi-statRow"><div class="num">~3 млрд</div><div class="lb">пар нуклеотидних основ у геномі людини</div></div>
+        <div class="fi-statRow"><div class="num">4</div><div class="lb">«літери» алфавіту ДНК: A, T, G, C — кожна кодує 2 біти</div></div>
+        <div class="fi-statRow"><div class="num">~750 МБ</div><div class="lb">стільки б важив геном людини, якби його записати як звичайний файл</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Braille history + table
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Цікаво / Завдання № 4</div>
+      <h2 class="stitle">Шрифт <span class="a">Брайля</span></h2>
+      <p>Рельєфно-крапковий тактильний шрифт для письма й читання незрячими людьми. Розробив у 1824 р. француз Луї Брайль — сам він у 3 роки втратив зір, а вже у 15 років створив свій шрифт, надихнувшись «нічним шрифтом» капітана Шарля Барб'є, яким військові читали повідомлення в темряві.</p>
+      <p style="margin-bottom:6px">Символи (переважно букви й цифри) подано шістьма опуклостями (крапками), розташованими у два стовпці по три:</p>
+      <table class="fi-brl">
+        <tr><th>Символ Брайля</th><th>Крапки</th><th>Латинська буква</th><th>Українська літера</th><th>Цифра</th></tr>
+        <tr><td>⠁</td><td><span class="fi-dots"><span class="f"></span><span></span><span></span><span></span><span></span><span></span></span></td><td>A</td><td>А</td><td>1</td></tr>
+        <tr><td>⠃</td><td><span class="fi-dots"><span class="f"></span><span></span><span class="f"></span><span></span><span></span><span></span></span></td><td>B</td><td>Б</td><td>2</td></tr>
+        <tr><td>⠉</td><td><span class="fi-dots"><span class="f"></span><span class="f"></span><span></span><span></span><span></span><span></span></span></td><td>C</td><td>Ц</td><td>3</td></tr>
+        <tr><td>⠙</td><td><span class="fi-dots"><span class="f"></span><span class="f"></span><span></span><span class="f"></span><span></span><span></span></span></td><td>D</td><td>Д</td><td>4</td></tr>
+      </table>
+      <div class="fi-note" style="margin-top:10px">🤔 Латинська «B», українська «Б» і цифра «2» кодуються однаковим символом! Як думаєш, за допомогою чого люди, які читають Брайлем, відрізняють букви від цифр?</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Fun fact break
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Перерва / Цікавий факт</div>
+      <h2 class="stitle">А ти знав<span class="a">(-ла)?</span></h2>
+      <div class="fi-factCard">
+        <div class="ic">📖</div>
+        <p>Напис на кам'яній табличці бібліотеки з фотографії підручника — теж закодована інформація, тільки читається вона <strong>дотиком, а не зором</strong>. А в шрифті Брайля навіть є окремі позначення для нотних знаків і хімічних формул — ним можна «прочитати» не лише текст, а й музику чи математику!</p>
+      </div>
+      <div class="fi-note" style="margin-top:14px">💬 Наведи власний приклад задачі, яка потребує зберігання й передавання повідомлень, закодованих незвичним способом (не текстом і не звуком).</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Right to information
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Закон України</div>
+      <h2 class="stitle">Право на <span class="a">інформацію</span></h2>
+      <div class="fi-def">
+        <div class="dt">Закон України «Про інформацію»</div>
+        <p>«Кожна людина має право на інформацію. Це означає, що кожен може вільно збирати, зберігати, використовувати і поширювати інформацію усно, письмово або в інший спосіб».</p>
+      </div>
+      <p>Конституційні гарантії права на інформацію закріплено у статтях 32, 34, 40 та 50 Конституції України. Але це право, як і більшість прав людини, <span class="hy">не є абсолютним</span> — у деяких випадках його здійснення може бути обмежено (перелік випадків — стаття 34 Конституції).</p>
+      <div class="fi-note">💬 Наведи приклад, коли доступ до інформації може бути обмежено (наприклад, персональні дані інших людей, державна таємниця).</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Practice 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Дані чи інформація?</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>Для кожної ситуації визнач: ідеться про <span class="hi">дані</span> чи про <span class="hg">інформацію</span>. Натисни на пункт, щоб перевірити себе.</p>
+      <div class="fi-quiz">
+        <div class="fi-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Файл із текстом параграфа, збережений на флешці</div><div class="ans">→ дані (зафіксовані на носії, ще не осмислені)</div></div>
+        <div class="fi-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Те, що ти зрозумів, прочитавши параграф</div><div class="ans">→ інформація (відображення у свідомості)</div></div>
+        <div class="fi-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Повідомлення незрозумілою тобі мовою</div><div class="ans">→ дані (для тебе не несуть інформації)</div></div>
+        <div class="fi-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Прогноз погоди, який ти щойно почув і врахував</div><div class="ans">→ інформація (зрозуміла, актуальна, використана)</div></div>
+        <div class="fi-qitem" onclick="this.classList.toggle('show')"><div class="q">д) Стара таблиця оцінок п'ятирічної давності в журналі</div><div class="ans">→ дані (втратили актуальність — не інформативні зараз)</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Питай себе: ці відомості вже осмислені й зрозумілі саме тобі зараз, чи це лише зафіксований на носії набір знаків?</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Practice 2 (interactive Braille encoder)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Закодуй своє прізвище шрифтом Брайля</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p style="margin-bottom:8px">Міжнародний шрифт Брайля для латинського алфавіту стандартизований — кожній літері A–Z завжди відповідає той самий, незмінний набір крапок. Ось повна абетка:</p>
+      <div class="fi-alphaGrid" id="fiAlphaGrid"></div>
+      <div class="demo" style="align-items:stretch;margin-top:6px">
+        <div class="dlbl" style="align-self:center">Напиши своє прізвище латиницею (як у закордонному паспорті чи квитку на літак)</div>
+        <input type="text" id="fiWordIn" class="fi-wordInput" placeholder="Наприклад: PETRENKO" oninput="fiEncodeWord()" autocomplete="off">
+        <div id="fiWordOut" class="fi-wordOut">&nbsp;</div>
+        <div id="fiWordDots" class="fi-wordDots"></div>
+      </div>
+      <div class="hint hint-y" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Питання для обговорення</div>
+        <p>На слайді 11 однаковий символ Брайля кодував і «B», і «Б», і «2». Запропонуй власний спосіб розрізнення латинського тексту, кириличного тексту та чисел у шрифті Брайля.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 3, сторінки 21–26 — прочитати, звернути увагу на означення (виділені жирним), уміти відповісти на запитання рубрики «Перевір себе».</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">🏠 Перевір себе (ст. 26)</div>
+        <ul class="fi-cl">
+          <li>Навести приклади джерел інформації та способів, якими в кожному подається інформація</li>
+          <li>Навести приклади повідомлень, що не відповідають властивостям актуальності, повноти, достовірності, зрозумілості чи своєчасності</li>
+          <li>Подумати, у яких формах може існувати інформація в комахи, собаки, комп'ютера, системи розпізнавання облич і дворічної дитини</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">🧩</div><div class="sumt">Інформація</div><p>Фундаментальне поняття, яке неможливо вичерпно означити — залежить від контексту</p></div>
+        <div class="sumc"><div class="sumi">📡</div><div class="sumt">Повідомлення → знання</div><p>Від сигналів до уявлень, понять, суджень і врешті знань</p></div>
+        <div class="sumc"><div class="sumi">💾</div><div class="sumt">Дані vs інформація</div><p>Дані стають інформацією, коли вони зрозумілі, актуальні й достовірні</p></div>
+        <div class="sumc"><div class="sumi">🔐</div><div class="sumt">Код і кодування</div><p>Кодування — не те саме, що шифрування; мета шифрування — конфіденційність</p></div>
+        <div class="sumc"><div class="sumi">🎭</div><div class="sumt">Способи подання</div><p>Текст, сигнали, радіохвилі, запахи, жести, гени — і навіть шрифт Брайля</p></div>
+        <div class="sumc"><div class="sumi">⚖️</div><div class="sumt">Право на інформацію</div><p>Гарантоване Конституцією, але не абсолютне право</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Ladder-of-abstraction demo — hover a step to see its worked example (slide 5)
+function fiShowEx(el, boxId) {
+  const box = document.getElementById(boxId);
+  box.style.opacity = '0';
+  setTimeout(() => {
+    box.textContent = el.dataset.ex;
+    box.style.opacity = '1';
+  }, 100);
+}
+function fiHideEx(boxId) {
+  const box = document.getElementById(boxId);
+  box.style.opacity = '0';
+  setTimeout(() => {
+    box.textContent = box.dataset.default;
+    box.style.opacity = '1';
+  }, 100);
+}
+
+// Standard international Latin Braille alphabet (Grade 1), dot numbers 1-6 per letter (slide 15)
+const fiBrailleMap = {
+  a:[1], b:[1,2], c:[1,4], d:[1,4,5], e:[1,5], f:[1,2,4], g:[1,2,4,5], h:[1,2,5],
+  i:[2,4], j:[2,4,5], k:[1,3], l:[1,2,3], m:[1,3,4], n:[1,3,4,5], o:[1,3,5],
+  p:[1,2,3,4], q:[1,2,3,4,5], r:[1,2,3,5], s:[2,3,4], t:[2,3,4,5], u:[1,3,6],
+  v:[1,2,3,6], w:[2,4,5,6], x:[1,3,4,6], y:[1,3,4,5,6], z:[1,3,5,6]
+};
+// Unicode Braille Patterns block: bit(dot-1) set for each dot present
+function fiDotsToChar(dots) {
+  let code = 0;
+  dots.forEach(d => { code |= 1 << (d - 1); });
+  return String.fromCodePoint(0x2800 + code);
+}
+// Visual dot-grid markup follows the 2-col/3-row layout: dot1,dot4,dot2,dot5,dot3,dot6
+function fiDotsHtml(dots) {
+  return [1, 4, 2, 5, 3, 6].map(n => `<span class="${dots.includes(n) ? 'f' : ''}"></span>`).join('');
+}
+function fiRenderAlphabet() {
+  const grid = document.getElementById('fiAlphaGrid');
+  Object.keys(fiBrailleMap).forEach(letter => {
+    const cell = document.createElement('div');
+    cell.className = 'fi-alpha';
+    cell.innerHTML = `<span class="lt">${letter.toUpperCase()}</span><span class="br">${fiDotsToChar(fiBrailleMap[letter])}</span>`;
+    grid.appendChild(cell);
+  });
+}
+fiRenderAlphabet();
+
+function fiEncodeWord() {
+  const raw = document.getElementById('fiWordIn').value.toLowerCase();
+  const out = document.getElementById('fiWordOut');
+  const dotsRow = document.getElementById('fiWordDots');
+  let brailleText = '';
+  dotsRow.innerHTML = '';
+  for (const ch of raw) {
+    if (ch === ' ') { brailleText += ' '; continue; }
+    const dots = fiBrailleMap[ch];
+    if (!dots) continue;
+    brailleText += fiDotsToChar(dots);
+    const cell = document.createElement('div');
+    cell.className = 'fi-wcell';
+    cell.innerHTML = `<span class="fi-dots">${fiDotsHtml(dots)}</span><span class="lt">${ch.toUpperCase()}</span>`;
+    dotsRow.appendChild(cell);
+  }
+  out.innerHTML = brailleText || '&nbsp;';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Робота з поштовим клієнтом – 6-а клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition / note boxes ── */
+.pk-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.pk-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.pk-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.pk-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Inbox mock (list of mail rows) ── */
+.pk-inbox{background:#060e1c;border:1px solid var(--border);border-radius:12px;padding:6px;display:flex;flex-direction:column;gap:2px}
+.pk-mail{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;transition:background .2s}
+.pk-mail:hover{background:rgba(0,212,255,.05)}
+.pk-star{cursor:pointer;color:var(--border);font-size:15px;user-select:none;width:16px;text-align:center}
+.pk-mail.starred .pk-star{color:var(--yellow)}
+.pk-from{font-size:12.5px;color:var(--muted);min-width:110px;flex-shrink:0}
+.pk-subj{font-size:12.5px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pk-subj strong{color:#c4d0e0;font-weight:600}
+.pk-att{font-family:var(--fm);font-size:10px;color:var(--muted);background:rgba(255,255,255,.04);padding:1px 6px;border-radius:6px;margin-left:6px}
+.pk-time{font-family:var(--fm);font-size:11px;color:var(--muted);flex-shrink:0}
+.pk-mail.unread{background:rgba(0,212,255,.05)}
+.pk-mail.unread .pk-from,.pk-mail.unread .pk-subj,.pk-mail.unread .pk-subj strong{color:var(--text);font-weight:700}
+.pk-mail.clickable{cursor:pointer}
+.pk-callout{margin-top:10px;font-family:var(--fm);font-size:11px;color:var(--cyan);text-align:center}
+
+/* ── Folder grid ── */
+.pk-folderGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.pk-folder{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
+.pk-folder .ic{font-size:19px;flex-shrink:0}
+.pk-folder .ft{font-family:var(--fd);font-weight:700;font-size:13.5px;color:var(--text);margin-bottom:3px}
+.pk-folder p{margin:0;font-size:12px;color:var(--muted)}
+
+/* ── Flow diagram (compose steps) ── */
+.pk-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.pk-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;transition:all .35s ease}
+.pk-fstep .ic{font-size:20px;margin-bottom:6px}
+.pk-fstep .tt{font-size:11.5px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.pk-fstep.on{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.pk-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:20px}
+
+/* ── Compose window mock ── */
+.pk-compose{background:#060e1c;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.pk-cHead{background:var(--card);padding:9px 14px;font-family:var(--fd);font-size:11.5px;font-weight:600;color:#c4d0e0;border-bottom:1px solid var(--border)}
+.pk-cBody{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.pk-cRow{display:flex;gap:10px;align-items:center;font-size:12.5px;padding-bottom:8px;border-bottom:1px dashed rgba(28,48,84,.6)}
+.pk-cRow:last-of-type{border-bottom:none}
+.pk-cRow .k{font-family:var(--fm);font-size:10.5px;color:var(--muted);min-width:60px}
+.pk-cRow .v{color:var(--text)}
+.pk-cRow .v.filled{color:var(--cyan)}
+.pk-cText{font-size:12.5px;color:#c4d0e0;line-height:1.6;padding-top:2px}
+.pk-toolbar{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.pk-tbtn{font-family:var(--fm);font-size:10.5px;color:var(--muted);background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px;padding:4px 9px}
+
+/* ── Action grid (received email actions) ── */
+.pk-actGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pk-act{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px 10px;text-align:center}
+.pk-act .ic{font-size:22px;margin-bottom:7px}
+.pk-act .lb{font-size:12px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+
+/* ── Label tree (custom folders) ── */
+.pk-tree{font-family:var(--fm);font-size:12.5px;color:#c4d0e0;line-height:2.1}
+.pk-tree .lvl1{color:var(--cyan)}
+.pk-tree .lvl2{padding-left:22px;color:var(--muted)}
+
+/* ── Practice / hints (shared) ── */
+.pk-cl{list-style:none;padding:0;margin:0}
+.pk-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.pk-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">Вхідні</span>
+        <span class="fcode">Надіслані</span>
+        <span class="fcode">Чернетки</span>
+        <span class="fcode">Спам</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">урок</span> тема=<span class="tn">"робота з поштовим клієнтом"</span>&gt;</div>
+        <h1 class="mtitle">Робота з<br>поштовим клієнтом</h1>
+        <div class="tul"></div>
+        <p class="tsub">Як листи потрапляють у скриньку, розподіляються за папками — і як написати власний лист?</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 6 клас</div>
+          <div class="mchip"><span class="ic">✉️</span> Електронна пошта</div>
+          <div class="mchip"><span class="ic">✨</span> Урок 2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 6 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Папки поштового клієнта Gmail</strong>Вхідні, Із зірочкою та інші стандартні папки</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Власні папки (мітки)</strong>Як користувач упорядковує листи по-своєму</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Написання листа</strong>Кому, тема, текст — послідовність дій</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Форматування та вкладення</strong>Смайлики, зображення, файли в листі</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Дії з отриманим листом</strong>Відповісти, переслати, видалити, позначити спамом</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Кому / Копія / Прихована копія</strong>Різниця між трьома полями адресатів</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Definition: folders principle
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Папки поштового клієнта</div>
+      <h2 class="stitle">Навіщо <span class="a">поштовому клієнту папки?</span></h2>
+      <div class="pk-def">
+        <div class="dt">Означення</div>
+        <p>Щоб було легше керувати поштою, поштовий клієнт розподіляє листи за <span class="hi">папками</span>. Розглянемо папки поштового клієнта <strong>Gmail</strong>.</p>
+      </div>
+      <div class="pk-note">💡 Принцип впорядкування листів у поштовому клієнті подібний до принципу впорядкування файлів на комп'ютері: кожен лист «лежить» в одній із папок.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Inbox
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Папка «Вхідні»</div>
+      <h2 class="stitle">Папка <span class="a">«Вхідні»</span></h2>
+      <p style="margin-bottom:10px">Листи, які ти отримуєш, автоматично розміщуються в папці <strong style="color:#fff">Вхідні</strong>:</p>
+      <div class="pk-inbox">
+        <div class="pk-mail unread"><span class="pk-star">☆</span><span class="pk-from">Ольга</span><span class="pk-subj"><strong>Hello</strong> — Мої вітання!!!</span><span class="pk-time">07:36</span></div>
+        <div class="pk-mail unread"><span class="pk-star">☆</span><span class="pk-from">Команда Google</span><span class="pk-subj">Сергій, поздравляем с созданием аккаунта…</span><span class="pk-time">07:33</span></div>
+      </div>
+      <div class="pk-note" style="margin-top:12px">📬 У папці <strong style="color:#fff">Вхідні</strong> можна отримати різноманітну інформацію про листи — про це на наступному слайді.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Mail info (sender/subject/time)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Інформація про лист</div>
+      <h2 class="stitle">Що показує <span class="a">рядок листа?</span></h2>
+      <p style="margin-bottom:10px">Стосовно кожного листа в папці Вхідні відображається така інформація:</p>
+      <div class="pk-inbox">
+        <div class="pk-mail"><span class="pk-star">☆</span><span class="pk-from">Ольга</span><span class="pk-subj"><strong>Фото</strong> — Фото <span class="pk-att">📎 04.png</span></span><span class="pk-time">07:48</span></div>
+        <div class="pk-mail"><span class="pk-star">☆</span><span class="pk-from">Команда Google</span><span class="pk-subj">Сергій, поздравляем с созданием аккаунта…</span><span class="pk-time">07:33</span></div>
+      </div>
+      <div class="pk-folderGrid" style="margin-top:12px">
+        <div class="pk-folder"><span class="ic">👤</span><div><div class="ft">Відправник</div><p>хто надіслав лист</p></div></div>
+        <div class="pk-folder"><span class="ic">📝</span><div><div class="ft">Тема листа</div><p>короткий заголовок повідомлення</p></div></div>
+        <div class="pk-folder"><span class="ic">📎</span><div><div class="ft">Вкладений файл</div><p>значок при листі з файлом</p></div></div>
+        <div class="pk-folder"><span class="ic">🕒</span><div><div class="ft">Час або дата</div><p>час — якщо сьогодні, дата — якщо раніше</p></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Read/unread + starred (interactive)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Прочитаний, непрочитаний, із зірочкою</div>
+      <h2 class="stitle">Стан <span class="a">листа</span></h2>
+      <p style="margin-bottom:8px"><strong style="color:#fff">Непрочитаний</strong> лист позначається жирним шрифтом. Клацни на лист, щоб «прочитати» його:</p>
+      <div class="pk-inbox">
+        <div class="pk-mail unread clickable" onclick="pkToggleRead(this)"><span class="pk-star">☆</span><span class="pk-from">Ольга</span><span class="pk-subj"><strong>Hello</strong> — Мої вітання!!!</span><span class="pk-time">07:36</span></div>
+      </div>
+      <div class="pk-callout">👆 клацни на рядок листа</div>
+      <p style="margin:14px 0 8px"><strong style="color:#fff">Зірочкою</strong> позначають листи, які важливо не загубити в загальному потоці. Клацни на зірочку:</p>
+      <div class="pk-inbox">
+        <div class="pk-mail"><span class="pk-star" onclick="pkToggleStar(this)">☆</span><span class="pk-from">Команда Google</span><span class="pk-subj">Сергій, поздравляем с созданием аккаунта…</span><span class="pk-time">07:33</span></div>
+      </div>
+      <div class="pk-callout">👆 клацни на зірочку ☆</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Standard folders 1
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Стандартні папки</div>
+      <h2 class="stitle">Основні <span class="a">папки Gmail</span></h2>
+      <div class="pk-folderGrid">
+        <div class="pk-folder"><span class="ic">📥</span><div><div class="ft">Вхідні</div><p>отримані листи</p></div></div>
+        <div class="pk-folder"><span class="ic">⭐</span><div><div class="ft">Із зірочкою</div><p>листи, позначені як важливі</p></div></div>
+        <div class="pk-folder"><span class="ic">⏰</span><div><div class="ft">Відкладені</div><p>листи, які буде переміщено у Вхідні в зазначений час</p></div></div>
+        <div class="pk-folder"><span class="ic">📤</span><div><div class="ft">Надіслані</div><p>надіслані листи</p></div></div>
+        <div class="pk-folder"><span class="ic">📄</span><div><div class="ft">Чернетки</div><p>ненадіслані листи</p></div></div>
+        <div class="pk-folder"><span class="ic">📮</span><div><div class="ft">Заплановано</div><p>листи буде відправлено у зазначений час</p></div></div>
+      </div>
+      <div class="pk-note" style="margin-top:12px">💡 У папці <strong style="color:#fff">Уся пошта</strong> відображаються листи з усіх папок електронної скриньки.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Standard folders 2
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Ще стандартні папки</div>
+      <h2 class="stitle">Важливі, <span class="a">спам і кошик</span></h2>
+      <div class="pk-folderGrid">
+        <div class="pk-folder"><span class="ic">🔖</span><div><div class="ft">Важливі</div><p>листи, що мають особливу важливість</p></div></div>
+        <div class="pk-folder"><span class="ic">💬</span><div><div class="ft">Чати</div><p>повідомлення із чату</p></div></div>
+        <div class="pk-folder"><span class="ic">🚫</span><div><div class="ft">Спам</div><p>небажані рекламні повідомлення</p></div></div>
+        <div class="pk-folder"><span class="ic">🗑️</span><div><div class="ft">Кошик</div><p>видалені листи (зберігаються 30 днів)</p></div></div>
+        <div class="pk-folder"><span class="ic">🏷️</span><div><div class="ft">Категорії</div><p>листи, структуровані за категоріями: Соцмережі, Оновлення, Форуми, Реклама</p></div></div>
+        <div class="pk-folder"><span class="ic">⚙️</span><div><div class="ft">Керувати мітками</div><p>налаштувати, які папки показувати в меню</p></div></div>
+      </div>
+      <div class="pk-note" style="margin-top:12px">🗑️ Листи з Кошика можна відновити до будь-якої папки — доки не минуло 30 днів.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Custom labels
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Власні папки</div>
+      <h2 class="stitle">Власні папки <span class="a">(мітки)</span></h2>
+      <p>Крім стандартних, користувач може створювати <span class="hi">власні папки</span>. У поштовому клієнті Gmail їх називають <strong style="color:#fff">мітками</strong>. Це роблять, щоб впорядкувати листи — наприклад, зберігати в різних папках листи, що стосуються різних тем.</p>
+      <div class="card" style="margin-top:14px">
+        <div class="ctitle">🌳 Приклад структури міток</div>
+        <div class="pk-tree">
+          <div class="lvl1">▸ Особисті</div>
+          <div class="lvl2">▸ навчання</div>
+          <div class="lvl2">▸ розваги</div>
+          <div class="lvl2">▸ хобі</div>
+        </div>
+      </div>
+      <div class="pk-note" style="margin-top:12px">💡 Розподіл листів за папками допомагає швидко знаходити потрібну пошту. Створюють мітку командою <strong style="color:#fff">Створити нову мітку</strong> в бічному меню.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Writing a letter (steps)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Написання листа</div>
+      <h2 class="stitle">Щоб написати <span class="a">лист</span></h2>
+      <div class="demo" style="align-items:stretch">
+        <div class="dlbl" style="align-self:center">Живе демо — натисни «Відтворити»</div>
+        <div class="pk-flow" id="flow1">
+          <div class="pk-fstep" data-step="1"><div class="ic">✏️</div><div class="tt">Натиснути «Написати»</div></div>
+          <div class="pk-farrow">→</div>
+          <div class="pk-fstep" data-step="2"><div class="ic">📧</div><div class="tt">Ввести адресу отримувача</div></div>
+          <div class="pk-farrow">→</div>
+          <div class="pk-fstep" data-step="3"><div class="ic">📝</div><div class="tt">Вказати тему листа</div></div>
+          <div class="pk-farrow">→</div>
+          <div class="pk-fstep" data-step="4"><div class="ic">💬</div><div class="tt">Ввести текст листа</div></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="pkPlayFlow('flow1')">▶ Відтворити</button>
+      </div>
+      <div class="pk-note" style="margin-top:14px">⚠️ Тему листа потрібно вказувати <strong style="color:#fff">обов'язково</strong>.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Formatting & smileys/images
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Теорія / Форматування тексту</div>
+      <h2 class="stitle">Форматування, <span class="a">смайлики й зображення</span></h2>
+      <p>Текст у листі можна форматувати так само, як і в текстовому процесорі. У текст листа можна вставляти <span class="hi">смайлики</span> та <span class="hp">зображення</span>, додавати посилання, створювати списки тощо.</p>
+      <div class="pk-compose" style="margin-top:12px">
+        <div class="pk-cHead">літній табір з програмування</div>
+        <div class="pk-cBody">
+          <div class="pk-cText"><strong style="color:var(--cyan)">Привіт, Марійко!</strong> 😊<br>Я збираюся влітку взяти участь у літньому таборі з програмування.</div>
+          <div class="pk-toolbar">
+            <span class="pk-tbtn">A</span><span class="pk-tbtn">B жирний</span><span class="pk-tbtn">I курсив</span><span class="pk-tbtn">Колір тексту</span><span class="pk-tbtn">Розмір</span><span class="pk-tbtn">😊 Смайлик</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Attachments
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Теорія / Вкладені файли</div>
+      <h2 class="stitle">Вкладення <span class="a">файлів</span></h2>
+      <p>До листа можна прикріпляти файли фотографій, документів, музики — майже будь-якого типу. Для цього слід натиснути значок <strong style="color:#fff">скріпки</strong> 📎 на панелі інструментів.</p>
+      <div class="pk-compose" style="margin-top:12px">
+        <div class="pk-cHead">вітання</div>
+        <div class="pk-cBody">
+          <div class="pk-cRow"><span class="k">Кому</span><span class="v filled">zava@ukr.net</span></div>
+          <div class="pk-cRow"><span class="k">Тема</span><span class="v">вітання</span></div>
+          <div class="pk-cText">Привіт!</div>
+          <div class="pk-toolbar"><span class="pk-tbtn">📎 вкласти файл</span><span class="pk-tbtn">🔗 посилання</span><span class="pk-tbtn">😊</span><span class="pk-tbtn">🖼️ зображення</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Actions with received mail
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Теорія / Дії з отриманим листом</div>
+      <h2 class="stitle">Що можна зробити <span class="a">з отриманим листом?</span></h2>
+      <div class="pk-actGrid">
+        <div class="pk-act"><div class="ic">↩️</div><div class="lb">Відповісти</div></div>
+        <div class="pk-act"><div class="ic">➡️</div><div class="lb">Переслати</div></div>
+        <div class="pk-act"><div class="ic">🔖</div><div class="lb">Позначити важливим</div></div>
+        <div class="pk-act"><div class="ic">🗑️</div><div class="lb">Видалити</div></div>
+        <div class="pk-act"><div class="ic">🚫</div><div class="lb">Позначити як спам</div></div>
+        <div class="pk-act"><div class="ic">📂</div><div class="lb">Перемістити в іншу папку</div></div>
+      </div>
+      <div class="pk-note" style="margin-top:12px">💡 Набір дій із <strong style="color:#fff">надісланим</strong> листом дещо менший: на нього неможливо відповісти та позначити як спам.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Кому / Копія / Прихована копія
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Теорія / Кому листа</div>
+      <h2 class="stitle">Кому, <span class="a">копія, прихована копія</span></h2>
+      <div class="col3">
+        <div class="card">
+          <div class="ctitle">📧 Кому</div>
+          <p style="margin-bottom:0">Основні адресати листа. Можна вказати декілька — усі адреси вводять у поле <strong style="color:#fff">Кому</strong>.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📋 Копія</div>
+          <p style="margin-bottom:0">Люди, до яких немає прямого звернення в листі, але яким варто знати його зміст.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">🙈 Прихована копія</div>
+          <p style="margin-bottom:0">Адресати, яких <strong style="color:#fff">не бачать</strong> інші отримувачі листа.</p>
+        </div>
+      </div>
+      <div class="pk-note" style="margin-top:12px">👀 Отримувачі листа дізнаються про адреси інших отримувачів, якщо їх не приховати (тобто якщо вказати в полях «Кому» чи «Копія»).</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Practice 1 (⭐)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Створи власну папку в Gmail</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>Створи власну мітку (папку) для листів від свого друга у своїй поштовій скриньці Gmail (<a href="http://mail.google.com" style="color:var(--cyan)">mail.google.com</a>).</p>
+      <ul class="pk-cl">
+        <li>Увійди у свій обліковий запис Gmail</li>
+        <li>У бічному меню знайди й натисни «Ще» → «Створити нову мітку»</li>
+        <li>Введи назву мітки — наприклад, ім'я твого друга — та натисни «Створити»</li>
+        <li>Перевір, що нова мітка з'явилася в бічному меню</li>
+      </ul>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Щойно створена мітка (папка) є порожньою — листи в неї потрібно переміщувати вручну командою «Перемістити у».</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Practice 2 (⭐⭐)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Листування з однокласником</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p>Виконай рольову вправу — обміняйся листами з однокласником.</p>
+      <ul class="pk-cl">
+        <li>Дізнайся поштову адресу когось зі своїх однокласників</li>
+        <li>Натисни «Написати», вкажи адресу отримувача й обов'язково тему листа</li>
+        <li>Напиши текст листа й вклади в нього якесь зображення (можеш знайти малюнок в інтернеті)</li>
+        <li>Надішли лист і дочекайся відповіді від однокласника</li>
+        <li>Напиши відповідь на лист, який тобі надішле однокласник</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Щоб відповісти на лист, відкрий його в папці «Вхідні» та натисни кнопку «Відповісти» — тема заповниться автоматично, а твій текст ляже над початковим листом.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 17 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="17">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">📥</div><div class="sumt">Папки Gmail</div><p>Вхідні, Із зірочкою, Відкладені, Надіслані, Чернетки, Спам, Кошик</p></div>
+        <div class="sumc"><div class="sumi">🏷️</div><div class="sumt">Власні мітки</div><p>Користувач може створювати свої папки для впорядкування листів</p></div>
+        <div class="sumc"><div class="sumi">✏️</div><div class="sumt">Написання листа</div><p>Написати → адреса отримувача → тема → текст</p></div>
+        <div class="sumc"><div class="sumi">🖼️</div><div class="sumt">Форматування й вкладення</div><p>Смайлики, зображення, файли будь-якого типу</p></div>
+        <div class="sumc"><div class="sumi">↩️</div><div class="sumt">Дії з листом</div><p>Відповісти, переслати, видалити, позначити спамом, перемістити</p></div>
+        <div class="sumc"><div class="sumi">📧</div><div class="sumt">Кому / Копія / Прихована копія</div><p>Різні способи вказати адресатів листа</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Toggle read/unread state on inbox row click (slide 6)
+function pkToggleRead(el) {
+  el.classList.toggle('unread');
+}
+
+// Toggle star on click (slide 6)
+function pkToggleStar(el) {
+  const row = el.closest('.pk-mail');
+  row.classList.toggle('starred');
+  el.textContent = row.classList.contains('starred') ? '★' : '☆';
+}
+
+// Sequential flow-step highlight demo (slide 10)
+let pkFlowBusy = false;
+function pkPlayFlow(id) {
+  if (pkFlowBusy) return;
+  pkFlowBusy = true;
+  const steps = document.querySelectorAll(`#${id} .pk-fstep`);
+  steps.forEach(s => s.classList.remove('on'));
+  steps.forEach((s, i) => {
+    setTimeout(() => s.classList.add('on'), i * 500);
+  });
+  setTimeout(() => { pkFlowBusy = false; }, steps.length * 500 + 900);
+}
+</script>
+</body>
+</html>

@@ -65,17 +65,9 @@
 .inf-skill p{margin:0;font-size:12.5px}
 
 /* ── Practice slides (15/17) ── */
-.th{display:flex;align-items:center;gap:11px;margin-bottom:16px}
-.tnum{font-family:var(--fd);font-size:46px;font-weight:800;color:var(--border);line-height:1}
-.tinf h2{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--text);margin-bottom:4px}
 .tcl{list-style:none;padding:0}
 .tcl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
-.tcl li::before{content:'☐';left:-20px;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
-.hint{border-radius:10px;padding:12px 14px}
-.hint-g{background:rgba(107,203,119,.07);border:1px solid rgba(107,203,119,.18)}
-.hint-y{background:rgba(255,217,61,.07);border:1px solid rgba(255,217,61,.18)}
-.hlbl{font-size:11.5px;font-weight:600;margin-bottom:5px}
-.hint p{font-size:12.5px;color:#94a3b8;margin:0}
+.tcl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
 
 .inf-quiz{display:flex;flex-direction:column;gap:8px}
 .inf-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
@@ -92,23 +84,6 @@
 /* ── Rebus break (slide 15) ── */
 .inf-tile{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-family:var(--fm);font-weight:700;font-size:15px;color:var(--yellow)}
 
-/* ── Summary ── */
-.sumGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.sumc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
-.sumi{font-size:26px;margin-bottom:7px}
-.sumt{font-family:var(--fd);font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:5px}
-.sumc p{font-size:12px;color:var(--muted);margin:0}
-.ty{text-align:center;margin-top:18px}
-.ty h2{font-family:var(--fd);font-size:32px;font-weight:800;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--yellow),var(--green));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:rainbow 4s linear infinite}
-@keyframes rainbow{0%{background-position:0% center}100%{background-position:300% center}}
-.ddots{display:flex;gap:10px;justify-content:center;margin-top:14px}
-.dd{width:13px;height:13px;border-radius:50%;animation:ddBounce .75s ease-in-out infinite alternate}
-.dd:nth-child(1){background:var(--cyan);animation-delay:0s}
-.dd:nth-child(2){background:var(--purple);animation-delay:.12s}
-.dd:nth-child(3){background:var(--yellow);animation-delay:.24s}
-.dd:nth-child(4){background:var(--coral);animation-delay:.36s}
-.dd:nth-child(5){background:var(--green);animation-delay:.48s}
-@keyframes ddBounce{from{transform:translateY(0)}to{transform:translateY(-18px)}}
 </style>
 </head>
 <body>
