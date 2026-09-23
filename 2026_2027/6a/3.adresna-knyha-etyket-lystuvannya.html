@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Адресна книга. Етикет електронного листування – 6-а клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── Definition / note boxes ── */
+.ak-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.ak-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.ak-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.ak-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Contact card (address book entry) ── */
+.ak-contactCard{background:#060e1c;border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px;max-width:420px;margin:0 auto}
+.ak-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--purple));display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:700;font-size:15px;color:#fff;flex-shrink:0;cursor:pointer;transition:transform .2s,opacity .2s}
+.ak-contactCard .ak-avatar{cursor:default}
+.ak-cInfo .nm{font-family:var(--fd);font-weight:700;font-size:14px;color:#fff}
+.ak-cInfo .em{font-family:var(--fm);font-size:11.5px;color:var(--muted)}
+.ak-cInfo .ph{font-family:var(--fm);font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── Flow diagram (add contact steps) ── */
+.ak-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.ak-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;transition:all .35s ease}
+.ak-fstep .ic{font-size:20px;margin-bottom:6px}
+.ak-fstep .tt{font-size:11.5px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.ak-fstep.on{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.ak-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:20px}
+
+/* ── Compose mock + autocomplete ── */
+.ak-compose{background:#060e1c;border:1px solid var(--border);border-radius:12px;padding:12px 14px;max-width:420px;margin:0 auto}
+.ak-cRow{display:flex;gap:10px;align-items:center;font-size:13px}
+.ak-cRow .k{font-family:var(--fm);font-size:10.5px;color:var(--muted);min-width:55px}
+.ak-cRow .v{color:var(--text);font-family:var(--fm)}
+.ak-cRow .v.filled{color:var(--cyan)}
+.ak-suggList{max-width:420px;margin:10px auto 0;display:flex;flex-direction:column;gap:6px}
+.ak-sugg{display:flex;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 13px;cursor:pointer;transition:border-color .2s}
+.ak-sugg:hover{border-color:var(--cyan)}
+.ak-sugg .nm{font-size:12.5px;color:#e2e8f0}
+.ak-sugg .em{font-family:var(--fm);font-size:10.5px;color:var(--muted)}
+.ak-callout{margin-top:10px;font-family:var(--fm);font-size:11px;color:var(--cyan);text-align:center}
+
+/* ── Group box (mailing list) ── */
+.ak-groupBox{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;max-width:440px;margin:0 auto}
+.ak-groupHead{font-family:var(--fd);font-weight:700;font-size:14.5px;margin-bottom:12px}
+.ak-avatarGrid{display:flex;justify-content:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.ak-avatarGrid .ak-avatar{opacity:.35;transform:scale(.92)}
+.ak-avatarGrid .ak-avatar.sel{opacity:1;transform:scale(1);box-shadow:0 0 0 2px var(--cyan)}
+.ak-groupNote{font-size:11.5px;color:var(--muted);margin-bottom:8px}
+.ak-groupCount{font-family:var(--fd);font-size:13px;color:#e2e8f0}
+.ak-groupCount b{color:var(--green)}
+
+/* ── Compare polite / rude email ── */
+.ak-cmp{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px}
+.ak-cmp .ct{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:8px}
+.ak-cmp .em-subj{font-family:var(--fm);font-size:10.5px;color:var(--muted);margin-bottom:6px}
+.ak-cmp .em-body{font-size:12.5px;color:#c4d0e0;line-height:1.55}
+.ak-cmp.bad{border-color:rgba(255,107,107,.3)}
+.ak-cmp.bad .ct{color:var(--coral)}
+.ak-cmp.good{border-color:rgba(107,203,119,.3)}
+.ak-cmp.good .ct{color:var(--green)}
+
+/* ── Checklist ── */
+.ak-cl{list-style:none;padding:0;margin:0}
+.ak-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.ak-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+/* ── Quiz (click to reveal) ── */
+.ak-quiz{display:flex;flex-direction:column;gap:8px}
+.ak-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.ak-qitem:hover{border-color:var(--cyan)}
+.ak-qitem .q{font-size:13px;color:#e2e8f0}
+.ak-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.ak-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+/* ── Fun-fact break ── */
+.ak-factCard{background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(0,212,255,.06));border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.ak-factCard .ic{font-size:34px;margin-bottom:10px}
+.ak-factCard p{margin:0;font-size:14px;color:#e2e8f0}
+
+@media(max-width:680px){
+  .ak-contactCard{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <span class="fcode">Контакти</span>
+        <span class="fcode">Групи</span>
+        <span class="fcode">Підпис</span>
+        <span class="fcode">Ввічливість</span>
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="ttag">&lt;<span class="tn">урок</span> тема=<span class="tn">"адресна книга, етикет листування"</span>&gt;</div>
+        <h1 class="mtitle">Адресна книга.<br>Етикет електронного листування</h1>
+        <div class="tul"></div>
+        <p class="tsub">Як не загубити важливий контакт і не образити адресата</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📚</span> 6 клас</div>
+          <div class="mchip"><span class="ic">✉️</span> Електронна пошта</div>
+          <div class="mchip"><span class="ic">✨</span> Урок 3</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Урок 6 кл. / Зміст</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Що таке адресна книга</strong>Навіщо зберігати контакти</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Контакти в Gmail</strong>Як додати новий контакт</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Автозаповнення адрес</strong>Як адресна книга економить час</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Групи контактів</strong>Розсилка листа кільком людям одразу</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Мережевий етикет (нетикет)</strong>Правила ввічливого листування</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Адресант і адресат</strong>Терміни та безпека в листуванні</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Address book definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">адресна книга?</span></h2>
+      <div class="ak-def">
+        <div class="dt">Означення</div>
+        <p><strong>Адресна книга (контакти)</strong> — список збережених відомостей про людей: ім'я, електронна адреса, телефон тощо. Дає змогу швидко знайти потрібного адресата, не вводячи щоразу повну адресу вручну.</p>
+      </div>
+      <div class="ak-note">📱 Це працює так само, як список контактів у твоєму телефоні: замість того щоб щоразу набирати номер, ти просто обираєш ім'я зі списку.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Contacts in Gmail (card + add flow)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Теорія / Контакти в Gmail</div>
+      <h2 class="stitle">Як виглядає <span class="a">запис у контактах?</span></h2>
+      <div class="ak-contactCard">
+        <div class="ak-avatar">ОК</div>
+        <div class="ak-cInfo">
+          <div class="nm">Оля Коваленко</div>
+          <div class="em">olya.kovalenko@gmail.com</div>
+          <div class="ph">📞 +380 XX XXX XX XX</div>
+        </div>
+      </div>
+      <p style="margin:16px 0 8px;text-align:center">Щоб додати новий контакт:</p>
+      <div class="demo" style="align-items:stretch">
+        <div class="ak-flow" id="flow1">
+          <div class="ak-fstep" data-step="1"><div class="ic">➕</div><div class="tt">Натиснути «Створити контакт»</div></div>
+          <div class="ak-farrow">→</div>
+          <div class="ak-fstep" data-step="2"><div class="ic">✏️</div><div class="tt">Ввести ім'я</div></div>
+          <div class="ak-farrow">→</div>
+          <div class="ak-fstep" data-step="3"><div class="ic">✉️</div><div class="tt">Ввести e-mail</div></div>
+          <div class="ak-farrow">→</div>
+          <div class="ak-fstep" data-step="4"><div class="ic">💾</div><div class="tt">Зберегти</div></div>
+        </div>
+        <button class="tbtn" style="align-self:center" onclick="akPlayFlow('flow1')">▶ Відтворити</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Autocomplete interactive demo
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Теорія / Автозаповнення адрес</div>
+      <h2 class="stitle">Адресна книга <span class="a">економить час</span></h2>
+      <p style="text-align:center;margin-bottom:10px">Почни вводити ім'я в полі «Кому» — поштовий клієнт сам запропонує контакти з адресної книги:</p>
+      <div class="ak-compose">
+        <div class="ak-cRow"><span class="k">Кому</span><span class="v" id="akTo">Оль</span></div>
+      </div>
+      <div class="ak-suggList" id="akSuggList">
+        <div class="ak-sugg" onclick="akPick('Оля Коваленко','olya.kovalenko@gmail.com')"><span class="nm">Оля Коваленко</span><span class="em">olya.kovalenko@gmail.com</span></div>
+        <div class="ak-sugg" onclick="akPick('Ольга Петренко','olga.petrenko@gmail.com')"><span class="nm">Ольга Петренко</span><span class="em">olga.petrenko@gmail.com</span></div>
+      </div>
+      <div class="ak-callout">👆 клацни на потрібний контакт зі списку</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Groups of contacts (interactive)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Теорія / Групи контактів</div>
+      <h2 class="stitle">Розсилка одразу <span class="a">кільком людям</span></h2>
+      <p style="text-align:center;margin-bottom:14px">Контакти можна об'єднувати в <span class="hi">групи</span> — тоді лист можна надіслати всім учасникам групи одразу, ввівши лише одну назву.</p>
+      <div class="ak-groupBox">
+        <div class="ak-groupHead">👥 Група «8-А клас»</div>
+        <div class="ak-avatarGrid" id="akGroup">
+          <div class="ak-avatar sel" data-n="Оля" onclick="akToggle(this)">О</div>
+          <div class="ak-avatar sel" data-n="Данило" onclick="akToggle(this)">Д</div>
+          <div class="ak-avatar sel" data-n="Тая" onclick="akToggle(this)">Т</div>
+          <div class="ak-avatar" data-n="Марко" onclick="akToggle(this)">М</div>
+        </div>
+        <div class="ak-groupNote">👆 клацни на аватар, щоб додати/прибрати учня з розсилки</div>
+        <div class="ak-groupCount">Отримають лист: <b id="akCount">3</b></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Netiquette definition
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Теорія / Означення</div>
+      <h2 class="stitle">Що таке <span class="a">мережевий етикет?</span></h2>
+      <div class="ak-def">
+        <div class="dt">Означення</div>
+        <p><strong>Мережевий етикет (нетикет)</strong> — правила ввічливого й коректного спілкування в мережі «Інтернет», зокрема під час електронного листування.</p>
+      </div>
+      <div class="ak-note">📖 Термін «netiquette» уперше з'явився ще у 1990-х роках — коли інтернет тільки ставав масовим, і люди почали замислюватися: як спілкуватися ввічливо, якщо не бачиш співрозмовника?</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Etiquette rules checklist
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Теорія / Правила ввічливого листування</div>
+      <h2 class="stitle">Правила <span class="a">електронного етикету</span></h2>
+      <ul class="ak-cl">
+        <li>Починай текст листа з привітання, завершуй підписом</li>
+        <li>Не забувай вживати «будь ласка», звертаючись із проханням, і дякуй за допомогу</li>
+        <li>Пиши грамотно й надсилай лише перевірені дані</li>
+        <li>Пиши короткі повідомлення — стомлювати читача довгим текстом нечемно</li>
+        <li>Завжди вказуй тему листа, що відповідає його змісту</li>
+        <li>Не пиши текст лише ВЕЛИКИМИ ЛІТЕРАМИ — сприймається як крик</li>
+      </ul>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Compare polite vs rude email
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Теорія / Приклад</div>
+      <h2 class="stitle">Ввічливо <span class="a">чи ні?</span></h2>
+      <div class="col2">
+        <div class="ak-cmp bad">
+          <div class="ct">😕 Так краще не писати</div>
+          <div class="em-subj">Тема: (порожньо)</div>
+          <div class="em-body">ДЕ ДОМАШКА?! ТИ ОБІЦЯВ НАДІСЛАТИ ВЧОРА!!! НАДІШЛИ ЗАРАЗ ЖЕ</div>
+        </div>
+        <div class="ak-cmp good">
+          <div class="ct">🙂 Ввічливий варіант</div>
+          <div class="em-subj">Тема: Домашнє завдання з інформатики</div>
+          <div class="em-body">Привіт, Максиме!<br>Будь ласка, надішли, коли матимеш змогу, файл із домашнім завданням — хочу звірити відповіді.<br>Дякую! До зв'язку, Оля</div>
+        </div>
+      </div>
+      <div class="ak-note" style="margin-top:12px">💬 Порівняй два листи: чого бракує лівому й чому правий сприймається приємніше?</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Adresant/adresat + safety
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Теорія / Терміни та безпека</div>
+      <h2 class="stitle">Адресант <span class="a">і адресат</span></h2>
+      <div class="col2">
+        <div class="card">
+          <div class="ctitle">📤 Адресант</div>
+          <p style="margin-bottom:0">Той, хто <span class="hi">надсилає</span> лист, посилку тощо.</p>
+        </div>
+        <div class="card">
+          <div class="ctitle">📥 Адресат</div>
+          <p style="margin-bottom:0">Той, <span class="hg">кому</span> надсилають лист.</p>
+        </div>
+      </div>
+      <div class="ak-note" style="margin-top:12px">🔒 Правило безпечного адресанта: ніколи не повідомляй пароль від поштової скриньки стороннім особам і не відкривай листи від незнайомих адресатів із сумнівною темою.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Fun fact break
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Перерва / Цікавий факт</div>
+      <h2 class="stitle">А ти знав<span class="a">(-ла)?</span></h2>
+      <div class="ak-factCard">
+        <div class="ic">📜</div>
+        <p>Слово «нетикет» (netiquette) утворилося від злиття «network» (мережа) і «etiquette» (етикет). Перші правила такого етикету автори писали ще тоді, коли листи набирали на повільних текстових терміналах — і кожне зайве слово справді коштувало часу!</p>
+      </div>
+      <div class="ak-note" style="margin-top:14px">💬 Як гадаєш, чи змінилися правила ввічливості за останні 30 років — чи лишилися тими самими, тільки в новому середовищі?</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Practice 1 (⭐)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Практика / Завдання 1 з 2</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf">
+          <h2>Порушено етикет чи ні?</h2>
+          <span class="badge be">⭐ Базовий рівень</span>
+        </div>
+      </div>
+      <p>Для кожної ситуації визнач, чи порушено правило мережевого етикету. Натисни на пункт, щоб перевірити себе.</p>
+      <div class="ak-quiz">
+        <div class="ak-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Лист без теми з текстом «дивись файл»</div><div class="ans">→ порушено: тема листа обов'язкова</div></div>
+        <div class="ak-qitem" onclick="this.classList.toggle('show')"><div class="q">б) «Привіт! Будь ласка, перешли мені конспект. Дякую! Оля»</div><div class="ans">→ усе гаразд: є привітання, ввічливе прохання й підпис</div></div>
+        <div class="ak-qitem" onclick="this.classList.toggle('show')"><div class="q">в) «НАДІШЛИ ФОТО ЗАРАЗ ЖЕ!!!»</div><div class="ans">→ порушено: текст великими літерами сприймається як крик</div></div>
+        <div class="ak-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Коротке ввічливе повідомлення з чіткою темою «Питання про домашнє завдання»</div><div class="ans">→ усе гаразд: короткий текст і зрозуміла тема</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Перевір: чи є привітання й підпис, чи вказана тема, чи текст короткий і без КРИКУ великими літерами.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Practice 2 (⭐⭐)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Практика / Завдання 2 з 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf">
+          <h2>Додай контакт і напиши ввічливого листа</h2>
+          <span class="badge bm">⭐⭐ Середній рівень</span>
+        </div>
+      </div>
+      <p>Виконай практичну вправу у своїй поштовій скриньці Gmail.</p>
+      <ul class="ak-cl">
+        <li>Відкрий Google Контакти (<a href="http://contacts.google.com" style="color:var(--cyan)">contacts.google.com</a>) і додай контакт однокласника/однокласниці</li>
+        <li>Повернись у Gmail, натисни «Написати» й почни вводити ім'я — перевір, чи з'явилася підказка з адресної книги</li>
+        <li>Напиши лист, дотримуючись правил етикету: привітання, чітка тема, «будь ласка»/«дякую», підпис</li>
+        <li>Перечитай лист перед надсиланням — переконайся, що немає ВЕЛИКИХ ЛІТЕР і текст короткий</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:12px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Якщо однокласників кілька — спробуй об'єднати їхні контакти в групу (мітку) й надіслати лист усій групі одразу.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">📖 Опрацювати підручник</div>
+        <p style="margin-bottom:0">§ 2 «Електронне листування», сторінки 18–29 — прочитати розділ «Які існують правила електронного листування?» і рубрику «Перевір себе».</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">🏠 Перевір себе</div>
+        <ul class="ak-cl">
+          <li>Пояснити різницю між термінами «адресант» і «адресат»</li>
+          <li>Навести приклад листа, який порушує правила етикету, та його виправлений варіант</li>
+          <li>Створити презентацію правил етикету електронного листування зі своїми прикладами</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Підсумок / Summary</div>
+      <h2 class="stitle">Що ми <span class="a">вивчили?</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">📇</div><div class="sumt">Адресна книга</div><p>Список збережених контактів для швидкого доступу до адрес</p></div>
+        <div class="sumc"><div class="sumi">➕</div><div class="sumt">Контакти в Gmail</div><p>Ім'я, e-mail, телефон — додаються командою «Створити контакт»</p></div>
+        <div class="sumc"><div class="sumi">⌨️</div><div class="sumt">Автозаповнення</div><p>Поштовий клієнт сам підказує адресу з контактів під час набору</p></div>
+        <div class="sumc"><div class="sumi">👥</div><div class="sumt">Групи контактів</div><p>Дають змогу надіслати лист кільком людям одразу</p></div>
+        <div class="sumc"><div class="sumi">🤝</div><div class="sumt">Мережевий етикет</div><p>Привітання, підпис, чітка тема, без КРИКУ великими літерами</p></div>
+        <div class="sumc"><div class="sumi">📤📥</div><div class="sumt">Адресант і адресат</div><p>Хто надсилає і хто отримує лист — і як листуватися безпечно</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides -->
+
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+
+<script src="../../_shared/nav.js"></script>
+<script>
+// Sequential flow-step highlight demo (slide 4)
+let akFlowBusy = false;
+function akPlayFlow(id) {
+  if (akFlowBusy) return;
+  akFlowBusy = true;
+  const steps = document.querySelectorAll(`#${id} .ak-fstep`);
+  steps.forEach(s => s.classList.remove('on'));
+  steps.forEach((s, i) => setTimeout(() => s.classList.add('on'), i * 500));
+  setTimeout(() => { akFlowBusy = false; }, steps.length * 500 + 900);
+}
+
+// Autocomplete pick demo (slide 5)
+function akPick(name, email) {
+  const to = document.getElementById('akTo');
+  to.textContent = email;
+  to.classList.add('filled');
+}
+
+// Group avatar toggle demo (slide 6)
+function akToggle(el) {
+  el.classList.toggle('sel');
+  const count = document.querySelectorAll('#akGroup .ak-avatar.sel').length;
+  document.getElementById('akCount').textContent = count;
+}
+</script>
+</body>
+</html>

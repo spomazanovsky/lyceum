@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Інтернет-маркетинг та інтернет-банкінг – 10-а клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── im- : урок-специфічні компоненти ── */
+.im-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.im-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.im-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+.im-note{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 15px;font-size:12.5px;color:#94a3b8}
+
+/* ── Channel / tool grid ── */
+.im-chanGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.im-chan{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:transform .2s,border-color .2s}
+.im-chan:hover{transform:translateY(-4px);border-color:var(--cyan)}
+.im-chan .ic{font-size:22px;margin-bottom:6px}
+.im-chan .nm{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--text)}
+.im-chan .ds{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
+
+/* ── Compare cards ── */
+.im-cmp{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px}
+.im-cmp .ct{font-family:var(--fd);font-weight:700;font-size:14px;margin-bottom:8px}
+.im-cmp p{font-size:12.5px;margin:0}
+
+/* ── Funnel flow (hover reveal) ── */
+.im-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.im-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;transition:all .25s ease;cursor:default}
+.im-fstep .ic{font-size:22px;margin-bottom:6px}
+.im-fstep .tt{font-size:12px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.im-fstep:hover{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.im-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:22px}
+.im-exBox{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(0,212,255,.05);border:1px solid var(--border);border-radius:10px;padding:12px 18px;font-size:13px;color:#c4d0e0;transition:opacity .2s ease;margin-top:12px}
+
+/* ── Trend cards ── */
+.im-trendGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.im-trend{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px;text-align:center}
+.im-trend .ic{font-size:24px;margin-bottom:7px}
+.im-trend .tt{font-family:var(--fd);font-weight:700;font-size:12.5px;color:var(--text);margin-bottom:4px}
+.im-trend p{font-size:11px;color:var(--muted);margin:0;line-height:1.4}
+
+/* ── Bank app comparison ── */
+.im-bankGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.im-bank{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px}
+.im-bank .bh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.im-bank .bdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.im-bank .bn{font-family:var(--fd);font-weight:700;font-size:13.5px;color:var(--text)}
+.im-bank ul{margin:0;padding-left:16px;font-size:11.5px;color:var(--muted);line-height:1.6}
+
+/* ── Bank function icon grid ── */
+.im-funcGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.im-func{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center}
+.im-func .ic{font-size:22px;margin-bottom:6px}
+.im-func .lb{font-size:11.5px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+
+/* ── Checklist ── */
+.im-cl{list-style:none;padding:0;margin:0}
+.im-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.im-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+/* ── Quiz (click to reveal) ── */
+.im-quiz{display:flex;flex-direction:column;gap:8px}
+.im-qitem{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 14px;cursor:pointer;transition:border-color .2s}
+.im-qitem:hover{border-color:var(--cyan)}
+.im-qitem .q{font-size:13px;color:#e2e8f0}
+.im-qitem .ans{max-height:0;overflow:hidden;opacity:0;transition:all .3s ease;font-family:var(--fm);font-size:11.5px;color:var(--green)}
+.im-qitem.show .ans{max-height:80px;opacity:1;margin-top:7px}
+
+/* ── Fun-fact break ── */
+.im-factCard{background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(0,212,255,.06));border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+.im-factCard .ic{font-size:34px;margin-bottom:10px}
+.im-factCard p{margin:0;font-size:14px;color:#e2e8f0}
+
+/* ── Stat row ── */
+.im-statRow{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.im-statRow .num{font-family:var(--fd);font-weight:800;font-size:20px;color:var(--cyan);min-width:100px}
+.im-statRow .lb{font-size:12px;color:#94a3b8}
+
+@media (max-width:680px){
+  .im-chanGrid,.im-trendGrid,.im-bankGrid,.im-funcGrid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <!-- ═══════════════════════════════════
+         SLIDE 1 — Title
+         ═══════════════════════════════════ -->
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="fcode">📣 SEO</div>
+        <div class="fcode">🎯 SMM</div>
+        <div class="fcode">💳 Приват24</div>
+        <div class="fcode">📱 monobank</div>
+        <div class="ttag">// <span class="tn">10 клас</span> · Інформатика · Інтернет-технології</div>
+        <h1 class="mtitle">Інтернет-маркетинг<br>та інтернет-банкінг</h1>
+        <div class="tul"></div>
+        <p class="tsub">Як бізнес знаходить нас в інтернеті — і як ми керуємо своїми грошима, не виходячи з дому</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">📣</span> Маркетинг</div>
+          <div class="mchip"><span class="ic">🏦</span> Банкінг</div>
+          <div class="mchip"><span class="ic">🔐</span> Безпека</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 2 — Plan
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="2">
+      <div class="lbl">Сьогодні на уроці</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem"><div class="pnum">01</div><div class="ptxt"><strong>Що таке інтернет-маркетинг</strong>основні канали просування</div></div>
+        <div class="pitem"><div class="pnum">02</div><div class="ptxt"><strong>Контекстна й таргетована реклама</strong>у чому різниця</div></div>
+        <div class="pitem"><div class="pnum">03</div><div class="ptxt"><strong>Вирва продажів</strong>шлях від першого враження до покупки</div></div>
+        <div class="pitem"><div class="pnum">04</div><div class="ptxt"><strong>Що таке інтернет-банкінг</strong>і які застосунки популярні в Україні</div></div>
+        <div class="pitem"><div class="pnum">05</div><div class="ptxt"><strong>Безпека онлайн-фінансів</strong>BankID, 2FA, біометрія</div></div>
+        <div class="pitem"><div class="pnum">06</div><div class="ptxt"><strong>Практична робота</strong>аналізуємо й проєктуємо</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 3 — Означення: інтернет-маркетинг
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="3">
+      <div class="lbl">Розділ 01 · Інтернет-маркетинг</div>
+      <h2 class="stitle">Що таке <span class="a">інтернет-маркетинг?</span></h2>
+      <div class="im-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інтернет-маркетинг</strong> — комплекс методів і інструментів просування товарів, послуг чи бренду через інтернет: пошукові системи, соціальні мережі, електронну пошту та інші онлайн-канали.</p>
+      </div>
+      <p>На відміну від традиційної реклами (білборд, телебачення), інтернет-маркетинг дає змогу:</p>
+      <div class="col3" style="margin-top:8px">
+        <div class="card"><div class="ctitle">🎯 Точно таргетувати</div><p style="margin-bottom:0">показувати рекламу саме тим, кому вона цікава</p></div>
+        <div class="card"><div class="ctitle">📊 Вимірювати результат</div><p style="margin-bottom:0">бачити перегляди, кліки й реальні продажі в цифрах</p></div>
+        <div class="card"><div class="ctitle">💰 Гнучко керувати бюджетом</div><p style="margin-bottom:0">запустити кампанію навіть із невеликою сумою</p></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 4 — Канали інтернет-маркетингу
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="4">
+      <div class="lbl">Розділ 01 · Канали просування</div>
+      <h2 class="stitle">Основні канали <span class="a">інтернет-маркетингу</span></h2>
+      <div class="im-chanGrid">
+        <div class="im-chan"><div class="ic">🔍</div><div class="nm">SEO</div><div class="ds">пошукова оптимізація — щоб сайт був вище у видачі Google</div></div>
+        <div class="im-chan"><div class="ic">📢</div><div class="nm">Контекстна реклама</div><div class="ds">оголошення тим, хто вже шукає щось подібне</div></div>
+        <div class="im-chan"><div class="ic">📱</div><div class="nm">SMM</div><div class="ds">просування в соцмережах — Instagram, TikTok, Facebook</div></div>
+        <div class="im-chan"><div class="ic">✉️</div><div class="nm">Email-маркетинг</div><div class="ds">розсилки з новинами, знижками, персональними пропозиціями</div></div>
+        <div class="im-chan"><div class="ic">✍️</div><div class="nm">Контент-маркетинг</div><div class="ds">статті, відео, подкасти, що приваблюють аудиторію</div></div>
+        <div class="im-chan"><div class="ic">🌟</div><div class="nm">Інфлюенс-маркетинг</div><div class="ds">реклама через блогерів і лідерів думок</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 5 — Контекстна vs таргетована
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="5">
+      <div class="lbl">Розділ 01 · Порівняння</div>
+      <h2 class="stitle">Контекстна <span class="a">чи таргетована?</span></h2>
+      <div class="col2">
+        <div class="im-cmp">
+          <div class="ct" style="color:var(--cyan)">🔎 Контекстна реклама</div>
+          <p>Показується людям, які <span class="hi">самі шукають</span> товар чи послугу через пошукову систему — реагує на запит «зараз».</p>
+        </div>
+        <div class="im-cmp">
+          <div class="ct" style="color:var(--purple)">🎯 Таргетована реклама</div>
+          <p>Орієнтується на <span class="hi">характеристики аудиторії</span> в соцмережах — вік, інтереси, поведінку — навіть якщо людина ще не шукала товар.</p>
+        </div>
+      </div>
+      <div class="im-note" style="margin-top:12px">💡 Приклад: шукаєш «кросівки для бігу» в Google — бачиш контекстну рекламу магазину спорттоварів. Погортав стрічку в Instagram — і той самий магазин показав тобі рекламу за інтересом «спорт», хоча ти нічого не шукав.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 6 — Вирва продажів (funnel, hover)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="6">
+      <div class="lbl">Розділ 01 · Шлях клієнта</div>
+      <h2 class="stitle">Вирва <span class="a">продажів</span></h2>
+      <p>Шлях від першого знайомства з брендом до покупки маркетологи описують моделлю <strong style="color:#fff">AIDA</strong>. Наведи курсор на етап:</p>
+      <div class="im-flow" id="imFlow">
+        <div class="im-fstep" onmouseenter="imShowEx(this,'imFlowEx')" onmouseleave="imHideEx('imFlowEx')" data-ex="Побачив рекламу в стрічці чи відео блогера — вперше дізнався про бренд."><div class="ic">👀</div><div class="tt">Увага</div></div>
+        <div class="im-farrow">→</div>
+        <div class="im-fstep" onmouseenter="imShowEx(this,'imFlowEx')" onmouseleave="imHideEx('imFlowEx')" data-ex="Зайшов на сайт, почитав відгуки, порівняв із конкурентами."><div class="ic">🧐</div><div class="tt">Інтерес</div></div>
+        <div class="im-farrow">→</div>
+        <div class="im-fstep" onmouseenter="imShowEx(this,'imFlowEx')" onmouseleave="imHideEx('imFlowEx')" data-ex="Додав товар у кошик, зважує «купувати чи ні»."><div class="ic">💭</div><div class="tt">Бажання</div></div>
+        <div class="im-farrow">→</div>
+        <div class="im-fstep" onmouseenter="imShowEx(this,'imFlowEx')" onmouseleave="imHideEx('imFlowEx')" data-ex="Оплатив покупку онлайн — саме тут стає в пригоді інтернет-банкінг!"><div class="ic">✅</div><div class="tt">Дія</div></div>
+      </div>
+      <div class="im-exBox" id="imFlowEx" data-default="Наведи курсор на етап, щоб побачити приклад.">Наведи курсор на етап, щоб побачити приклад.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 7 — Тренди маркетингу 2026
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="7">
+      <div class="lbl">Розділ 01 · Тренди</div>
+      <h2 class="stitle">Маркетинг <span class="a">сьогодні</span></h2>
+      <div class="im-trendGrid">
+        <div class="im-trend"><div class="ic">🤖</div><div class="tt">ШІ-персоналізація</div><p>алгоритми підбирають рекламу під кожного користувача окремо</p></div>
+        <div class="im-trend"><div class="ic">🎬</div><div class="tt">Відео на першому місці</div><p>короткі відео (Reels, TikTok, Shorts) обганяють текст і фото</p></div>
+        <div class="im-trend"><div class="ic">🧑‍🤝‍🧑</div><div class="tt">Мікроінфлюенсери</div><p>блогери з невеликою, але залученою аудиторією часто ефективніші за «зірок»</p></div>
+      </div>
+      <div class="im-note" style="margin-top:14px">📈 Через дорожчання класичної контекстної реклами малий і середній бізнес дедалі частіше шукає дешевші канали — саме тому контент- та інфлюенс-маркетинг ростуть так швидко.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 8 — Означення: інтернет-банкінг
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="8">
+      <div class="lbl">Розділ 02 · Інтернет-банкінг</div>
+      <h2 class="stitle">Що таке <span class="a">інтернет-банкінг?</span></h2>
+      <div class="im-def">
+        <div class="dt">Означення</div>
+        <p><strong>Інтернет-банкінг</strong> — дистанційне обслуговування банківського рахунку через сайт або мобільний застосунок: перекази, оплата послуг, контроль витрат — без візиту у відділення.</p>
+      </div>
+      <div class="im-note">🇺🇦 Україна — один із світових піонерів цієї галузі: Приват24 запрацював ще у 2001 році, задовго до того, як онлайн-банкінг став звичною справою в багатьох країнах Європи.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 9 — Bank apps comparison
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="9">
+      <div class="lbl">Розділ 02 · Застосунки в Україні</div>
+      <h2 class="stitle">Хто є хто серед <span class="a">банківських застосунків?</span></h2>
+      <div class="im-bankGrid">
+        <div class="im-bank">
+          <div class="bh"><span class="bdot" style="background:var(--cyan)"></span><span class="bn">Приват24</span></div>
+          <ul><li>найбільша екосистема послуг</li><li>платежі, страхування, держпослуги</li><li>зручний для бізнесу й ФОП</li></ul>
+        </div>
+        <div class="im-bank">
+          <div class="bh"><span class="bdot" style="background:var(--yellow)"></span><span class="bn">monobank</span></div>
+          <ul><li>повністю дистанційне відкриття рахунку</li><li>простий і мінімалістичний інтерфейс</li><li>популярний серед молоді та ФОП</li></ul>
+        </div>
+        <div class="im-bank">
+          <div class="bh"><span class="bdot" style="background:var(--green)"></span><span class="bn">Ощад24/7 · PUMB</span></div>
+          <ul><li>застосунки інших великих банків</li><li>схожий базовий набір функцій</li><li>вибір часто залежить від звички й умов рахунку</li></ul>
+        </div>
+      </div>
+      <div class="im-note" style="margin-top:14px">💡 Обираючи банківський застосунок, звертають увагу не лише на дизайн, а й на комісії, ліміти переказів і якість підтримки клієнтів.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 10 — Функції інтернет-банкінгу
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="10">
+      <div class="lbl">Розділ 02 · Можливості</div>
+      <h2 class="stitle">Що можна зробити <span class="a">в застосунку банку?</span></h2>
+      <div class="im-funcGrid">
+        <div class="im-func"><div class="ic">💸</div><div class="lb">Перекази й платежі</div></div>
+        <div class="im-func"><div class="ic">📲</div><div class="lb">Поповнення мобільного</div></div>
+        <div class="im-func"><div class="ic">💰</div><div class="lb">Депозити та накопичення</div></div>
+        <div class="im-func"><div class="ic">💳</div><div class="lb">Кредити онлайн</div></div>
+        <div class="im-func"><div class="ic">💱</div><div class="lb">Обмін валют</div></div>
+        <div class="im-func"><div class="ic">🧾</div><div class="lb">Оплата комунальних послуг</div></div>
+        <div class="im-func"><div class="ic">🛡️</div><div class="lb">Страхування</div></div>
+        <div class="im-func"><div class="ic">📊</div><div class="lb">Аналітика витрат</div></div>
+        <div class="im-func"><div class="ic">🏛️</div><div class="lb">Державні послуги</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 11 — Безпека онлайн-фінансів
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="11">
+      <div class="lbl">Розділ 03 · Безпека</div>
+      <h2 class="stitle">Як банки <span class="a">захищають гроші онлайн?</span></h2>
+      <ul class="im-cl">
+        <li><strong style="color:#fff">Двофакторна автентифікація (2FA)</strong> — пароль плюс одноразовий код із SMS чи застосунку</li>
+        <li><strong style="color:#fff">Біометрія</strong> — вхід за відбитком пальця чи розпізнаванням обличчя</li>
+        <li><strong style="color:#fff">BankID</strong> — національна система, що дає змогу підтвердити особу через банк для доступу до держпослуг (наприклад, у «Дії»)</li>
+        <li><strong style="color:#fff">Push-підтвердження</strong> — операція виконається, лише якщо підтвердити її в самому застосунку</li>
+      </ul>
+      <div class="im-note" style="margin-top:12px">⚠️ Жоден банк ніколи не просить назвати CVV-код, повний номер картки чи одноразовий пароль по телефону або в листі — це завжди ознака шахрайства (фішингу).</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 12 — Fun fact break
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="12">
+      <div class="lbl">Перерва / Цікавий факт</div>
+      <h2 class="stitle">А ти знав<span class="a">(-ла)?</span></h2>
+      <div class="im-factCard">
+        <div class="ic">📲</div>
+        <p>Значна частина всіх платежів в Україні сьогодні відбувається безготівково — телефоном, карткою чи QR-кодом. Ще років двадцять тому оплата «одним дотиком» здавалася фантастикою, а зараз це звичайна дія кілька разів на день.</p>
+      </div>
+      <div class="im-note" style="margin-top:14px">💬 Пригадай: скільки разів за останній тиждень ти (чи твої батьки) платили карткою або телефоном замість готівки?</div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 13 — Practice 1 (⭐)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="13">
+      <div class="lbl">Практична робота · Завдання 1</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf"><h2>Маркетинг чи банкінг?</h2><span class="badge be">⭐ Базовий рівень</span></div>
+      </div>
+      <p>Для кожної ситуації визнач, до чого вона стосується — до інтернет-маркетингу чи до інтернет-банкінгу. Натисни на пункт, щоб перевірити себе.</p>
+      <div class="im-quiz">
+        <div class="im-qitem" onclick="this.classList.toggle('show')"><div class="q">а) Блогер розповідає в Instagram про новий смартфон за рекламний контракт</div><div class="ans">→ інтернет-маркетинг (інфлюенс-маркетинг)</div></div>
+        <div class="im-qitem" onclick="this.classList.toggle('show')"><div class="q">б) Учениця оплачує комунальні послуги через застосунок банку</div><div class="ans">→ інтернет-банкінг</div></div>
+        <div class="im-qitem" onclick="this.classList.toggle('show')"><div class="q">в) Магазин показує рекламу кросівок тому, що ти шукав «кросівки» в Google</div><div class="ans">→ інтернет-маркетинг (контекстна реклама)</div></div>
+        <div class="im-qitem" onclick="this.classList.toggle('show')"><div class="q">г) Підтвердження оплати відбитком пальця в застосунку банку</div><div class="ans">→ інтернет-банкінг (біометрична безпека)</div></div>
+      </div>
+      <div class="hint hint-g" style="margin-top:14px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Маркетинг — про те, як бізнес привертає увагу й пропонує щось купити. Банкінг — про те, як людина керує вже своїми грошима.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 14 — Practice 2 (⭐⭐)
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="14">
+      <div class="lbl">Практична робота · Завдання 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf"><h2>Розроби короткий рекламний бриф</h2><span class="badge bm">⭐⭐ Середній рівень</span></div>
+      </div>
+      <p>Уяви, що твій клас організовує шкільний ярмарок. Склади короткий план просування в інтернеті.</p>
+      <ul class="im-cl">
+        <li>Обери цільову аудиторію: хто саме має дізнатися про ярмарок?</li>
+        <li>Обери 2 канали з вивчених (SMM, контент-маркетинг, email тощо) і поясни свій вибір</li>
+        <li>Сформулюй заклик до дії (наприклад: «Забронюй столик до п'ятниці»)</li>
+        <li>Познач один етап вирви продажів (AIDA), на якому спрацює кожен обраний канал</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:14px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Гарний бриф відповідає на запитання «кому», «що» і «навіщо» одним-двома реченнями на кожен пункт — без зайвих деталей.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 15 — Homework
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="15">
+      <div class="lbl">Домашнє завдання</div>
+      <h2 class="stitle">Що зробити <span class="a">вдома</span></h2>
+      <div class="card">
+        <div class="ctitle">🔍 Дослідження</div>
+        <p style="margin-bottom:0">Відкрий застосунок банку, яким користується твоя родина (за згодою дорослих), і знайди в ньому три функції безпеки з переліку на слайді 11. Запиши, як вони називаються саме в цьому застосунку.</p>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="ctitle">✍️ Аналіз реклами</div>
+        <ul class="im-cl">
+          <li>Знайди приклад реклами у своїй стрічці соцмереж — визнач, контекстна вона чи таргетована</li>
+          <li>Опиши, на якому етапі вирви продажів (AIDA) ти перебуваєш стосовно цього товару</li>
+          <li>Подумай: чи довіряєш ти цій рекламі — і чому</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════
+         SLIDE 16 — Summary
+         ═══════════════════════════════════ -->
+    <div class="slide" data-n="16">
+      <div class="lbl">Підсумок уроку</div>
+      <h2 class="stitle">Що варто <span class="a">запам'ятати</span></h2>
+      <div class="sumGrid">
+        <div class="sumc"><div class="sumi">📣</div><div class="sumt">Інтернет-маркетинг</div><p>SEO, контекстна й таргетована реклама, SMM, контент, інфлюенсери</p></div>
+        <div class="sumc"><div class="sumi">🧭</div><div class="sumt">Вирва продажів (AIDA)</div><p>Увага → Інтерес → Бажання → Дія</p></div>
+        <div class="sumc"><div class="sumi">🤖</div><div class="sumt">Тренди 2026</div><p>ШІ-персоналізація, відео-контент, мікроінфлюенсери</p></div>
+        <div class="sumc"><div class="sumi">🏦</div><div class="sumt">Інтернет-банкінг</div><p>Приват24, monobank та інші — керування рахунком без відділення</p></div>
+        <div class="sumc"><div class="sumi">💳</div><div class="sumt">Можливості застосунків</div><p>Перекази, депозити, кредити, страхування, держпослуги</p></div>
+        <div class="sumc"><div class="sumi">🔐</div><div class="sumt">Безпека</div><p>2FA, біометрія, BankID — і жодних кодів по телефону стороннім</p></div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+<script src="../../_shared/nav.js"></script>
+<script>
+function imShowEx(el, boxId) {
+  const box = document.getElementById(boxId);
+  box.style.opacity = '0';
+  setTimeout(() => { box.textContent = el.dataset.ex; box.style.opacity = '1'; }, 100);
+}
+function imHideEx(boxId) {
+  const box = document.getElementById(boxId);
+  box.style.opacity = '0';
+  setTimeout(() => { box.textContent = box.dataset.default; box.style.opacity = '1'; }, 100);
+}
+</script>
+</body>
+</html>

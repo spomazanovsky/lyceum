@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентація – Комп'ютерно-орієнтовані засоби планування, виконання і прогнозування – 10-а клас</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Nunito:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_shared/base.css">
+<style>
+/* ── pl- : урок-специфічні компоненти ── */
+.pl-def{background:rgba(0,212,255,.06);border:1px solid rgba(0,212,255,.22);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:14px}
+.pl-def .dt{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.pl-def p{margin:0;font-size:14.5px;color:#e2e8f0}
+
+.pl-flow{display:flex;align-items:stretch;gap:6px;flex-wrap:nowrap}
+.pl-fstep{flex:1;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;transition:all .25s ease;cursor:default}
+.pl-fstep .ic{font-size:22px;margin-bottom:6px}
+.pl-fstep .tt{font-size:12px;color:#c4d0e0;font-family:var(--fd);font-weight:600}
+.pl-fstep:hover{border-color:var(--cyan);background:rgba(0,212,255,.08);transform:translateY(-4px);box-shadow:0 8px 22px rgba(0,212,255,.15)}
+.pl-farrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;padding-top:22px}
+.pl-exBox{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(0,212,255,.05);border:1px solid var(--border);border-radius:10px;padding:12px 18px;font-size:13px;color:#c4d0e0;transition:opacity .2s ease;margin-top:12px}
+
+.pl-toolGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+.pl-tool{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.pl-tool .ic{font-size:24px;margin-bottom:6px}
+.pl-tool .nm{font-family:var(--fd);font-weight:700;font-size:13px;color:var(--text)}
+.pl-tool .ds{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.4}
+
+.pl-smartGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.pl-smart{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 10px;text-align:center}
+.pl-smart .l{font-family:var(--fd);font-weight:800;font-size:24px;color:var(--cyan)}
+.pl-smart .w{font-size:11.5px;color:var(--text);font-weight:600;margin:4px 0 3px}
+.pl-smart .d{font-size:10.5px;color:var(--muted);line-height:1.35}
+
+.pl-chartCard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+.pl-chartLbl{display:flex;gap:16px;justify-content:center;margin-top:8px;font-family:var(--fm);font-size:11px;color:var(--muted)}
+.pl-chartLbl span{display:inline-flex;align-items:center;gap:5px}
+.pl-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+.pl-pillGrid{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0 14px}
+.pl-pill{font-family:var(--fm);font-size:12px;padding:6px 13px;border-radius:20px;border:1px solid var(--border);color:#c4d0e0;background:var(--card)}
+
+.pl-cl{list-style:none;padding:0;margin:0}
+.pl-cl li{display:flex;align-items:flex-start;gap:9px;padding:7px 0;font-size:13.5px;color:#c4d0e0}
+.pl-cl li::before{content:'☐';position:static;color:var(--cyan);font-size:15px;margin-top:-1px;flex-shrink:0}
+
+@media (max-width:680px){
+  .pl-toolGrid{grid-template-columns:1fr 1fr}
+  .pl-smartGrid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow2"></div>
+<div id="app">
+  <div id="slides">
+
+    <div class="slide active" data-n="1">
+      <div class="s1">
+        <div class="fshape fs1"></div>
+        <div class="fshape fs2"></div>
+        <div class="fshape fs3"></div>
+        <div class="fshape fs4"></div>
+        <div class="fshape fs5"></div>
+        <div class="fcode">📅 план</div>
+        <div class="fcode">✅ дія</div>
+        <div class="fcode">📈 прогноз</div>
+        <div class="fcode">🤖 ШІ</div>
+        <div class="ttag">// <span class="tn">10 клас</span> · Інформатика · Практична робота 2</div>
+        <h1 class="mtitle">Комп'ютерно-орієнтовані засоби<br>планування, виконання й прогнозування</h1>
+        <div class="tul"></div>
+        <p class="tsub">Як цифрові інструменти допомагають вчитися, досліджувати й досягати мети</p>
+        <div class="tmeta">
+          <div class="mchip"><span class="ic">🗓️</span> Планування</div>
+          <div class="mchip"><span class="ic">⚙️</span> Виконання</div>
+          <div class="mchip"><span class="ic">📈</span> Прогнозування</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="2">
+      <div class="lbl">Сьогодні на уроці</div>
+      <h2 class="stitle">План <span class="a">уроку</span></h2>
+      <div class="planGrid">
+        <div class="pitem">
+          <div class="pnum">01</div>
+          <div class="ptxt"><strong>Комп'ютерно-орієнтовані засоби</strong>що це і навіщо потрібні</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">02</div>
+          <div class="ptxt"><strong>Плануємо</strong>інструменти тайм-менеджменту й метод SMART</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">03</div>
+          <div class="ptxt"><strong>Виконуємо</strong>спільна робота онлайн</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">04</div>
+          <div class="ptxt"><strong>Прогнозуємо</strong>як комп'ютер передбачає результат</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">05</div>
+          <div class="ptxt"><strong>ШІ-помічники</strong>у навчанні та дослідженнях сьогодні</div>
+        </div>
+        <div class="pitem">
+          <div class="pnum">06</div>
+          <div class="ptxt"><strong>Практична робота</strong>плануємо власний дослідницький проєкт</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" data-n="3">
+      <div class="lbl">Розділ 01 · Основні поняття</div>
+      <h2 class="stitle">Комп'ютерно-орієнтовані <span class="a">засоби діяльності</span></h2>
+      <div class="pl-def">
+        <div class="dt">Означення</div>
+        <p><strong>Комп'ютерно-орієнтовані засоби</strong> навчальної, дослідницької й практичної діяльності — програми та онлайн-сервіси, які допомагають людині організувати свою роботу на кожному з трьох етапів: <span class="hi">спланувати</span>, <span class="hg">виконати</span> й <span class="hy">спрогнозувати</span> результат.</p>
+      </div>
+      <div class="pl-flow" id="plFlow">
+        <div class="pl-fstep" onmouseenter="plShowEx(this,'plFlowEx')" onmouseleave="plHideEx('plFlowEx')" data-ex="Визначаємо мету, терміни й кроки — Google Календар, Notion, Trello."><div class="ic">🗓️</div><div class="tt">Плануємо</div></div>
+        <div class="pl-farrow">→</div>
+        <div class="pl-fstep" onmouseenter="plShowEx(this,'plFlowEx')" onmouseleave="plHideEx('plFlowEx')" data-ex="Виконуємо заплановане разом — Google Документи, Classroom, дошки Miro."><div class="ic">⚙️</div><div class="tt">Виконуємо</div></div>
+        <div class="pl-farrow">→</div>
+        <div class="pl-fstep" onmouseenter="plShowEx(this,'plFlowEx')" onmouseleave="plHideEx('plFlowEx')" data-ex="Передбачаємо результат на основі даних — тренд у таблицях, ШІ-аналіз."><div class="ic">📈</div><div class="tt">Прогнозуємо</div></div>
+      </div>
+      <div class="pl-exBox" id="plFlowEx" data-default="Наведи курсор на етап, щоб побачити приклад інструментів.">Наведи курсор на етап, щоб побачити приклад інструментів.</div>
+    </div>
+
+    <div class="slide" data-n="4">
+      <div class="lbl">Розділ 02 · Планування</div>
+      <h2 class="stitle">Плануємо: <span class="a">тайм-менеджмент</span></h2>
+      <p>Сучасні інструменти <span class="hi">тайм-менеджменту</span> допомагають розподілити час і не забути про дедлайни.</p>
+      <div class="pl-toolGrid">
+        <div class="pl-tool"><div class="ic">📅</div><div class="nm">Google Календар</div><div class="ds">спільні події, нагадування, доступ для інших</div></div>
+        <div class="pl-tool"><div class="ic">📝</div><div class="nm">Notion</div><div class="ds">план проєкту, нотатки й таблиці в одному місці</div></div>
+        <div class="pl-tool"><div class="ic">🗂️</div><div class="nm">Trello</div><div class="ds">дошки завдань за принципом "зробити → в процесі → готово"</div></div>
+        <div class="pl-tool"><div class="ic">✅</div><div class="nm">Google Завдання</div><div class="ds">короткі списки справ, прив'язані до календаря</div></div>
+      </div>
+      <p style="margin-top:14px;font-family:var(--fm);font-size:12px;color:var(--muted)">У підручнику (Морзе Н. В., 2018) як приклади також згадують Doodle (спільне голосування за час зустрічі) та C-Organizer.</p>
+    </div>
+
+    <div class="slide" data-n="5">
+      <div class="lbl">Розділ 02 · Планування</div>
+      <h2 class="stitle">Метод <span class="a">SMART</span></h2>
+      <div class="pl-def">
+        <div class="dt">Означення</div>
+        <p><strong>SMART</strong> — методика формулювання цілей, яку легко перенести в будь-який планувальник: кожен пункт плану варто перевірити за цими п'ятьма критеріями.</p>
+      </div>
+      <div class="pl-smartGrid">
+        <div class="pl-smart"><div class="l">S</div><div class="w">Specific</div><div class="d">конкретна</div></div>
+        <div class="pl-smart"><div class="l">M</div><div class="w">Measurable</div><div class="d">вимірна</div></div>
+        <div class="pl-smart"><div class="l">A</div><div class="w">Achievable</div><div class="d">досяжна</div></div>
+        <div class="pl-smart"><div class="l">R</div><div class="w">Relevant</div><div class="d">доречна</div></div>
+        <div class="pl-smart"><div class="l">T</div><div class="w">Time-bound</div><div class="d">обмежена в часі</div></div>
+      </div>
+      <p style="margin-top:14px">Приклад: не "підготуватися до дослідницького проєкту", а <span class="hg">"зібрати 20 відповідей анкети в Google Формах до п'ятниці"</span>.</p>
+    </div>
+
+    <div class="slide" data-n="6">
+      <div class="lbl">Розділ 03 · Виконання</div>
+      <h2 class="stitle">Виконуємо: <span class="a">спільна робота онлайн</span></h2>
+      <div class="pl-toolGrid">
+        <div class="pl-tool"><div class="ic">📄</div><div class="nm">Google Документи/Таблиці</div><div class="ds">редагування в реальному часі кількома людьми</div></div>
+        <div class="pl-tool"><div class="ic">🏫</div><div class="nm">Google Клас</div><div class="ds">завдання, терміни здачі, оцінки — в одному місці</div></div>
+        <div class="pl-tool"><div class="ic">🖇️</div><div class="nm">Miro / FigJam</div><div class="ds">спільна дошка для мозкового штурму й схем</div></div>
+        <div class="pl-tool"><div class="ic">🎥</div><div class="nm">Google Meet</div><div class="ds">відеозустрічі для обговорення прогресу</div></div>
+      </div>
+      <p style="margin-top:14px">Головна перевага онлайн-інструментів — усі бачать <span class="hi">останню версію</span> документа й можуть працювати <span class="hi">одночасно</span>, без пересилання файлів поштою.</p>
+    </div>
+
+    <div class="slide" data-n="7">
+      <div class="lbl">Розділ 04 · Прогнозування</div>
+      <h2 class="stitle">Прогнозуємо: <span class="a">що буде далі?</span></h2>
+      <div class="pl-def">
+        <div class="dt">Означення</div>
+        <p><strong>Прогнозування</strong> — обчислення ймовірного майбутнього значення на основі вже наявних даних (тренду). У таблицях це роблять функції <code>TREND()</code> і <code>FORECAST()</code> або лінія тренду на діаграмі.</p>
+      </div>
+      <div class="pl-chartCard">
+        <svg viewBox="0 0 320 140" width="100%" height="140" style="overflow:visible">
+          <line x1="10" y1="120" x2="310" y2="120" stroke="#1c3054" stroke-width="1"/>
+          <line x1="10" y1="10" x2="10" y2="120" stroke="#1c3054" stroke-width="1"/>
+          <polyline points="30,100 70,88 110,76 150,60 190,48" fill="none" stroke="#00d4ff" stroke-width="2.5"/>
+          <circle cx="30" cy="100" r="4" fill="#00d4ff"/>
+          <circle cx="70" cy="88" r="4" fill="#00d4ff"/>
+          <circle cx="110" cy="76" r="4" fill="#00d4ff"/>
+          <circle cx="150" cy="60" r="4" fill="#00d4ff"/>
+          <circle cx="190" cy="48" r="4" fill="#00d4ff"/>
+          <polyline points="190,48 230,36 270,24" fill="none" stroke="#6bcb77" stroke-width="2.5" stroke-dasharray="5,4"/>
+          <circle cx="230" cy="36" r="4" fill="#6bcb77"/>
+          <circle cx="270" cy="24" r="4" fill="#6bcb77"/>
+        </svg>
+        <div class="pl-chartLbl">
+          <span><span class="pl-dot" style="background:#00d4ff"></span> фактичні бали учня за тижні</span>
+          <span><span class="pl-dot" style="background:#6bcb77"></span> прогноз на наступні тижні</span>
+        </div>
+      </div>
+      <p style="margin-top:12px">Так само аналізують результати досліджень: наприклад, як змінюється результат експерименту з кожним повторенням.</p>
+    </div>
+
+    <div class="slide" data-n="8">
+      <div class="lbl">Розділ 05 · ШІ-помічники</div>
+      <h2 class="stitle">ШІ у навчанні й <span class="a">дослідженнях</span></h2>
+      <p>Ще кілька років тому основними прикладами були Go-Lab і Wolfram|Alpha. Сьогодні до них додались потужні ШІ-асистенти:</p>
+      <div class="pl-toolGrid">
+        <div class="pl-tool"><div class="ic">💬</div><div class="nm">ChatGPT / Claude / Gemini</div><div class="ds">допомога сформулювати дослідницьке питання чи план</div></div>
+        <div class="pl-tool"><div class="ic">📚</div><div class="nm">NotebookLM</div><div class="ds">аналізує завантажені джерела й відповідає лише на їх основі</div></div>
+        <div class="pl-tool"><div class="ic">🧮</div><div class="nm">Wolfram|Alpha</div><div class="ds">обчислення, графіки функцій, перевірка розрахунків</div></div>
+        <div class="pl-tool"><div class="ic">🔬</div><div class="nm">Go-Lab</div><div class="ds">віртуальні лабораторії для навчальних досліджень</div></div>
+      </div>
+      <div class="pl-def" style="margin-top:14px">
+        <div class="dt">Важливо</div>
+        <p>ШІ-асистент — це <span class="hy">помічник</span>, а не джерело істини: результат завжди варто перевіряти й критично оцінювати, особливо в дослідницькій роботі.</p>
+      </div>
+    </div>
+
+    <div class="slide" data-n="9">
+      <div class="lbl">Розділ 05 · Приклад</div>
+      <h2 class="stitle">Дослідницький проєкт <span class="a">крок за кроком</span></h2>
+      <div class="pl-flow" id="plFlow2">
+        <div class="pl-fstep" onmouseenter="plShowEx(this,'plFlow2Ex')" onmouseleave="plHideEx('plFlow2Ex')" data-ex="Формулюємо гіпотезу та запитання дослідження."><div class="ic">💡</div><div class="tt">Гіпотеза</div></div>
+        <div class="pl-farrow">→</div>
+        <div class="pl-fstep" onmouseenter="plShowEx(this,'plFlow2Ex')" onmouseleave="plHideEx('plFlow2Ex')" data-ex="Складаємо план і дедлайни в Google Календарі чи Notion."><div class="ic">🗓️</div><div class="tt">План</div></div>
+        <div class="pl-farrow">→</div>
+        <div class="pl-fstep" onmouseenter="plShowEx(this,'plFlow2Ex')" onmouseleave="plHideEx('plFlow2Ex')" data-ex="Збираємо дані анкетою в Google Формах."><div class="ic">📋</div><div class="tt">Збір даних</div></div>
+        <div class="pl-farrow">→</div>
+        <div class="pl-fstep" onmouseenter="plShowEx(this,'plFlow2Ex')" onmouseleave="plHideEx('plFlow2Ex')" data-ex="Аналізуємо в Google Таблицях, будуємо тренд і прогноз."><div class="ic">📊</div><div class="tt">Аналіз</div></div>
+        <div class="pl-farrow">→</div>
+        <div class="pl-fstep" onmouseenter="plShowEx(this,'plFlow2Ex')" onmouseleave="plHideEx('plFlow2Ex')" data-ex="Оформлюємо висновки в Google Презентаціях чи Canva."><div class="ic">🎤</div><div class="tt">Презентація</div></div>
+      </div>
+      <div class="pl-exBox" id="plFlow2Ex" data-default="Наведи курсор на крок, щоб побачити приклад інструмента.">Наведи курсор на крок, щоб побачити приклад інструмента.</div>
+    </div>
+
+    <div class="slide" data-n="10">
+      <div class="lbl">Практична робота · Завдання 1</div>
+      <div class="th">
+        <div class="tnum">01</div>
+        <div class="tinf"><h2>Спільний календар проєкту</h2><span class="badge be">⭐ Базовий рівень</span></div>
+      </div>
+      <p>Створи в Google Календарі окремий календар для класного дослідницького проєкту.</p>
+      <ul class="pl-cl">
+        <li>Створи новий календар і дай йому назву проєкту</li>
+        <li>Надай до нього доступ двом однокласникам</li>
+        <li>Внесіть разом дати ключових етапів: збір даних, аналіз, презентація</li>
+        <li>Надішли посилання на календар учителю електронною поштою</li>
+      </ul>
+      <div class="hint hint-g" style="margin-top:14px">
+        <div class="hlbl" style="color:var(--green)">💡 Підказка</div>
+        <p>Налаштування доступу — кнопка «Поділитися» біля назви календаря в лівій панелі Google Календаря.</p>
+      </div>
+    </div>
+
+    <div class="slide" data-n="11">
+      <div class="lbl">Практична робота · Завдання 2</div>
+      <div class="th">
+        <div class="tnum">02</div>
+        <div class="tinf"><h2>Досліджуємо онлайн-інструмент</h2><span class="badge bm">⭐⭐ Середній рівень</span></div>
+      </div>
+      <p>Обери один сервіс — Go-Lab, Wolfram|Alpha або NotebookLM — і дослідь його можливості.</p>
+      <ul class="pl-cl">
+        <li>Відкрий сервіс і розглянь його меню та елементи керування</li>
+        <li>Визнач призначення основних кнопок і розділів</li>
+        <li>Запиши опис інтерфейсу в зошит</li>
+        <li>Наведи три приклади, як цей сервіс можна застосувати для розв'язання навчальних чи дослідницьких задач</li>
+      </ul>
+      <div class="hint hint-y" style="margin-top:14px">
+        <div class="hlbl" style="color:var(--yellow)">💡 Підказка</div>
+        <p>Порівняй свій сервіс із функціями, що вивчали на уроці: планування, виконання чи прогнозування — до якого етапу він ближчий?</p>
+      </div>
+    </div>
+
+    <div class="slide" data-n="12">
+      <div class="lbl">Підсумок уроку</div>
+      <h2 class="stitle">Що варто <span class="a">запам'ятати</span></h2>
+      <div class="sumGrid">
+        <div class="sumc">
+          <div class="sumi">🗓️</div>
+          <div class="sumt">Плануємо</div>
+          <p>Google Календар, Notion, Trello + метод SMART</p>
+        </div>
+        <div class="sumc">
+          <div class="sumi">⚙️</div>
+          <div class="sumt">Виконуємо</div>
+          <p>спільні документи, дошки, відеозустрічі</p>
+        </div>
+        <div class="sumc">
+          <div class="sumi">📈</div>
+          <div class="sumt">Прогнозуємо</div>
+          <p>тренд у таблицях і аналіз за допомогою ШІ</p>
+        </div>
+      </div>
+      <div class="ty">
+        <h2>Дякую за увагу!</h2>
+        <div class="ddots">
+          <div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div><div class="dd"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <nav id="nav">
+    <button class="nbtn" id="pb" onclick="go(-1)">←</button>
+    <div id="ctr"><span id="cn">1</span> / <span id="tot"></span></div>
+    <button class="nbtn" id="nb" onclick="go(1)">→</button>
+  </nav>
+</div>
+<script src="../../_shared/nav.js"></script>
+<script>
+function plShowEx(el, boxId) {
+  const box = document.getElementById(boxId);
+  box.style.opacity = '0';
+  setTimeout(() => { box.textContent = el.dataset.ex; box.style.opacity = '1'; }, 100);
+}
+function plHideEx(boxId) {
+  const box = document.getElementById(boxId);
+  box.style.opacity = '0';
+  setTimeout(() => { box.textContent = box.dataset.default; box.style.opacity = '1'; }, 100);
+}
+</script>
+</body>
+</html>
