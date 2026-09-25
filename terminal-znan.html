@@ -1,0 +1,868 @@
+<meta charset="UTF-8">
+<title>Термінал знань</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap">
+<style>
+/* ============ Tokens ============ */
+:root{
+  --bg:#f2f6f4;
+  --surface:#ffffff;
+  --surface-2:#e7eee9;
+  --ink:#0e1a17;
+  --ink-soft:#51655f;
+  --border:#ccd8d1;
+  --accent:#0f8b8d;
+  --accent-ink:#ffffff;
+  --amber:#a06a08;
+  --good:#1f8a4c;
+  --bad:#c23b3b;
+  --console-bg:#0d1613;
+  --console-ink:#dbe9e3;
+  --console-border:#24352f;
+  --console-soft:#7f9a91;
+  --ff-display:'IBM Plex Sans',system-ui,sans-serif;
+  --ff-body:'IBM Plex Sans',system-ui,sans-serif;
+  --ff-mono:'IBM Plex Mono','SF Mono',monospace;
+}
+/* Термінал знань навмисно однотемний (світлий) — без прив'язки до системної теми. */
+
+*,*::before,*::after{box-sizing:border-box}
+html{color-scheme:light}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--ff-body);
+  margin:0;
+  padding:28px 16px 60px;
+  -webkit-font-smoothing:antialiased;
+  zoom:1.75;
+}
+h1,h2,h3{font-family:var(--ff-display);text-wrap:balance;margin:0}
+p{margin:0;line-height:1.55}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:900px;margin:0 auto}
+
+/* ============ Console chrome ============ */
+.console{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 1px 2px rgba(0,0,0,.04), 0 18px 44px -28px rgba(10,30,24,.35);
+}
+.console-bar{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 16px;
+  background:var(--console-bg);
+  border-bottom:1px solid var(--console-border);
+}
+.console-dots{display:flex;gap:6px}
+.console-dot{width:9px;height:9px;border-radius:50%;background:#3a4a44}
+#led1 { background-color: #ff5c5f; box-shadow: 0 0 8px #ff5c5f; }
+#led2 { background-color: #fac800; box-shadow: 0 0 8px #fac800; }
+#led3 { background-color: #34c759; box-shadow: 0 0 8px #34c759; }
+.console-dot.live{background:var(--good);box-shadow:0 0 8px var(--good)}
+.console-title{
+  font-family:var(--ff-mono);font-size:11.5px;letter-spacing:.4px;
+  color:var(--console-soft);margin-left:2px;
+}
+.console-stat{
+  margin-left:auto;font-family:var(--ff-mono);font-size:11.5px;color:var(--console-soft);
+  font-variant-numeric:tabular-nums;
+}
+.console-stat b{color:var(--console-ink)}
+.console-reset{
+  margin-left:12px;flex-shrink:0;background:none;cursor:pointer;
+  border:1px solid var(--console-border);color:var(--console-soft);
+  font-family:var(--ff-mono);font-size:11px;padding:5px 10px;border-radius:7px;
+  transition:border-color .12s ease,color .12s ease;
+}
+.console-reset:hover{border-color:var(--bad);color:var(--bad)}
+.console-body{padding:30px 32px 32px}
+@media (max-width:600px){body{zoom:1}.console-body{padding:22px 18px 26px}}
+
+/* ============ Intro ============ */
+.eyebrow{
+  font-family:var(--ff-mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:10px;
+}
+.hero h1{font-size:clamp(26px,4vw,36px);font-weight:700;line-height:1.15;letter-spacing:-.01em}
+.hero p.lead{margin-top:12px;max-width:56ch;color:var(--ink-soft);font-size:15px}
+.subsys-line{
+  display:flex;flex-wrap:wrap;gap:6px 0;align-items:center;margin-top:20px;
+  font-family:var(--ff-mono);font-size:12px;color:var(--ink-soft);
+}
+.subsys-line .chip{
+  padding:4px 10px;border:1px solid var(--border);border-radius:20px;background:var(--surface-2);
+  margin-right:6px;color:var(--ink);
+}
+.subsys-line .arrow{margin:0 6px;color:var(--border)}
+.start-row{margin-top:26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn{
+  font-family:var(--ff-mono);font-weight:600;font-size:13px;letter-spacing:.3px;
+  padding:12px 22px;border-radius:9px;border:1px solid transparent;
+  background:var(--accent);color:var(--accent-ink);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px -10px var(--accent)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;border-color:var(--border);color:var(--ink)}
+.btn.small{padding:8px 14px;font-size:12px}
+.resume-note{font-family:var(--ff-mono);font-size:11.5px;color:var(--ink-soft)}
+
+.name-row{margin-top:24px;display:flex;flex-direction:column;gap:7px;max-width:380px}
+.name-label{font-family:var(--ff-mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft)}
+.name-input{
+  font-family:var(--ff-body);font-size:14.5px;padding:11px 13px;border-radius:9px;
+  border:1px solid var(--border);background:var(--surface);color:var(--ink);
+  transition:border-color .12s ease;
+}
+.name-input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.name-input.err{border-color:var(--bad)}
+.name-hint{font-family:var(--ff-mono);font-size:11.5px;color:var(--bad);display:none}
+.name-hint.show{display:block}
+
+.who-line{font-family:var(--ff-mono);font-size:11.5px;color:var(--ink-soft);margin-top:7px}
+.who-line b{color:var(--ink)}
+
+.report-name{font-family:var(--ff-display);font-size:16px;font-weight:600;margin-top:5px}
+
+/* ============ Module map ============ */
+.map-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.map-head h2{font-size:19px}
+.map-head .sub{font-family:var(--ff-mono);font-size:11.5px;color:var(--ink-soft);margin-top:4px}
+
+.trail{position:relative;display:flex;flex-direction:column;gap:2px}
+.node{
+  position:relative;display:flex;align-items:center;gap:16px;
+  padding:16px 16px 16px 4px;border-radius:12px;
+  border:1px solid transparent;
+  background:transparent;
+  cursor:pointer;text-align:left;width:100%;
+  transition:background .15s ease,border-color .15s ease;
+}
+.node:hover{background:var(--surface-2);border-color:var(--border)}
+.node:not(:last-child)::after{
+  content:'';position:absolute;left:29px;top:56px;bottom:-2px;width:2px;
+  background:var(--border);
+}
+.node-led{
+  flex-shrink:0;width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface-2);border:1px solid var(--border);
+  font-size:18px;position:relative;z-index:1;
+}
+.node.pass .node-led{background:color-mix(in srgb, var(--good) 16%, var(--surface));border-color:var(--good)}
+.node.active .node-led{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent)}
+.node-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.node-name{font-weight:600;font-size:14.5px}
+.node-desc{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+.node-score{
+  font-family:var(--ff-mono);font-size:12px;color:var(--ink-soft);flex-shrink:0;
+  font-variant-numeric:tabular-nums;text-align:right;
+}
+.node-score b{color:var(--ink);font-size:14px}
+.node.pass .node-score b{color:var(--good)}
+
+.overall-row{
+  margin-top:26px;padding-top:20px;border-top:1px dashed var(--border);
+  display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.overall-row .label{font-family:var(--ff-mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.5px}
+.overall-row .val{font-family:var(--ff-mono);font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ============ Quiz panel ============ */
+.quiz-head{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.quiz-back{
+  font-family:var(--ff-mono);font-size:12px;color:var(--ink-soft);
+  background:none;border:none;padding:4px 0;display:flex;align-items:center;gap:5px;
+}
+.quiz-back:hover{color:var(--ink)}
+.quiz-title{font-size:18px;margin-top:10px}
+.quiz-progress{display:flex;gap:5px;margin:16px 0 22px}
+.qp-dot{width:22px;height:4px;border-radius:3px;background:var(--border)}
+.qp-dot.done{background:var(--ink-soft)}
+.qp-dot.now{background:var(--accent)}
+.qp-dot.correct{background:var(--good)}
+.qp-dot.wrong{background:var(--bad)}
+
+.q-count{font-family:var(--ff-mono);font-size:11.5px;color:var(--ink-soft);margin-bottom:8px}
+.q-text{font-size:16.5px;font-weight:500;line-height:1.5;margin-bottom:18px}
+.q-text code{
+  font-family:var(--ff-mono);background:var(--surface-2);padding:2px 6px;border-radius:5px;font-size:14.5px;
+}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{
+  display:flex;align-items:center;gap:12px;text-align:left;
+  padding:13px 15px;border-radius:10px;border:1px solid var(--border);background:var(--surface);
+  font-size:14px;color:var(--ink);transition:border-color .12s ease, background .12s ease;
+}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .k{
+  font-family:var(--ff-mono);font-size:11px;color:var(--ink-soft);
+  width:20px;height:20px;border-radius:5px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.opt:disabled{cursor:default}
+.opt.correct{border-color:var(--good);background:color-mix(in srgb, var(--good) 10%, var(--surface))}
+.opt.correct .k{border-color:var(--good);color:var(--good)}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 9%, var(--surface))}
+.opt.wrong .k{border-color:var(--bad);color:var(--bad)}
+.opt.dim{opacity:.5}
+
+.feedback{
+  margin-top:16px;padding:13px 15px;border-radius:10px;font-size:13px;line-height:1.5;
+  border:1px solid var(--border);background:var(--surface-2);display:none;
+}
+.feedback.show{display:block}
+.feedback .tag{font-family:var(--ff-mono);font-size:11px;letter-spacing:.5px;font-weight:600;margin-bottom:5px;display:block}
+.feedback.ok .tag{color:var(--good)}
+.feedback.no .tag{color:var(--bad)}
+.feedback p{color:var(--ink-soft)}
+
+.quiz-next{margin-top:20px;display:flex;justify-content:flex-end}
+
+/* ============ Module result ============ */
+.mres{text-align:center;padding:20px 0 4px}
+.mres .ic{font-size:34px}
+.mres h3{font-size:19px;margin-top:10px}
+.mres .score{font-family:var(--ff-mono);font-size:34px;font-weight:700;margin-top:10px;font-variant-numeric:tabular-nums}
+.mres .score small{font-size:15px;color:var(--ink-soft);font-weight:500}
+.mres-row{margin-top:22px;display:flex;justify-content:center;gap:12px}
+
+/* ============ Final report ============ */
+.report-grade{
+  display:flex;gap:24px;align-items:center;flex-wrap:wrap;
+  padding:22px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);
+  margin-bottom:26px;
+}
+.grade-num{font-family:var(--ff-mono);font-size:52px;font-weight:700;line-height:1;color:var(--accent)}
+.grade-num small{display:block;font-family:var(--ff-mono);font-size:11px;color:var(--ink-soft);font-weight:500;letter-spacing:1px;margin-top:6px}
+.grade-detail{flex:1;min-width:180px}
+.grade-detail .big{font-family:var(--ff-mono);font-size:15px;font-variant-numeric:tabular-nums}
+.grade-detail .small{font-size:12.5px;color:var(--ink-soft);margin-top:4px}
+
+.bar-row{display:flex;align-items:center;gap:14px;padding:10px 0}
+.bar-row .nm{width:150px;flex-shrink:0;font-size:13px;display:flex;align-items:center;gap:8px}
+.bar-track{flex:1;height:9px;border-radius:5px;background:var(--surface-2);position:relative;overflow:hidden;border:1px solid var(--border)}
+.bar-fill{display:block;height:100%;border-radius:5px;background:var(--accent);transition:width .4s ease}
+.bar-val{width:44px;text-align:right;font-family:var(--ff-mono);font-size:12.5px;color:var(--ink-soft);flex-shrink:0;font-variant-numeric:tabular-nums}
+.bar-scale{display:flex;justify-content:space-between;margin:2px 0 14px 164px;font-family:var(--ff-mono);font-size:10px;color:var(--ink-soft);max-width:calc(100% - 164px - 44px)}
+
+.report-actions{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+
+[hidden]{display:none!important}
+
+@media (max-width:600px){
+  .bar-row .nm{width:110px;font-size:12px}
+  .bar-scale{margin-left:124px}
+  .report-grade{flex-direction:column;align-items:flex-start}
+  .console-bar{flex-wrap:wrap;row-gap:8px}
+  .console-title{order:1}
+  .console-reset{order:2;margin-left:0}
+  .console-stat{order:3;margin-left:auto}
+  .console-dots{order:0}
+}
+</style>
+
+<div class="wrap">
+  <div class="console">
+    <div class="console-bar">
+      <div class="console-dots">
+        <span class="console-dot" id="led1"></span>
+        <span class="console-dot" id="led2"></span>
+        <span class="console-dot" id="led3"></span>
+      </div>
+      <span class="console-title">termznan://informatyka</span>
+      <span class="console-stat" id="topStat"><b>0</b>/50 перевірено</span>
+      <button class="console-reset" onclick="confirmReset()" title="Скинути прогрес і ПІБ">⟲ Скинути</button>
+    </div>
+
+    <div class="console-body">
+
+      <!-- ===== INTRO ===== -->
+      <section id="view-intro">
+        <div class="hero">
+          <div class="eyebrow">Підсумкова діагностика · Інформатика · 9 клас</div>
+          <h1>Термінал знань</h1>
+          <p class="lead">П'ять підсистем курсу, по десять запитань у кожній. Обери підсистему на мапі, пройди перевірку — і отримай повний звіт із оцінкою за 12-бальною шкалою.</p>
+          <div class="subsys-line">
+            <span class="chip">🛡️ ПЗ та безпека</span><span class="arrow">→</span>
+            <span class="chip">🧊 3D-графіка</span><span class="arrow">→</span>
+            <span class="chip">📊 Excel</span><span class="arrow">→</span>
+            <span class="chip">🗄️ Бази даних</span><span class="arrow">→</span>
+            <span class="chip">🐍 Python</span>
+          </div>
+          <div class="name-row">
+            <label class="name-label" for="studentNameInput">ПІБ учня / учениці</label>
+            <input type="text" id="studentNameInput" class="name-input" placeholder="Прізвище Ім'я По батькові" autocomplete="name"
+              oninput="this.classList.remove('err'); document.getElementById('nameHint').classList.remove('show'); saveName(this.value)">
+            <span class="name-hint" id="nameHint">Введіть ПІБ, щоб розпочати діагностику</span>
+          </div>
+          <div class="start-row">
+            <button class="btn" onclick="startDiagnostics()">Почати діагностику →</button>
+            <span class="resume-note" id="resumeNote" hidden></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== MODULE MAP ===== -->
+      <section id="view-map" hidden>
+        <div class="map-head">
+          <div>
+            <h2>Перелік тем</h2>
+            <div class="sub">Порядок довільний — обери будь-яку тему</div>
+            <div class="who-line" id="whoLine" hidden></div>
+          </div>
+          <button class="btn ghost small" onclick="goIntro()">← На початок</button>
+        </div>
+        <div class="trail" id="trail"></div>
+        <div class="overall-row">
+          <span class="label">ЗАГАЛЬНИЙ ПРОГРЕС</span>
+          <span class="val" id="overallVal">0 / 50</span>
+        </div>
+        <div class="start-row" id="reportLinkRow" hidden>
+          <button class="btn" onclick="goReport()">Переглянути підсумковий звіт →</button>
+        </div>
+      </section>
+
+      <!-- ===== QUIZ ===== -->
+      <section id="view-quiz" hidden>
+        <div class="quiz-head">
+          <button class="quiz-back" onclick="goMap()">← Повернутись до тем</button>
+        </div>
+        <h3 class="quiz-title" id="quizModTitle"></h3>
+        <div class="quiz-progress" id="quizDots"></div>
+        <div class="q-count" id="qCount"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="opts" id="qOpts"></div>
+        <div class="feedback" id="qFeedback">
+          <span class="tag" id="fbTag"></span>
+          <p id="fbText"></p>
+        </div>
+        <div class="quiz-next">
+          <button class="btn" id="nextBtn" onclick="nextQuestion()" hidden>Далі →</button>
+        </div>
+      </section>
+
+      <!-- ===== MODULE RESULT ===== -->
+      <section id="view-mres" hidden>
+        <div class="mres">
+          <div class="ic" id="mresIcon"></div>
+          <h3 id="mresTitle"></h3>
+          <div class="score" id="mresScore"></div>
+          <div class="mres-row">
+            <button class="btn ghost" onclick="goMap()">Повернутись до тем</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FINAL REPORT ===== -->
+      <section id="view-report" hidden>
+        <div class="map-head">
+          <div>
+            <h2>Підсумок</h2>
+            <div class="report-name" id="reportName"></div>
+            <div class="sub" id="reportDate"></div>
+          </div>
+          <button class="btn ghost small" onclick="goMap()">← До переліку тем</button>
+        </div>
+        <div class="report-grade">
+          <div class="grade-num" id="gradeNum">—<small>з 12</small></div>
+          <div class="grade-detail">
+            <div class="big" id="gradeScore"></div>
+            <div class="small">Автоматична оцінка за 12-бальною шкалою на основі частки правильних відповідей</div>
+          </div>
+        </div>
+        <div id="reportBars"></div>
+        <div class="bar-scale"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span></div>
+        <div class="report-actions">
+          <button class="btn ghost" onclick="confirmReset()">Пройти ще раз</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const MODULES = [
+  {
+    id: 'sec', icon: '🛡️', name: 'ПЗ та інформаційна безпека', desc: 'Ліцензії, архіви, шкідливе ПЗ, фішинг',
+    questions: [
+      { q: 'До якого виду програмного забезпечення належить операційна система?',
+        opts: ['Системне', 'Прикладне', 'Інструментальне', 'Шкідливе'], correct: 0,
+        expl: 'ОС керує апаратним забезпеченням і роботою інших програм — це системне ПЗ.' },
+      { q: 'Яке програмне забезпечення призначене для розробки та налагодження інших програм?',
+        opts: ['Інструментальне ПЗ', 'Системне ПЗ', 'Прикладне ПЗ', 'Портативне ПЗ'], correct: 0,
+        expl: 'Інструментальне ПЗ (середовища розробки, компілятори, налагоджувачі) використовують для створення іншого ПЗ.' },
+      { q: 'Розробник дозволяє безкоштовно користуватися програмою, змінювати й поширювати її код. До якого типу ліцензії це належить?',
+        opts: ['Вільне ПЗ', 'Власницьке (пропрієтарне) ПЗ', 'Демонстраційна (trial) версія', 'OEM-ліцензія'], correct: 0,
+        expl: 'Вільне (відкрите) ПЗ дозволяє користуватися, змінювати й поширювати код програми.' },
+      { q: 'Портативна програма — це програма, яка:',
+        opts: ['не потребує інсталяції і може запускатися одразу з носія', 'може працювати лише на портативних пристроях', 'автоматично оновлюється через інтернет', 'має обмежений демонстраційний період використання'], correct: 0,
+        expl: 'Портативне ПЗ запускають без встановлення — наприклад, з флешки.' },
+      { q: 'Яким буває стиснення даних за впливом на якість інформації?',
+        opts: ['Зі втратами та без втрат інформації', 'Тільки зі втратами інформації', 'Тільки без втрат інформації', 'Постійним і тимчасовим'], correct: 0,
+        expl: 'Стиснення може бути зі втратами (напр. JPEG) або без втрат (напр. ZIP) даних.' },
+      { q: 'Для чого призначені програми-архіватори?',
+        opts: ['Для стиснення даних та об'+"'"+'єднання кількох файлів в один архів', 'Для встановлення програм на комп'+"'"+'ютер', 'Для форматування диска', 'Для сканування системи на віруси'], correct: 0,
+        expl: 'Архіватори (ZIP, RAR, 7z) стискають дані та можуть об'+"'"+'єднувати кілька файлів в один архів.' },
+      { q: 'Що таке комп'+"'"+'ютерний вірус?',
+        opts: ['Шкідлива програма, здатна до самокопіювання і зараження інших файлів', 'Будь-яка помилка в програмному коді', 'Програма для злому паролів', 'Різновид архіватора даних'], correct: 0,
+        expl: 'Вірус — шкідлива програма, яка копіює себе і заражає інші файли чи програми.' },
+      { q: 'Яка шкідлива програма самостійно поширюється мережею, без зараження інших файлів?',
+        opts: ['Хробак (черв'+"'"+'як)', 'Троян', 'Макровірус', 'Файловий вірус'], correct: 0,
+        expl: 'Мережевий хробак розповсюджується мережею самостійно, на відміну від вірусів, що заражають файли.' },
+      { q: 'Який тип антивірусної програми порівнює поточний стан файлів зі збереженим раніше еталоном, щоб виявити зміни?',
+        opts: ['Ревізор', 'Сканер', 'Монітор', 'Блокувальник'], correct: 0,
+        expl: 'Ревізор відстежує зміни файлів порівняно з попередньо збереженим станом системи.' },
+      { q: 'Лист нібито від банку просить терміново перейти за посиланням і ввести пароль. Це приклад:',
+        opts: ['Фішингу', 'Резервного копіювання', 'Архівування', 'Інсталяції'], correct: 0,
+        expl: 'Фішинг — спроба виманити особисті дані під виглядом надійного джерела.' },
+    ]
+  },
+  {
+    id: '3d', icon: '🧊', name: '3D-графіка', desc: 'Blender, сітки, рендеринг, колірні моделі',
+    questions: [
+      { q: 'Що таке 3D-моделювання?',
+        opts: ['Технологія побудови об'+"'"+'ємної моделі об'+"'"+'єкта в тривимірному просторі', 'Спосіб стиснення растрових зображень', 'Процес друку документів на 3D-принтері', 'Формат збереження векторних зображень'], correct: 0,
+        expl: '3D-моделювання — це побудова об'+"'"+'ємної моделі об'+"'"+'єкта засобами комп'+"'"+'ютерної програми.' },
+      { q: 'Яку програму для тривимірного моделювання використовували на уроках?',
+        opts: ['Blender', 'Excel', 'Access', 'PyCharm'], correct: 0,
+        expl: 'Blender — безкоштовний редактор тривимірної графіки з відкритим кодом.' },
+      { q: 'У Blender об'+"'"+'єкти можна переміщувати, масштабувати та:',
+        opts: ['обертати', 'фарбувати', 'архівувати', 'сортувати'], correct: 0,
+        expl: 'Переміщення, масштабування й обертання — базові операції з об'+"'"+'єктами в Blender.' },
+      { q: 'Як називається операція, що «витягує» плоску грань у тривимірну форму?',
+        opts: ['Екструдування', 'Рендеринг', 'Клонування', 'Текстурування'], correct: 0,
+        expl: 'Екструдування додає об'+"'"+'єму, витягуючи вибрану грань чи ребро.' },
+      { q: 'У якому режимі Blender можна виділяти окремі вершини, ребра та грані об'+"'"+'єкта?',
+        opts: ['У режимі редагування (Edit Mode)', 'У режимі об'+"'"+'єкта (Object Mode)', 'У режимі рендерингу', 'У режимі перегляду матеріалів'], correct: 0,
+        expl: 'Режим редагування дає доступ до вершин, ребер і граней сітки об'+"'"+'єкта.' },
+      { q: 'Яка операція округлює гострий край об'+"'"+'єкта, створюючи додаткову грань?',
+        opts: ['Фаска', 'Екструдування', 'Клонування', 'Текстурування'], correct: 0,
+        expl: 'Фаска (bevel) згладжує гострі ребра, додаючи нову грань замість краю.' },
+      { q: 'Матеріал об'+"'"+'єкта, на відміну від текстури:',
+        opts: ['визначає загальні властивості поверхні (колір, блиск), а не саме зображення', 'завжди має білий колір', 'використовується лише для 3D-друку', 'не впливає на вигляд об'+"'"+'єкта при рендерингу'], correct: 0,
+        expl: 'Матеріал описує властивості поверхні, тоді як текстура — це зображення, накладене на неї.' },
+      { q: 'Що таке рендеринг?',
+        opts: ['Створення зображення 3D-сцени на основі моделі, матеріалів і освітлення', 'Стиснення 3D-моделі для зменшення розміру файлу', 'Перетворення тексту на 3D-об'+"'"+'єкт', 'Процес 3D-друку моделі'], correct: 0,
+        expl: 'Рендеринг — обчислення підсумкового зображення сцени програмою.' },
+      { q: 'Що таке ключовий кадр в анімації Blender?',
+        opts: ['Кадр, у якому зафіксовано певний стан об'+"'"+'єкта (положення, розмір тощо)', 'Перший кадр анімації, що завжди має номер 0', 'Кадр, який неможливо редагувати', 'Файл, у якому зберігається готове відео'], correct: 0,
+        expl: 'Ключові кадри фіксують стан об'+"'"+'єкта в певний момент часу; між ними програма розраховує проміжні зміни.' },
+      { q: 'Що потрібно виконати з тривимірною моделлю перед друком на 3D-принтері?',
+        opts: ['Експортувати її у придатний для друку формат, наприклад STL', 'Зробити її двовимірною', 'Стиснути архіватором', 'Додати до неї гіперпосилання'], correct: 0,
+        expl: 'Для 3D-друку модель експортують у спеціальний формат (напр. STL), який розуміє принтер.' },
+    ]
+  },
+  {
+    id: 'xls', icon: '📊', name: 'Опрацювання табличних даних', desc: 'Формули, функції, діаграми, фільтри',
+    questions: [
+      { q: 'Що означає запис <code>$A$1</code> у формулі електронної таблиці?',
+        opts: ['Абсолютне посилання', 'Відносне посилання', 'Синтаксичну помилку', 'Ім'+"'"+'я функції'], correct: 0,
+        expl: 'Знак $ фіксує номер стовпця й рядка — посилання не зміниться при копіюванні формули.' },
+      { q: 'Яка функція обчислює суму значень, що відповідають заданій умові?',
+        opts: ['СУММЕСЛИ (SUMIF)', 'СУМ (SUM)', 'СЧЁТ (COUNT)', 'СРЗНАЧ (AVERAGE)'], correct: 0,
+        expl: 'СУММЕСЛИ / SUMIF підсумовує лише ті значення, які задовольняють умову.' },
+      { q: 'Чим відрізняються функції COUNT та COUNTA?',
+        opts: ['COUNT рахує лише клітинки з числами, а COUNTA — усі непорожні клітинки', 'Це повні синоніми однієї функції', 'COUNT рахує текст, а COUNTA — тільки числа', 'COUNTA працює лише в Google Таблицях'], correct: 0,
+        expl: 'COUNT враховує тільки числові значення, а COUNTA — будь-які непорожні клітинки.' },
+      { q: 'Чим RANK.EQ відрізняється від RANK.AVG при визначенні рангу однакових значень?',
+        opts: ['RANK.EQ надає однаковим значенням однаковий (найвищий) ранг, а RANK.AVG — середній ранг', 'Це одна й та сама функція під різними назвами', 'RANK.AVG працює тільки з текстовими даними', 'RANK.EQ доступна лише в застарілих версіях Excel'], correct: 0,
+        expl: 'RANK.EQ дає однаковим значенням однаковий найвищий ранг, RANK.AVG — усереднює ранги між собою.' },
+      { q: 'Яка функція перевіряє умову й повертає одне значення, якщо вона істинна, і інше — якщо хибна?',
+        opts: ['IF (ЯКЩО)', 'AND (І)', 'OR (АБО)', 'NOT (НЕ)'], correct: 0,
+        expl: 'IF (ЯКЩО) — базова логічна функція з умовою та двома результатами.' },
+      { q: 'Функція AND (І) поверне значення ІСТИНА, якщо:',
+        opts: ['усі задані умови одночасно істинні', 'хоча б одна з умов істинна', 'жодна з умов не істинна', 'перша з умов хибна'], correct: 0,
+        expl: 'AND повертає ІСТИНА лише тоді, коли істинні всі задані умови одночасно.' },
+      { q: 'Для чого використовують умовне форматування?',
+        opts: ['Щоб автоматично виділяти комірки за заданою умовою', 'Щоб захищати аркуш паролем', 'Щоб об'+"'"+'єднувати кілька комірок', 'Щоб створювати нову електронну книгу'], correct: 0,
+        expl: 'Умовне форматування змінює вигляд комірки, коли її значення відповідає правилу.' },
+      { q: 'Яку діаграму краще використати для неперервної зміни даних за рівні проміжки часу (наприклад, температури за місяць)?',
+        opts: ['Лінійчату (графік)', 'Кругову (секторну)', 'Точкову', 'Стовпчасту з накопиченням'], correct: 0,
+        expl: 'Лінійчаті діаграми (графіки) наочно показують зміну величини в часі.' },
+      { q: 'Яка обов'+"'"+'язкова умова перед обчисленням проміжних підсумків за групами даних?',
+        opts: ['Дані мають бути відсортовані за стовпцем групування', 'Дані мають бути відфільтровані', 'Аркуш має бути захищений паролем', 'Усі клітинки мають містити формули'], correct: 0,
+        expl: 'Проміжні підсумки групують послідовні однакові значення, тому стовпець групування має бути відсортований.' },
+      { q: 'Чим розширений фільтр відрізняється від автофільтра?',
+        opts: ['Дає змогу задавати складні умови одночасно для кількох полів', 'Працює лише з текстовими даними', 'Видаляє відфільтровані рядки назавжди', 'Доступний лише в Google Таблицях'], correct: 0,
+        expl: 'Розширений фільтр дозволяє поєднувати кілька критеріїв для різних полів одночасно.' },
+    ]
+  },
+  {
+    id: 'db', icon: '🗄️', name: 'Бази даних. СКБД', desc: 'Таблиці, ключі, зв'+"'"+'язки, запити',
+    questions: [
+      { q: 'Що таке первинний ключ таблиці бази даних?',
+        opts: ['Поле, що унікально ідентифікує кожен запис', 'Перше поле таблиці за порядком стовпців', 'Пароль для доступу до бази даних', 'Назва самої таблиці'], correct: 0,
+        expl: 'Первинний ключ гарантує, що кожен запис можна однозначно розрізнити.' },
+      { q: 'Який приклад ілюструє зв'+"'"+'язок «один-до-багатьох»?',
+        opts: ['Один автор — багато книг', 'Один учень — один атестат', 'Один пароль — один логін', 'Один клас — один кабінет'], correct: 0,
+        expl: 'Один запис у таблиці «Автори» може бути пов'+"'"+'язаний із багатьма записами в таблиці «Книги».' },
+      { q: 'Яка з програм є системою керування базами даних (СКБД)?',
+        opts: ['MS Access', 'MS Word', 'Adobe Photoshop', 'Blender'], correct: 0,
+        expl: 'MS Access, MySQL, PostgreSQL — приклади СКБД для роботи з базами даних.' },
+      { q: 'Що робить запит (query) у базі даних?',
+        opts: ['Вибирає дані за заданою умовою', 'Видаляє всю базу даних без можливості відновлення', 'Форматує диск комп'+"'"+'ютера', 'Створює архів усіх таблиць'], correct: 0,
+        expl: 'Запит дає змогу відібрати, відсортувати або обчислити потрібні дані.' },
+      { q: 'Як називають рядок таблиці бази даних?',
+        opts: ['Записом', 'Полем', 'Індексом', 'Доменом'], correct: 0,
+        expl: 'Запис — один рядок таблиці; поле — стовпець, що описує одну характеристику.' },
+      { q: 'Що таке предметна область бази даних?',
+        opts: ['Сукупність реальних об'+"'"+'єктів чи явищ, дані про які зберігаються в базі', 'Назва файлу бази даних', 'Розділ меню програми СКБД', 'Тип зв'+"'"+'язку між таблицями'], correct: 0,
+        expl: 'Предметна область — це те коло реальних об'+"'"+'єктів чи процесів, які описує база даних.' },
+      { q: 'Зовнішній ключ у таблиці бази даних — це поле, яке:',
+        opts: ['посилається на первинний ключ іншої таблиці, встановлюючи зв'+"'"+'язок між ними', 'завжди містить лише унікальні значення в межах усієї бази', 'автоматично видаляється при видаленні будь-якого запису', 'може містити лише текстові дані'], correct: 0,
+        expl: 'Зовнішній ключ пов'+"'"+'язує запис однієї таблиці з відповідним записом іншої через первинний ключ.' },
+      { q: 'Що відбудеться, якщо спробувати ввести до ключового поля значення, яке вже є в іншому записі?',
+        opts: ['СКБД не дозволить це зробити й покаже помилку', 'Значення запишеться без попереджень', 'Старий запис буде автоматично видалено', 'Таблиця автоматично створить нове поле'], correct: 0,
+        expl: 'Ключове поле вимагає унікальності значень, тому дублікат викличе помилку.' },
+      { q: 'Для чого в Access використовують Майстер підстановок?',
+        opts: ['Щоб обмежити введення даних у поле значеннями зі списку чи іншої таблиці', 'Щоб автоматично перекладати дані іншою мовою', 'Щоб стискати розмір файлу бази даних', 'Щоб створювати резервну копію бази'], correct: 0,
+        expl: 'Майстер підстановок дає змогу вибирати значення поля зі заданого списку або пов'+"'"+'язаної таблиці.' },
+      { q: 'Що дозволяє зробити запит із параметром?',
+        opts: ['Під час кожного запуску запиту вводити нове значення умови відбору', 'Створити нову порожню таблицю', 'Автоматично видалити повторювані записи', 'Об'+"'"+'єднати дві різні бази даних в одну'], correct: 0,
+        expl: 'Запит із параметром щоразу запитує нове значення, за яким відбираються дані.' },
+    ]
+  },
+  {
+    id: 'py', icon: '🐍', name: 'Алгоритми та програми', desc: 'Python, масиви, складність алгоритмів',
+    questions: [
+      { q: 'Що виведе код <code>print(len([3, 7, 1, 9]))</code>?',
+        opts: ['4', '9', '3', 'Помилку'], correct: 0,
+        expl: 'len() повертає кількість елементів списку — їх тут чотири.' },
+      { q: 'З якого індексу починається нумерація елементів списку в Python?',
+        opts: ['З 0', 'З 1', 'З -1', 'Залежить від типу елементів'], correct: 0,
+        expl: 'Індексація в Python завжди починається з нуля.' },
+      { q: 'Який код виведе числа від 0 до 4 включно?',
+        opts: ['<code>for i in range(5): print(i)</code>', '<code>for i in range(1, 5): print(i)</code>', '<code>for i in range(5, 0): print(i)</code>', '<code>for i in range(4): print(i)</code>'], correct: 0,
+        expl: 'range(5) утворює послідовність 0, 1, 2, 3, 4.' },
+      { q: 'Що таке складність алгоритму?',
+        opts: ['Показник залежності часу (чи пам'+"'"+'яті) виконання алгоритму від обсягу вхідних даних', 'Кількість рядків коду програми', 'Версія мови програмування, якою написано код', 'Кількість змінних, використаних у програмі'], correct: 0,
+        expl: 'Складність алгоритму показує, як зростає час чи пам'+"'"+'ять при збільшенні обсягу даних.' },
+      { q: 'Який підхід використовують, щоб знайти найбільший елемент масиву?',
+        opts: ['Порівнювати кожен елемент з поточним максимумом і оновлювати його', 'Відсортувати масив за абеткою', 'Порахувати загальну кількість елементів', 'Видалити всі парні елементи масиву'], correct: 0,
+        expl: 'Класичний алгоритм пошуку максимуму — послідовне порівняння з поточним найбільшим значенням.' },
+      { q: 'Який вбудований метод списку сортує його елементи за зростанням «на місці»?',
+        opts: ['sort()', 'append()', 'index()', 'count()'], correct: 0,
+        expl: 'Метод sort() впорядковує список безпосередньо, змінюючи його.' },
+      { q: 'У чому головна відмінність сортування бульбашками від сортування вибором?',
+        opts: ['Бульбашки порівнюють і міняють сусідні елементи щопрохід, а вибір шукає мінімум (максимум) і ставить його на місце', 'Це повністю однакові алгоритми з різними назвами', 'Бульбашки працюють лише з числами, а вибір — з будь-якими даними', 'Сортування вибором завжди швидше за будь-якого обсягу даних'], correct: 0,
+        expl: 'Це різні стратегії впорядкування: бульбашки — обмін сусідів, вибір — пошук екстремуму на кожному кроці.' },
+      { q: 'Який метод додає новий елемент у кінець списку Python?',
+        opts: ['append()', 'insert(0, x) — додає на початок', 'sort()', 'len()'], correct: 0,
+        expl: 'append(x) додає елемент x у кінець списку.' },
+      { q: 'Як у Python зазвичай реалізують двовимірний масив (матрицю)?',
+        opts: ['Як список списків (list of lists)', 'Як звичайний рядок (string)', 'Як словник без ключів', 'Python не підтримує двовимірні масиви'], correct: 0,
+        expl: 'Двовимірний масив у Python — це список, елементами якого є інші списки (рядки матриці).' },
+      { q: 'У квадратному масиві розміром n×n елемент належить головній діагоналі, якщо:',
+        opts: ['індекс рядка дорівнює індексу стовпця (i == j)', 'сума індексів дорівнює n-1', 'індекс рядка більший за індекс стовпця', 'елемент має найбільше значення в рядку'], correct: 0,
+        expl: 'Головна діагональ квадратного масиву — це елементи, де номер рядка збігається з номером стовпця.' },
+    ]
+  },
+];
+
+const GRADE_STEPS = [[50,12],[46,11],[42,10],[38,9],[34,8],[30,7],[26,6],[22,5],[18,4],[14,3],[8,2],[0,1]];
+
+const STORAGE_KEY = 'termznan-v1';
+const NAME_KEY = 'termznan-name-v1';
+let state = loadState();
+let studentName = loadName();
+let currentModIdx = null;
+let currentQIdx = 0;
+let awaitingNext = false;
+
+function loadName(){
+  try{ return localStorage.getItem(NAME_KEY) || ''; }catch(e){ return ''; }
+}
+function saveName(v){
+  studentName = v.trim();
+  try{ localStorage.setItem(NAME_KEY, studentName); }catch(e){}
+  syncNameUI();
+}
+function escapeHtml(s){
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+function syncNameUI(){
+  const who = document.getElementById('whoLine');
+  if(who){
+    who.hidden = !studentName;
+    who.innerHTML = studentName ? `Учень / учениця: <b>${escapeHtml(studentName)}</b>` : '';
+  }
+  const input = document.getElementById('studentNameInput');
+  if(input && input.value !== studentName) input.value = studentName;
+}
+function startDiagnostics(){
+  const input = document.getElementById('studentNameInput');
+  const hint = document.getElementById('nameHint');
+  const v = input.value.trim();
+  if(!v){
+    input.classList.add('err');
+    hint.classList.add('show');
+    input.focus();
+    return;
+  }
+  input.classList.remove('err');
+  hint.classList.remove('show');
+  saveName(v);
+  goMap();
+}
+function confirmReset(){
+  if(!confirm('Скинути весь прогрес і ПІБ учня? Дію не можна скасувати.')) return;
+  resetAll();
+}
+
+function freshState(){
+  const s = {};
+  MODULES.forEach(m => { s[m.id] = { answers: new Array(m.questions.length).fill(null) }; });
+  return s;
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return freshState();
+    const parsed = JSON.parse(raw);
+    const fresh = freshState();
+    MODULES.forEach(m => { if(parsed[m.id]) fresh[m.id] = parsed[m.id]; });
+    return fresh;
+  }catch(e){ return freshState(); }
+}
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function resetAll(){
+  state = freshState();
+  saveState();
+  studentName = '';
+  try{ localStorage.removeItem(NAME_KEY); }catch(e){}
+  syncNameUI();
+  goIntro();
+  renderTrail();
+}
+
+function moduleScore(mod){
+  const a = state[mod.id].answers;
+  let correct = 0, answered = 0;
+  a.forEach((v,i) => { if(v!==null){ answered++; if(v===mod.questions[i].correct) correct++; } });
+  return { correct, answered, total: mod.questions.length };
+}
+function totalScore(){
+  let correct=0, answered=0, total=0;
+  MODULES.forEach(m=>{ const s=moduleScore(m); correct+=s.correct; answered+=s.answered; total+=s.total; });
+  return { correct, answered, total };
+}
+function gradeFor(correct){
+  for(const [minC, g] of GRADE_STEPS){ if(correct>=minC) return g; }
+  return 1;
+}
+
+function showView(id){
+  ['view-intro','view-map','view-quiz','view-mres','view-report'].forEach(v=>{
+    document.getElementById(v).hidden = (v!==id);
+  });
+  window.scrollTo({top:0});
+}
+
+function updateTopStat(){
+  const t = totalScore();
+  document.getElementById('topStat').innerHTML = `<b>${t.answered}</b>/${t.total} перевірено`;
+  const leds = [document.getElementById('led1'), document.getElementById('led2'), document.getElementById('led3')];
+  const doneMods = MODULES.filter(m => moduleScore(m).answered === m.questions.length).length;
+  leds.forEach((el,i)=> el.classList.toggle('live', doneMods > i*Math.ceil(MODULES.length/3)));
+}
+
+function goIntro(){
+  const t = totalScore();
+  const note = document.getElementById('resumeNote');
+  if(t.answered>0){ note.hidden=false; note.textContent = `Збережено прогрес: ${t.answered}/${t.total}`; }
+  else note.hidden = true;
+  syncNameUI();
+  updateTopStat();
+  showView('view-intro');
+}
+
+function goMap(){
+  renderTrail();
+  syncNameUI();
+  updateTopStat();
+  showView('view-map');
+}
+
+function renderTrail(){
+  const trail = document.getElementById('trail');
+  trail.innerHTML = '';
+  MODULES.forEach((m, idx) => {
+    const s = moduleScore(m);
+    const done = s.answered === s.total;
+    const inProgress = s.answered>0 && !done;
+    const btn = document.createElement('button');
+    btn.className = 'node' + (done ? ' pass' : '') + (inProgress ? ' active' : '');
+    btn.onclick = () => openModule(idx);
+    btn.innerHTML = `
+      <span class="node-led">${done ? '✓' : m.icon}</span>
+      <span class="node-main">
+        <span class="node-name">${m.name}</span>
+        <span class="node-desc">${m.desc}</span>
+      </span>
+      <span class="node-score">${s.answered>0 ? `<b>${s.correct}</b>/${s.total}` : `<b>—</b>/${s.total}`}</span>
+    `;
+    trail.appendChild(btn);
+  });
+  const t = totalScore();
+  document.getElementById('overallVal').textContent = `${t.correct} / ${t.total}`;
+  document.getElementById('reportLinkRow').hidden = !(t.answered === t.total);
+}
+
+function openModule(idx){
+  currentModIdx = idx;
+  const mod = MODULES[idx];
+  const answers = state[mod.id].answers;
+  currentQIdx = answers.findIndex(a => a===null);
+  if(currentQIdx === -1){ showModuleResult(idx); return; }
+  document.getElementById('quizModTitle').textContent = mod.icon + '  ' + mod.name;
+  renderQuestion();
+  showView('view-quiz');
+}
+
+function renderDots(){
+  const mod = MODULES[currentModIdx];
+  const answers = state[mod.id].answers;
+  const wrap = document.getElementById('quizDots');
+  wrap.innerHTML = '';
+  mod.questions.forEach((q,i)=>{
+    const d = document.createElement('span');
+    let cls = 'qp-dot';
+    if(i===currentQIdx) cls += ' now';
+    else if(answers[i]!==null) cls += (answers[i]===q.correct ? ' correct' : ' wrong');
+    d.className = cls;
+    wrap.appendChild(d);
+  });
+}
+
+function shuffledIndices(n){
+  const arr = Array.from({length:n}, (_,i)=>i);
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let currentOrder = [];
+
+function renderQuestion(){
+  const mod = MODULES[currentModIdx];
+  const q = mod.questions[currentQIdx];
+  awaitingNext = false;
+  renderDots();
+  document.getElementById('qCount').textContent = `Питання ${currentQIdx+1} з ${mod.questions.length}`;
+  document.getElementById('qText').innerHTML = q.q;
+  const optsWrap = document.getElementById('qOpts');
+  optsWrap.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  currentOrder = shuffledIndices(q.opts.length);
+  currentOrder.forEach((origIdx, pos) => {
+    const b = document.createElement('button');
+    b.className = 'opt';
+    b.dataset.orig = origIdx;
+    b.innerHTML = `<span class="k">${letters[pos]}</span><span>${q.opts[origIdx]}</span>`;
+    b.onclick = () => answerQuestion(origIdx);
+    optsWrap.appendChild(b);
+  });
+  document.getElementById('qFeedback').className = 'feedback';
+  document.getElementById('nextBtn').hidden = true;
+
+  const saved = state[mod.id].answers[currentQIdx];
+  if(saved !== null){ lockOptions(saved, q, true); }
+}
+
+function lockOptions(chosenOrigIdx, q, silent){
+  const opts = document.querySelectorAll('#qOpts .opt');
+  opts.forEach((b)=>{
+    const origIdx = +b.dataset.orig;
+    b.disabled = true;
+    if(origIdx===q.correct) b.classList.add('correct');
+    if(origIdx===chosenOrigIdx && chosenOrigIdx!==q.correct) b.classList.add('wrong');
+    if(origIdx!==q.correct && origIdx!==chosenOrigIdx) b.classList.add('dim');
+  });
+  const fb = document.getElementById('qFeedback');
+  fb.className = 'feedback show ' + (chosenOrigIdx===q.correct ? 'ok' : 'no');
+  document.getElementById('fbTag').textContent = chosenOrigIdx===q.correct ? '✓ Правильно' : '✕ Неправильно';
+  document.getElementById('fbText').textContent = q.expl;
+  document.getElementById('nextBtn').hidden = false;
+  const mod = MODULES[currentModIdx];
+  const isLast = currentQIdx === mod.questions.length - 1;
+  document.getElementById('nextBtn').textContent = isLast ? 'Завершити тему →' : 'Далі →';
+  awaitingNext = true;
+  renderDots();
+}
+
+function answerQuestion(origIdx){
+  if(awaitingNext) return;
+  const mod = MODULES[currentModIdx];
+  const q = mod.questions[currentQIdx];
+  state[mod.id].answers[currentQIdx] = origIdx;
+  saveState();
+  lockOptions(origIdx, q, false);
+  updateTopStat();
+}
+
+function nextQuestion(){
+  const mod = MODULES[currentModIdx];
+  if(currentQIdx < mod.questions.length - 1){
+    currentQIdx++;
+    renderQuestion();
+  } else {
+    showModuleResult(currentModIdx);
+  }
+}
+
+function showModuleResult(idx){
+  const mod = MODULES[idx];
+  const s = moduleScore(mod);
+  const good = s.correct === s.total;
+  const ok = s.correct >= Math.ceil(s.total*0.6);
+  document.getElementById('mresIcon').textContent = good ? '🏁' : (ok ? '✅' : '🔁');
+  document.getElementById('mresTitle').textContent = mod.icon + ' ' + mod.name + ' — тему завершено';
+  document.getElementById('mresScore').innerHTML = `${s.correct}<small> / ${s.total} правильно</small>`;
+  showView('view-mres');
+}
+
+function goReport(){
+  updateTopStat();
+  const t = totalScore();
+  const grade = gradeFor(t.correct);
+  document.getElementById('gradeNum').innerHTML = grade + '<small>з 12</small>';
+  document.getElementById('gradeScore').textContent = `${t.correct} правильних відповідей із ${t.total} (${Math.round(t.correct/t.total*100)}%)`;
+  document.getElementById('reportName').textContent = studentName || 'ПІБ не вказано';
+  const now = new Date();
+  document.getElementById('reportDate').textContent = 'Сформовано ' + now.toLocaleDateString('uk-UA', {day:'numeric',month:'long',year:'numeric'});
+
+  const bars = document.getElementById('reportBars');
+  bars.innerHTML = '';
+  MODULES.forEach(m => {
+    const s = moduleScore(m);
+    const pct = (s.correct / s.total) * 100;
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <span class="nm">${m.icon} ${m.name}</span>
+      <span class="bar-track"><span class="bar-fill" style="width:${pct}%"></span></span>
+      <span class="bar-val">${s.correct}/${s.total}</span>
+    `;
+    bars.appendChild(row);
+  });
+  showView('view-report');
+}
+
+// init
+(function init(){
+  updateTopStat();
+  goIntro();
+})();
+</script>
